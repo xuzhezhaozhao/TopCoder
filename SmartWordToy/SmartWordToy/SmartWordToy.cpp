@@ -1,6 +1,15 @@
+/*
+ *	TopCoder:  SmartWordToy (http://community.topcoder.com/stat?c=problem_statement&pm=3935&rd=6532)
+ *	Author: xuzhezhao
+ *	E-mail: zhezhaoxu@gmail.com
+ *	Time: 2013/6/1
+ */
+
 #include <iostream>
 #include <queue>
 #include <string>
+
+#define WORDS (26 * 26 * 26 * 26)	/* 单词总的组合数 */
 
 using namespace std;
 
@@ -11,27 +20,32 @@ public:
 };
 
 typedef struct {
-	string str;
+	string word;
 	int steps;
-	int dir;
 }Button;
 
 bool isForbid(string test, string forbid[]);
 char nextChar(char ch);
 char preChar(char ch);
+int getWordIndex(string word);
+
+bool visited[WORDS];			/* 单词是否被访问的标志 */
+
 
 int main()
 {
 	SmartWordToy toy;
-	string start, finish;
-	int steps;
-	string forbid[] = {"a a a z", "a a z a", "a z a a", "z a a a", "a z z z", "z a z z", "z z a z", "z z z a", ""};
 
-	start = "aaaa";
-	finish = "zzzz";
-	steps = toy.minPresses(start, finish, forbid);
+	string start = "aaaa";
+	string finish = "zzzz";
+	string forbid[] = {""};
 
-	cout << steps << endl;
+	/* 初始化visited数组 */
+	for (int i = 0; i < WORDS; i++) {
+		visited[i] = false;
+	}
+
+	cout << toy.minPresses(start, finish, forbid) << endl;
 
 	return 0;
 }
@@ -39,69 +53,46 @@ int main()
 int SmartWordToy::minPresses(string start, string finish, string forbid[])
 {
 	queue <Button> Q;
-	Button button, button2;
-	button.str = start;
-	button.steps = 0;
-	button.dir = 0;
-
+	Button button, button_temp;
+	
 	if (isForbid(finish, forbid)) {
 		return -1;
 	}
 
-	button2 = button;
-	++button2.steps;
-	for (int i = 0; i < 4; i++) {
-		button2.str = button.str;
-		button2.str[i] = nextChar(button2.str[i]);
-		button2.dir = 2 * (i + 1) - 1;
-		if (!isForbid(button2.str, forbid)) {
-			Q.push(button2);
-		}
-		button2.str = button.str;
-		button2.str[i] = preChar(button2.str[i]);
-		button2.dir = 2 * (i + 1);
-		if (!isForbid(button2.str, forbid)) {
-			Q.push(button2);
-		}
-	}
-	while (button.str != finish && !Q.empty()) {
+	button.word = start;
+	button.steps = 0;
+	Q.push(button);
+	while (button.word != finish && !Q.empty()) {
 		button = Q.front();
-		button2 = button;
 		Q.pop();
-		++button2.steps;
+		
+		/* 每次都有4个按键可以选择，每个按键可以选择向上或向下按 */
 		for (int i = 0; i < 4; i++) {
-			if ( (2 * (i + 1) - 1) == button2.dir ) {
-				button2.str = button.str;
-				button2.str[i] = nextChar(button2.str[i]);
-				button2.dir = 2 * (i + 1) - 1;
-				if (!isForbid(button2.str, forbid)) {
-					Q.push(button2);
+			/* 向上按 */
+			button_temp = button;
+			button_temp.word[i] = nextChar(button_temp.word[i]);
+			if (!visited[getWordIndex(button_temp.word)]) {
+				visited[getWordIndex(button_temp.word)] = true;
+				++button_temp.steps;
+				if (!isForbid(button_temp.word, forbid)) {
+					Q.push(button_temp);
 				}
-			} else if ( (2 * (i + 1)) == button2.dir ) {
-				button2.str = button.str;
-				button2.str[i] = preChar(button2.str[i]);
-				button2.dir = 2 * (i + 1);
-				if (!isForbid(button2.str, forbid)) {
-					Q.push(button2);
-				}
-			} else {
-				button2.str = button.str;
-				button2.str[i] = nextChar(button2.str[i]);
-				button2.dir = 2 * (i + 1) - 1;
-				if (!isForbid(button2.str, forbid)) {
-					Q.push(button2);
-				}
-				button2.str = button.str;
-				button2.str[i] = preChar(button2.str[i]);
-				button2.dir = 2 * (i + 1);
-				if (!isForbid(button2.str, forbid)) {
-					Q.push(button2);
+			}
+
+			/* 向下按 */
+			button_temp = button;
+			button_temp.word[i] = preChar(button_temp.word[i]);
+			if (!visited[getWordIndex(button_temp.word)]) {
+				visited[getWordIndex(button_temp.word)] = true;
+				++button_temp.steps;
+				if (!isForbid(button_temp.word, forbid)) {
+					Q.push(button_temp);
 				}
 			}
 		}
 	}
 
-	if (button.str != finish) {
+	if (button.word != finish) {
 		return -1;
 	} else {
 		return button.steps;
@@ -115,8 +106,8 @@ int SmartWordToy::minPresses(string start, string finish, string forbid[])
 bool isForbid(string test, string forbid[])
 {
 	int i;
-	int len;	/* forbid 数组长度 */
-	int pos1, pos2, pos3;
+	int len;			/* length of forbid  */
+	int pos1, pos2, pos3;		/* white space positons */
 	string s0, s1, s2, s3;
 	
 	len = 0;
@@ -175,4 +166,14 @@ char preChar(char ch)
 		--ch;
 	}
 	return ch;
+}
+
+/**
+ * 返回每个单词的索引，将每个单词看成26进制数，a - z 分别表示 0 - 25，
+ * 单词的数值就是索引值。
+ */
+int getWordIndex(string word)
+{
+	return ((word[0] - 'a') * (26 * 26 * 26) + (word[1] - 'a') * (26 * 26) + 
+		(word[2] - 'a') * 26 + (word[3] - 'a') );
 }
