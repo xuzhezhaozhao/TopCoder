@@ -3,6 +3,7 @@
  *（http://community.topcoder.com/stat?c=problem_statement&pm=2915&rd=5853）
  * Author: xuzhezhao
  * E-mail: zhezhaoxu@gmail.com
+ * Blog: http://blog.csdn.net/xuzhezhaozhao/
  * Date: 2013/6/2
  */
 
@@ -12,6 +13,8 @@
 
 #define ROWS	8
 #define COLS	8
+
+#define STATES_NUM	(3 * ROWS * COLS)
 
 using namespace std;
 
@@ -28,16 +31,22 @@ typedef struct {
 	bool queen_eaten;
 }vertex;
 
-int getVexIndex(string cr);
+int getPos(string cr);
 vertex jump(vertex vex, int dirction);
+int getStateIndex(vertex vex);
 
+int visited[STATES_NUM];
 
 int main()
 {
 	CaptureThemAll chess;
-	string knight = "a1";
-	string rook = "a8";
-	string queen = "h1";
+	string knight = "h8";
+	string rook = "e2";
+	string queen = "d2";
+
+	for (int i = 0; i < STATES_NUM; i++) {
+		visited[i] = false;
+	}
 
 	cout << chess.fastKnight(knight, rook, queen) << endl;
 
@@ -47,13 +56,15 @@ int main()
 int CaptureThemAll::fastKnight(string knight, string rook, string queen)
 {
 	queue<vertex> Q;
+	int state;
 	vertex vex, vex_next;
 	bool rook_eaten, queen_eaten;
 	int knight_pos, rook_pos, queen_pos;
+
 	rook_eaten = queen_eaten = false;
-	knight_pos = getVexIndex(knight);
-	rook_pos = getVexIndex(rook);
-	queen_pos = getVexIndex(queen);
+	knight_pos = getPos(knight);
+	rook_pos = getPos(rook);
+	queen_pos = getPos(queen);
 
 	vex.pos = knight_pos;
 	vex.steps = 0;
@@ -64,18 +75,22 @@ int CaptureThemAll::fastKnight(string knight, string rook, string queen)
 		Q.pop();
 		for (int i = 1; i <= 8; i++) {
 			vex_next = jump(vex, i);
-			if (vex_next.pos > 0) {
-				if (vex_next.pos == rook_pos) {
-					vex_next.rook_eaten = true;
-				} else if (vex_next.pos == queen_pos) {
-					vex_next.queen_eaten = true;
-				}
+			if (vex_next.pos > 0) {		/* 没有越棋盘边界 */
+				state = getStateIndex(vex_next);
+				if (!visited[state]) {
+					visited[state] = true;
+					if (vex_next.pos == rook_pos) {
+						vex_next.rook_eaten = true;
+					} else if (vex_next.pos == queen_pos) {
+						vex_next.queen_eaten = true;
+					}
 
-				if (vex_next.rook_eaten && vex_next.queen_eaten) {
-					return vex_next.steps;
-				}
+					if (vex_next.rook_eaten && vex_next.queen_eaten) {
+						return vex_next.steps;
+					}
 
-				Q.push(vex_next);
+					Q.push(vex_next);
+				}
 			}
 		}
 	}
@@ -84,13 +99,13 @@ int CaptureThemAll::fastKnight(string knight, string rook, string queen)
 /**
  * 返回cr表示的棋盘位置的0－63数字表示形式
  */
-int getVexIndex(string cr)
+int getPos(string cr)
 {
 	return (cr[0] - 'a') * COLS + (cr[1] - '1');
 }
 
 /**
- * 
+ * 得到knight走一步后的位置
  */
 vertex jump(vertex vex, int dirction)
 {
@@ -139,4 +154,19 @@ vertex jump(vertex vex, int dirction)
 		vex.pos = col * COLS + row;
 	}
 	return vex;
+}
+
+/**
+ * 得到当前位置的状态，对于于visited数组，每个棋盘位置对应有3个状态，一是没有吃到rook和
+ * queen，二是吃到了rook，没有吃到queen，三是吃到了queen，没有吃到rook。
+ */
+int getStateIndex(vertex vex)
+{
+	if (!vex.rook_eaten && !vex.queen_eaten) {
+		return (3 * vex.pos);
+	} else if (vex.rook_eaten && !vex.queen_eaten) {
+		return (3 * vex.pos + 1);
+	} else {
+		return (3 * vex.pos + 2);
+	}
 }
