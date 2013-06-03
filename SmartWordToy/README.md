@@ -1,4 +1,4 @@
-From: http://community.topcoder.com/stat?c=problem_statement&pm=3935&rd=6532
+##TopCoder: [SmartWordToy](http://community.topcoder.com/stat?c=problem_statement&pm=3935&rd=6532)
 
 ###Problem Statement
 The toy company "I Can't Believe It Works!" has hired you to help 
@@ -29,12 +29,12 @@ the toy to ever show the desired word, return -1.
  
 ###Definition
     	
-Class:	SmartWordToy
-Method:	minPresses
-Parameters:	String, String, String[]
-Returns:	int
-Method signature:	int minPresses(String start, String finish, String[] forbid)
-(be sure your method is public)
+Class:	SmartWordToy<br />
+Method:	minPresses<br />
+Parameters:	String, String, String[]<br />
+Returns:	int<br />
+Method signature:	int minPresses(String start, String finish, String[] forbid)<br />
+(be sure your method is public)<br />
     
  
 ###Constraints

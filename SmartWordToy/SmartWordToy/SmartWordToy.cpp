@@ -2,6 +2,7 @@
  *	TopCoder:  SmartWordToy (http://community.topcoder.com/stat?c=problem_statement&pm=3935&rd=6532)
  *	Author: xuzhezhao
  *	E-mail: zhezhaoxu@gmail.com
+ *	Blog: http://blog.csdn.net/xuzhezhaozhao
  *	Time: 2013/6/1
  */
 
@@ -31,7 +32,9 @@ int getWordIndex(string word);
 
 bool visited[WORDS];			/* 单词是否被访问的标志 */
 
-
+/**
+* 使用BFS算法
+*/
 int main()
 {
 	SmartWordToy toy;
