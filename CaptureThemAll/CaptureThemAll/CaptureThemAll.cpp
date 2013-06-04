@@ -4,7 +4,7 @@
  * Author: xuzhezhao
  * E-mail: zhezhaoxu@gmail.com
  * Blog: http://blog.csdn.net/xuzhezhaozhao/
- * Date: 2013/6/2
+ * Date: 2013/6/4
  */
 
 #include <iostream>
@@ -40,9 +40,9 @@ int visited[STATES_NUM];
 int main()
 {
 	CaptureThemAll chess;
-	string knight = "h8";
-	string rook = "e2";
-	string queen = "d2";
+	string knight = "a1";
+	string rook = "a8";
+	string queen = "h1";
 
 	for (int i = 0; i < STATES_NUM; i++) {
 		visited[i] = false;
@@ -76,19 +76,18 @@ int CaptureThemAll::fastKnight(string knight, string rook, string queen)
 		for (int i = 1; i <= 8; i++) {
 			vex_next = jump(vex, i);
 			if (vex_next.pos > 0) {		/* 没有越棋盘边界 */
+				if (vex_next.pos == rook_pos) {
+					vex_next.rook_eaten = true;
+				} else if (vex_next.pos == queen_pos) {
+					vex_next.queen_eaten = true;
+				}
+
+				if (vex_next.rook_eaten && vex_next.queen_eaten) {
+					return vex_next.steps;
+				}
 				state = getStateIndex(vex_next);
 				if (!visited[state]) {
 					visited[state] = true;
-					if (vex_next.pos == rook_pos) {
-						vex_next.rook_eaten = true;
-					} else if (vex_next.pos == queen_pos) {
-						vex_next.queen_eaten = true;
-					}
-
-					if (vex_next.rook_eaten && vex_next.queen_eaten) {
-						return vex_next.steps;
-					}
-
 					Q.push(vex_next);
 				}
 			}
