@@ -48,10 +48,6 @@ int main()
 		visited[i] = false;
 	}
 
-	for (int i = 0; i < STATES_NUM; i++) {
-		visited[i] = false;
-	}
-
 	cout << chess.fastKnight(knight, rook, queen) << endl;
 
 	return 0;
