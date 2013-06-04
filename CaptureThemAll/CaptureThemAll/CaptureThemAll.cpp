@@ -40,9 +40,13 @@ int visited[STATES_NUM];
 int main()
 {
 	CaptureThemAll chess;
-	string knight = "a1";
-	string rook = "a8";
-	string queen = "h1";
+	string knight = "h8";
+	string rook = "e2";
+	string queen = "d2";
+
+	for (int i = 0; i < STATES_NUM; i++) {
+		visited[i] = false;
+	}
 
 	for (int i = 0; i < STATES_NUM; i++) {
 		visited[i] = false;
