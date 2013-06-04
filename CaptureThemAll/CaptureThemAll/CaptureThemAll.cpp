@@ -3,7 +3,8 @@
  *（http://community.topcoder.com/stat?c=problem_statement&pm=2915&rd=5853）
  * Author: xuzhezhao
  * E-mail: zhezhaoxu@gmail.com
- * Date: 2013/6/2
+ * Blog: http://blog.csdn.net/xuzhezhaozhao/
+ * Date: 2013/6/4
  */
 
 #include <iostream>
@@ -35,7 +36,6 @@ vertex jump(vertex vex, int dirction);
 int getStateIndex(vertex vex);
 
 int visited[STATES_NUM];
-int steps = 0;
 
 int main()
 {
@@ -48,8 +48,11 @@ int main()
 		visited[i] = false;
 	}
 
+	for (int i = 0; i < STATES_NUM; i++) {
+		visited[i] = false;
+	}
+
 	cout << chess.fastKnight(knight, rook, queen) << endl;
-	cout << steps << endl;
 
 	return 0;
 }
@@ -74,23 +77,21 @@ int CaptureThemAll::fastKnight(string knight, string rook, string queen)
 	while (true) {
 		vex = Q.front();
 		Q.pop();
-		steps++;
 		for (int i = 1; i <= 8; i++) {
 			vex_next = jump(vex, i);
 			if (vex_next.pos > 0) {		/* 没有越棋盘边界 */
+				if (vex_next.pos == rook_pos) {
+					vex_next.rook_eaten = true;
+				} else if (vex_next.pos == queen_pos) {
+					vex_next.queen_eaten = true;
+				}
+
+				if (vex_next.rook_eaten && vex_next.queen_eaten) {
+					return vex_next.steps;
+				}
 				state = getStateIndex(vex_next);
 				if (!visited[state]) {
 					visited[state] = true;
-					if (vex_next.pos == rook_pos) {
-						vex_next.rook_eaten = true;
-					} else if (vex_next.pos == queen_pos) {
-						vex_next.queen_eaten = true;
-					}
-
-					if (vex_next.rook_eaten && vex_next.queen_eaten) {
-						return vex_next.steps;
-					}
-
 					Q.push(vex_next);
 				}
 			}
