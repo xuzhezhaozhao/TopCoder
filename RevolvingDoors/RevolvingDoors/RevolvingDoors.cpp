@@ -4,7 +4,7 @@
  * Author: xuzhezhao
  * E-mail: zhezhaoxu@gmail.com
  * Blog: http://blog.csdn.net/xuzhezhaozhao/
- * Date: 2013/6/4
+ * Date: 2013/6/7
  */
 
 #include <iostream>
@@ -13,7 +13,8 @@
 
 using namespace std;
 
-#define MAX 50
+#define MAX 50			/* 地图无数限制数 */
+#define DOORS_MAX 10		/* 门数限制 */
 
 class RevolvingDoors
 {
@@ -21,100 +22,121 @@ public:
 	int turns(string map[]);
 };
 
-enum Door {H, V, NONE};
+enum Door_State {H, V};		/* 门的状态，H：水平 V：竖直 */
 typedef struct CurrentPos{
-	int row;
-	int col;
-	Door door[MAX][MAX];
-	int throuth_doors;
+	int row;			/* 当前所处行 */
+	int col;			/* 当前所处列 */
+	Door_State door[MAX][MAX];	/* 门状态数组 */
+	int door_pos[DOORS_MAX];	/* 门位置信息 */
+	int doors_num;			/* 门数量 */
+	int turn_doors;			/* trun的门数量 */
 }CurrentPos;
 
-static int map_rows = 0;
-static int map_cols = 0;
-static int end_row;
-static int end_col;
+static int map_rows = 0;	/* 地图行数 */
+static int map_cols = 0;	/* 地图列数 */
+static int end_row;		/* 终点所在行数 */
+static int end_col;		/* 终点所在列数 */
 static int visited[MAX][MAX];
 
 void init(string map[], CurrentPos &curpos);
 bool isEnd(CurrentPos curpos);
+bool isVisited(list <CurrentPos> LV, CurrentPos curpos);
 
 int main()
 {
 	RevolvingDoors revolvingdoors;
 	
-	string map[] = {
-	" |  |  |     |  |  |  |  |  | ",
-	" O  O EO -O- O  O  O  O  OS O ",
-	" |  |  |     |  |  |  |  |  | ", 
-	""};
+	/* 地图，以 "" 结尾 */
+	string map[] = 
+	{ 
+	"#############",
+	"#  #|##|#   #",
+	"#   O  O    #",
+	"# E || || S #",
+	"#    O  O   #",
+	"#   #|##|#  #",
+	"#############", 
+	"" };
 
 	cout << revolvingdoors.turns(map) << endl;
-
+	
 	return 0;
 }
 
 int RevolvingDoors::turns(string map[])
 {
-	list <CurrentPos> LC, LD;
+	list <CurrentPos> LC;		/* LC: 内层BFS状态 */
+	list <CurrentPos> LD;		/* LD: 外层BFS，turn 操作之后的状态 */
+	list <CurrentPos> LV;		/* LV：外层BFS访问状态标志，类似visited数组，保存turn操作之后的状态，以避免重复 */
 	CurrentPos curpos, nextpos;
 	int row, col;
 
 	init(map, curpos);
 	LD.push_back(curpos);
 
+	/* 外层BFS */
 	while (!LD.empty()) {
 		curpos = LD.front();
 		LD.pop_front();
 
+		/* 初始化visited数组 */
 		for (int i = 0; i < MAX; i++) {
 			for (int j = 0; j < MAX; j++) {
 				visited[i][j] = false;
 			}
 		}
-		
+
 		LC.push_back(curpos);
+
+		/* 内层BFS */
 		while (!LC.empty()) {
 			curpos = LC.front();
 			LC.pop_front();
 			row = curpos.row;
 			col = curpos.col;
 			visited[row][col] = true;
-		
+
+			if (isEnd(curpos)) {
+				return curpos.turn_doors;
+			}
+
+			/* 可以向上下左右四个方向推进状态 */
 
 			/* 向上走 */
 			nextpos = curpos;
 			if (row - 1 >= 0 && !visited[row-1][col]) {
 				nextpos.row = row - 1;
-				if (isEnd(nextpos)) {
-					/* 终点处也要和turn一次的情况 */
-					return curpos.throuth_doors;
-				}
 
 				if (' ' == map[row-1][col]) {
 					LC.push_back(nextpos);
-				} else if ('*' == map[row-1][col]) {
-					if (row - 2 >= 0 && 'O' == map[row-2][col] &&
-						H == curpos.door[row-2][col] ) {
-							LC.push_back(nextpos);
+				} else if ('*' == map[row-1][col]) {	/* 进入门的四周区域 */
+					/* 门的位置有三种情况 */
+					if (row - 2 >= 0 && 'O' == map[row-2][col] && H == curpos.door[row-2][col] ) {
+						LC.push_back(nextpos);
 					} else if (col + 1 <= map_cols - 1 && 
 						'O' == map[row-1][col+1]) {
 						if (V == curpos.door[row-1][col+1]) {
 							LC.push_back(nextpos);
 						} else {	/* turn door */
 							nextpos.door[row-1][col+1] = V;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row-1][col] = true;
-							LD.push_back(nextpos);
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
 						}
-					} else if (col - 1 >= 0 && 
-						'O' == map[row-1][col-1]) {
+					} else if (col - 1 >= 0 && 'O' == map[row-1][col-1]) {
 						if (V == curpos.door[row-1][col-1]) {
 							LC.push_back(nextpos);
 						} else {
 							nextpos.door[row-1][col-1] = V;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row-1][col] = true;
-							LD.push_back(nextpos);
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
 						}
 					}
 				}
@@ -124,34 +146,36 @@ int RevolvingDoors::turns(string map[])
 			nextpos = curpos;
 			if (row + 1 <= map_rows - 1 && !visited[row+1][col]) {
 				nextpos.row = row + 1;
-				if (isEnd(nextpos)) {
-					return curpos.throuth_doors;
-				}
 				if (' ' == map[row+1][col]) {
 					LC.push_back(nextpos);
 				} else if ('*' == map[row+1][col]) {
 					if (row + 2 <= map_rows - 1 && 'O' == map[row+2][col] &&
 						H == curpos.door[row+2][col] ) {
+						LC.push_back(nextpos);
+					} else if (col + 1 <= map_cols - 1 && 'O' == map[row+1][col+1]) {
+						if (V == curpos.door[row+1][col+1]) {
 							LC.push_back(nextpos);
-					} else if (col + 1 <= map_cols - 1 && 
-						'O' == map[row+1][col+1]) {
-							if (V == curpos.door[row+1][col+1]) {
-								LC.push_back(nextpos);
-							} else {	/* turn door */
-								nextpos.door[row+1][col+1] = V;
-								++nextpos.throuth_doors;
-								visited[row+1][col] = true;
+						} else {	/* turn door */
+							nextpos.door[row+1][col+1] = V;
+							++nextpos.turn_doors;
+							visited[row+1][col] = true;
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
 								LD.push_back(nextpos);
 							}
+						}
 					} else if (col - 1 >= 0 &&
 						'O' == map[row+1][col-1]) {
 						if (V == curpos.door[row+1][col-1]) {
 							LC.push_back(nextpos);
 						} else {
 							nextpos.door[row+1][col-1] = V;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row+1][col] = true;
-							LD.push_back(nextpos);
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
 						}
 					}
 				}
@@ -161,35 +185,37 @@ int RevolvingDoors::turns(string map[])
 			nextpos = curpos;
 			if (col - 1 >= 0 && !visited[row][col-1]) {
 				nextpos.col = col - 1;
-				if (isEnd(nextpos)) {
-					return curpos.throuth_doors;
-				}
 				if (' ' == map[row][col-1]) {
 					LC.push_back(nextpos);
 				} else if ('*' == map[row][col-1]) {
 					if (col - 2 >= 0 && 'O' == map[row][col-2] &&
 						V == curpos.door[row][col-2] ) {
-							LC.push_back(nextpos);
+						LC.push_back(nextpos);
 					} else if (row - 1 >= 0 && 
 						'O' == map[row-1][col-1]) {
 						if (H == curpos.door[row-1][col-1]) {
 							LC.push_back(nextpos);
 						} else {	/* turn door */
 							nextpos.door[row-1][col-1] = H;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row][col-1] = true;
-							LD.push_back(nextpos);
-						}
-					} else if (row + 1 <= map_rows - 1 &&
-						'O' == map[row+1][col-1]) {
-							if (H == curpos.door[row+1][col-1]) {
-								LC.push_back(nextpos);
-							} else {
-								nextpos.door[row+1][col-1] = H;
-								++nextpos.throuth_doors;
-								visited[row][col-1] = true;
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
 								LD.push_back(nextpos);
 							}
+						}
+					} else if (row + 1 <= map_rows - 1 && 'O' == map[row+1][col-1]) {
+						if (H == curpos.door[row+1][col-1]) {
+							LC.push_back(nextpos);
+						} else {
+							nextpos.door[row+1][col-1] = H;
+							++nextpos.turn_doors;
+							visited[row][col-1] = true;
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
+						}
 					}
 				}
 			}
@@ -198,9 +224,6 @@ int RevolvingDoors::turns(string map[])
 			nextpos = curpos;
 			if (col + 1 <= map_cols - 1 && !visited[row][col+1]) {
 				nextpos.col = col + 1;
-				if (isEnd(nextpos)) {
-					return curpos.throuth_doors;
-				}
 				if (' ' == map[row][col+1]) {
 					LC.push_back(nextpos);
 				} else if ('*' == map[row][col+1]) {
@@ -213,9 +236,12 @@ int RevolvingDoors::turns(string map[])
 							LC.push_back(nextpos);
 						} else {	/* turn door */
 							nextpos.door[row+1][col+1] = H;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row][col+1] = true;
-							LD.push_back(nextpos);
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
 						}
 					} else if (row - 1 >= 0 &&
 						'O' == map[row-1][col+1]) {
@@ -223,9 +249,12 @@ int RevolvingDoors::turns(string map[])
 							LC.push_back(nextpos);
 						} else {
 							nextpos.door[row-1][col+1] = H;
-							++nextpos.throuth_doors;
+							++nextpos.turn_doors;
 							visited[row][col+1] = true;
-							LD.push_back(nextpos);
+							if (!isVisited(LV, nextpos)){
+								LV.push_back(nextpos);
+								LD.push_back(nextpos);
+							}
 						}
 					}
 				}
@@ -235,12 +264,14 @@ int RevolvingDoors::turns(string map[])
 	return -1;
 }
 
-
+/**
+ * 初始操作，获得地图的基本信息，行，列，门状态。并将门四周的4个点置为 '*' 字符，将 S， E 置为' '(空格)。
+ */
 void init(string map[], CurrentPos &curpos)
 {
 	int i, j;
 	
-	curpos.throuth_doors = 0;
+	curpos.turn_doors = 0;
 
 	while (map[map_rows] != "") {
 		++map_rows;
@@ -263,10 +294,12 @@ void init(string map[], CurrentPos &curpos)
 			}
 		}
 	}
-
+	curpos.doors_num = 0;
 	for (i = 0; i < map_rows; i ++) {
 		for (j = 0; j < map_cols; j++) {
 			if ('O' == map[i][j]) {
+				curpos.door_pos[curpos.doors_num] = i * map_cols + j;
+				++curpos.doors_num;
 				if ('|' == map[i+1][j]) {
 					curpos.door[i][j] = V;
 				} else {
@@ -274,8 +307,6 @@ void init(string map[], CurrentPos &curpos)
 				}
 				map[i+1][j] = map[i-1][j] =
 					map [i][j+1] = map[i][j-1] = '*';
-			} else {
-				curpos.door[i][j] = NONE;
 			}
 		}
 	}
@@ -291,4 +322,34 @@ bool isEnd(CurrentPos curpos)
 	} else {
 		return false;
 	}
+}
+
+/**
+ * 外层BFS访问标志，若LV中含有curpos状态，返回true，否则返回false
+ */
+bool isVisited(list <CurrentPos> LV, CurrentPos curpos)
+{
+	list<CurrentPos>::iterator it;
+	int door_row, door_col;
+	bool flag;
+	if (LV.empty()) {
+		return false;
+	}
+	for (it = LV.begin(); it != LV.end(); it++) {
+		if (it->row == curpos.row && it->col == curpos.col) {
+			flag = true;
+			for (int i = 0; i < curpos.doors_num; i++) {
+				door_row = curpos.door_pos[i] / map_cols;
+				door_col = curpos.door_pos[i] % map_cols;
+				if (it->door[door_row][door_col] != curpos.door[door_row][door_col]) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
