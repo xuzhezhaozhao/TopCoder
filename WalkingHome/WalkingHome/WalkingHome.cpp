@@ -1,3 +1,11 @@
+/*
+ *	TopCoder:  WalkingHome
+ *	Author: xuzhezhao
+ *	E-mail: zhezhaoxu@gmail.com
+ *	Blog: http://blog.csdn.net/xuzhezhaozhao
+ *	Time: 2013/6/8
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,7 +26,7 @@ typedef struct CurrentPos {
 	int row;
 	int col;
 	int crossings;
-};
+}CurrentPos;
 
 bool visited[ELEMENT_SIZE][ELEMENT_SIZE];	/* 访问标志数组 */
 int map_rows;		/* 地图行数 */
@@ -35,7 +43,8 @@ int main()
 	string str;
 	int line;
 	
-	fin.open("../map.txt", fstream::in);
+	/* 地图文件格式每个地图以一行空行分隔，最前面一行和最后一行不得为空行 */
+	fin.open("../map.txt", fstream::in);	/* 打开地图文件 */
 
 	line = 0;
 	while (!fin.eof()) {
@@ -44,6 +53,7 @@ int main()
 		while ("" == str) {
 			map[line] = "";
 			cout << walkinghome.fewestCrossings(map) << endl;
+
 			fin.getline(buffer, 255);
 			str = buffer;
 			line = 0;
@@ -76,7 +86,7 @@ int WalkingHome::fewestCrossings(string map[])
 	}
 
 	QS.push(curpos);
-
+	
 	while (!QS.empty()) {
 		curpos = QS.front();
 		QS.pop();
@@ -84,7 +94,7 @@ int WalkingHome::fewestCrossings(string map[])
 		QC.push(curpos);
 		while (!QC.empty()) {
 			curpos = QC.front();
-			QC.pop();
+			QC.pop();	
 
 			row = curpos.row;
 			col = curpos.col;
@@ -109,6 +119,7 @@ int WalkingHome::fewestCrossings(string map[])
 				}
 				if (row - 1 - street_adj >= 0 && ('.' == map[row-1-street_adj][col] || 'H' == map[row-1-street_adj][col])) {
 					if (!visited[row-1-street_adj][col]) {
+						visited[row-1-street_adj][col] = true;
 						nextpos.row = row - 1 - street_adj;
 						++nextpos.crossings;
 						QS.push(nextpos);
@@ -130,6 +141,7 @@ int WalkingHome::fewestCrossings(string map[])
 				}
 				if (row + 1 + street_adj <= map_rows-1 && ('.' == map[row+1+street_adj][col] || 'H' == map[row+1+street_adj][col])) {
 					if (!visited[row+1+street_adj][col]) {
+						visited[row+1+street_adj][col] = true;
 						nextpos.row = row + 1 + street_adj;
 						++nextpos.crossings;
 						QS.push(nextpos);
@@ -151,6 +163,7 @@ int WalkingHome::fewestCrossings(string map[])
 				}
 				if (col - 1 - street_adj >= 0 && ('.' == map[row][col-1-street_adj] || 'H' == map[row][col-1-street_adj])) {
 					if (!visited[row][col-1-street_adj]) {
+						visited[row][col-1-street_adj] = true;
 						nextpos.col = col - 1 - street_adj;
 						++nextpos.crossings;
 						QS.push(nextpos);
@@ -172,6 +185,7 @@ int WalkingHome::fewestCrossings(string map[])
 				}
 				if (col + 1 + street_adj <= map_cols-1 && ('.' == map[row][col+1+street_adj] || 'H' == map[row][col+1+street_adj])) {
 					if (!visited[row][col+1+street_adj]) {
+						visited[row][col+1+street_adj] = true;
 						nextpos.col = col + 1 + street_adj;
 						++nextpos.crossings;
 						QS.push(nextpos);
@@ -180,7 +194,6 @@ int WalkingHome::fewestCrossings(string map[])
 			}
 		}
 	}
-
 	return -1;
 }
 
