@@ -10,13 +10,14 @@
 #include <fstream>
 #include <string>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
 class WalkingHome
 {
 public:
-	int fewestCrossings(string map[]);
+	int fewestCrossings(vector <string> map);
 };
 
 #define BUFFER_SIZE 100
@@ -32,45 +33,20 @@ bool visited[ELEMENT_SIZE][ELEMENT_SIZE];	/* 访问标志数组 */
 int map_rows;		/* 地图行数 */
 int map_cols;		/* 地图列数 */
 
-void init(string map[], CurrentPos &curpos);
+void init(vector <string> map, CurrentPos &curpos);
 
 int main()
 {
 	WalkingHome walkinghome;
-	fstream fin;
-	string map[ELEMENT_SIZE];
-	char buffer[BUFFER_SIZE];
-	string str;
-	int line;
-	
-	/* 地图文件格式每个地图以一行空行分隔，最前面一行和最后一行不得为空行 */
-	fin.open("../map.txt", fstream::in);	/* 打开地图文件 */
+	vector <string> map;
+	map.push_back("S-H");
 
-	line = 0;
-	while (!fin.eof()) {
-		fin.getline(buffer, 255);
-		str = buffer;
-		while ("" == str) {
-			map[line] = "";
-			cout << walkinghome.fewestCrossings(map) << endl;
-
-			fin.getline(buffer, 255);
-			str = buffer;
-			line = 0;
-		}
-		map[line] = buffer;
-		++line;
-	}
-
-	map[line] = "";
 	cout << walkinghome.fewestCrossings(map) << endl;
-
-	fin.close();
 
 	return 0;
 }
 
-int WalkingHome::fewestCrossings(string map[])
+int WalkingHome::fewestCrossings(vector <string> map)
 {
 	queue <CurrentPos> QC, QS;
 	CurrentPos curpos, nextpos;
@@ -200,13 +176,11 @@ int WalkingHome::fewestCrossings(string map[])
 /**
  * 初始化操作，得到地图的基本信息
  */
-void init(string map[], CurrentPos &curpos)
+void init(vector <string> map, CurrentPos &curpos)
 {
-	map_rows = 0;
+	map_rows = map.size();
 	map_cols = 0;
-	while ("" != map[map_rows]) {
-		++map_rows;
-	}
+
 	map_cols = map[0].length();
 	curpos.crossings = 0;
 	for (int i = 0; i < map_rows; i++) {
