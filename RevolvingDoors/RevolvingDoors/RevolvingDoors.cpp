@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 class RevolvingDoors
 {
 public:
-	int turns(string map[]);
+	int turns(vector <string> map);
 };
 
 enum Door_State {H, V};		/* 门的状态，H：水平 V：竖直 */
@@ -38,7 +39,7 @@ static int end_row;		/* 终点所在行数 */
 static int end_col;		/* 终点所在列数 */
 static int visited[MAX][MAX];
 
-void init(string map[], CurrentPos &curpos);
+void init(vector <string> &map, CurrentPos &curpos);
 bool isEnd(CurrentPos curpos);
 bool isVisited(list <CurrentPos> LV, CurrentPos curpos);
 
@@ -46,24 +47,17 @@ int main()
 {
 	RevolvingDoors revolvingdoors;
 	
-	/* 地图，以 "" 结尾 */
-	string map[] = 
-	{ 
-	"#############",
-	"#  #|##|#   #",
-	"#   O  O    #",
-	"# E || || S #",
-	"#    O  O   #",
-	"#   #|##|#  #",
-	"#############", 
-	"" };
+	vector <string> map;
+	map.push_back(" |  |  |     |  |  |  |  |  | ");
+	map.push_back(" O  O EO -O- O  O  O  O  OS O ");
+	map.push_back(" |  |  |     |  |  |  |  |  | ");
 
 	cout << revolvingdoors.turns(map) << endl;
 	
 	return 0;
 }
 
-int RevolvingDoors::turns(string map[])
+int RevolvingDoors::turns(vector <string> map)
 {
 	list <CurrentPos> LC;		/* LC: 内层BFS状态 */
 	list <CurrentPos> LD;		/* LD: 外层BFS，turn 操作之后的状态 */
@@ -267,15 +261,14 @@ int RevolvingDoors::turns(string map[])
 /**
  * 初始操作，获得地图的基本信息，行，列，门状态。并将门四周的4个点置为 '*' 字符，将 S， E 置为' '(空格)。
  */
-void init(string map[], CurrentPos &curpos)
+void init(vector <string> &map, CurrentPos &curpos)
 {
 	int i, j;
 	
 	curpos.turn_doors = 0;
 
-	while (map[map_rows] != "") {
-		++map_rows;
-	}
+	map_rows = map.size();
+
 	if (map_rows > 0) {
 		map_cols = map[0].length();
 	}
