@@ -9,6 +9,7 @@
 #include <iostream>
 #include <queue>
 #include <string>
+#include <vector>
 
 #define WORDS (26 * 26 * 26 * 26)	/* 单词总的组合数 */
 
@@ -17,7 +18,7 @@ using namespace std;
 class SmartWordToy
 {
 public:
-	int minPresses(string start, string finish, string forbid[]);
+	int minPresses(string start, string finish, vector <string> forbid);
 };
 
 typedef struct {
@@ -25,7 +26,7 @@ typedef struct {
 	int steps;
 }Button;
 
-bool isForbid(string test, string forbid[]);
+bool isForbid(string test, vector <string> forbid);
 char nextChar(char ch);
 char preChar(char ch);
 int getWordIndex(string word);
@@ -41,7 +42,7 @@ int main()
 
 	string start = "aaaa";
 	string finish = "zzzz";
-	string forbid[] = {""};
+	vector <string> forbid;
 
 	/* 初始化visited数组 */
 	for (int i = 0; i < WORDS; i++) {
@@ -53,7 +54,7 @@ int main()
 	return 0;
 }
 
-int SmartWordToy::minPresses(string start, string finish, string forbid[])
+int SmartWordToy::minPresses(string start, string finish, vector <string> forbid)
 {
 	queue <Button> Q;
 	Button button, button_temp;
@@ -106,17 +107,14 @@ int SmartWordToy::minPresses(string start, string finish, string forbid[])
  * 判断test字符串是否是满足forbid条件的字符串,
  * 是返回true，否则返回false.
  */
-bool isForbid(string test, string forbid[])
+bool isForbid(string test, vector <string> forbid)
 {
 	int i;
 	int len;			/* length of forbid  */
 	int pos1, pos2, pos3;		/* white space positons */
 	string s0, s1, s2, s3;
 	
-	len = 0;
-	while ("" != forbid[len]) {
-		++len;
-	}
+	len = forbid.size();
 
 	/* 当forbid数组为空时，返回false */
 	if (0 == len) {
