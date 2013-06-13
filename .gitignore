@@ -1,6 +1,4 @@
-
-*/Debug/*
-*/*/Debug/*
-*/ipch/*
-*/*.sdf
-*/*.suo
+*Debug*
+*ipch*
+*.sdf
+*.suo
