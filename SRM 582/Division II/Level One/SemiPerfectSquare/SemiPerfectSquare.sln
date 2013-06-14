@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SemiPerfectSquare", "SemiPerfectSquare\SemiPerfectSquare.vcxproj", "{89105E3F-00B7-4433-9E83-643288FD8BFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89105E3F-00B7-4433-9E83-643288FD8BFC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89105E3F-00B7-4433-9E83-643288FD8BFC}.Debug|Win32.Build.0 = Debug|Win32
+		{89105E3F-00B7-4433-9E83-643288FD8BFC}.Release|Win32.ActiveCfg = Release|Win32
+		{89105E3F-00B7-4433-9E83-643288FD8BFC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
