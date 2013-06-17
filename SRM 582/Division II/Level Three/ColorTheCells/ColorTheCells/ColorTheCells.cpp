@@ -332,9 +332,75 @@ bool finished(bitset <10> state, int size)
 	return true;
 }
 
+
+/* Ueddy µÄ´úÂë */
+class ColorTheCells_Ueddy
+{
+public:
+	int N;
+	int inf;
+	vector <int> p;
+	vector <int> d;
+	vector <int> dryingTime;
+
+	int calc (int b)
+	{
+		int t = 0;
+		int x = 0;
+		for (int i = 0; i < N; i++) {
+			int f = b & 1;
+			b /= 2;
+			int nx = p[i] + 1;
+			if (0 == f) {
+				nx = p[i] - 1;
+			}
+			if (nx < 0 || nx >= N) {
+				return inf;
+			}
+			int dx = 1;
+			if (nx - x < 0) {
+				dx = -1;
+			}
+			for (; x != nx; x += dx) {
+				if (t < d[x + dx]) {
+					t = d[x + dx];	
+				}
+				++t;
+			}
+			++t;
+			d[p[i]] = t + dryingTime[p[i]];
+		}
+		return t;
+	}
+
+	int minimalTime(vector <int> dryingTime)
+	{
+		inf = 100000000;
+		int ans = inf;
+		this->dryingTime = dryingTime;
+		N = dryingTime.size();
+		p.clear();
+		d.clear();
+		for (int i = 0; i < N; i++) {
+			p.push_back(i);
+			d.push_back(0);
+		}
+		do {
+			for (int i = 0; i < (1 << N); i++) {
+				for (int j = 0; j < N; j++) {
+					d[j] = 0;
+				}
+				ans = min(ans, calc(i));
+			}
+		} while (next_permutation(p.begin(), p.end()));
+		
+		return ans;
+	}
+};
+
 int main()
 {
-	ColorTheCells color;
+	ColorTheCells_Ueddy color;
 	vector <int> dryintTime;
 	int dry[] = {35198, 26281, 72533, 91031, 44326, 43178, 85530};
 
