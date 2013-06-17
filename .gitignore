@@ -1,4 +1,11 @@
+#vs2010
 *Debug*
 *ipch*
 *.sdf
 *.suo
+*.vsp
+
+#GCC
+*.o
+*~
+*.swp

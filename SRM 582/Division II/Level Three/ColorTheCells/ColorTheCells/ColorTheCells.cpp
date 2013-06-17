@@ -1,337 +1,111 @@
 #include <iostream>
 #include <vector>
-#include <bitset>
-#include <queue>
 #include <limits>
+#include <algorithm>
 
 using namespace std;
 
-#define STATE_SIZE 1024
-#define MAX_SIZE 7
-#define getPos(state) (state[7] + state[8] * 2 + state[9] * 4)
-#define setPos(pos, state) state[7] = pos_table[pos][0]; \
-		state[8] = pos_table[pos][1]; state[9] = pos_table[pos][2]
-
-bool visited[STATE_SIZE];
-long mintime = INT_MAX;
-bitset <3> pos_table[7] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6};
-
-typedef struct State {
-	bitset <10> state;
-	long time;
-	long finish_time;
-	long dryedTime[MAX_SIZE];
-	int count;
-}State;
-
 class ColorTheCells
 {
+private:
+	vector <int> dryingTime;	/* 需要干燥的时间  */
+	vector <long> dryedTime;	/* 正好干燥的时间，0表示还没有paint */
+	vector <int> paint_order;	/* paint格子的顺序 */
 public:
+	long calc(int seq);
 	int minimalTime(vector <int> dryingTime);
 };
 
-bool finished(bitset <10> state, int size);
+#define MOVE_TIME 1L
+#define PAINT_TIME 1L
+#define INFINITY_TIME LONG_MAX 
 
+/* 参考Ueddy代码实现 */
 int ColorTheCells::minimalTime(vector<int> dryingTime)
 {
-	queue <State> Q;
-	State cus_state, next_state;
-	int paint_size;
-	int cus_pos, next_pos, paint_pos;
+	int num = dryingTime.size();
+	long minTime = INFINITY_TIME;
+	int i, j;
 
-	paint_size = dryingTime.size();
-	cus_state.state = 0x000;
-	cus_state.time = 0;
-	cus_state.finish_time = 0;
-	cus_state.count = 0;
-	for (int i = 0; i < MAX_SIZE; i++) {
-		cus_state.dryedTime[i] = 0;
-	}
-	
-	for (int i = 0; i < STATE_SIZE; i++) {
-		visited[i] = false;
+	this->dryingTime = dryingTime;
+	paint_order.clear();		/* paint 的顺序 */
+	dryedTime.clear();
+
+	for (i = 0; i < num; i++) {
+		paint_order.push_back(i);
+		dryedTime.push_back(0);
 	}
 
-	Q.push(cus_state);
-	while (!Q.empty()) {
-		cus_state = Q.front();
-		Q.pop();
-		cus_pos = getPos(cus_state.state);
-
-		if (finished(cus_state.state, paint_size)) {
-			if (cus_state.finish_time < mintime) {
-				mintime = cus_state.finish_time;
+	/* brute force，枚举所有的情况，选出最小时间 */
+	do {
+		for (i = 0; i < (1<<num); i++) {
+			for (j = 0; j < num; j++) {
+				dryedTime[j] = 0;
 			}
+			minTime = min(minTime, calc(i));
 		}
-		if (cus_state.count > 10) {
-			break;
-		}
+	} while (next_permutation(paint_order.begin(), paint_order.end()));
 
-		/* 左走 */
-		next_state = cus_state;
-		if (cus_pos - 1 >= 0) {
-			++next_state.count;
-			next_pos = cus_pos - 1;
-			setPos(next_pos, next_state.state);
-			/* 干燥最后时间 */
-			if (cus_state.dryedTime[next_pos] > cus_state.time) {
-				next_state.time = cus_state.dryedTime[next_pos];
-			}
-			next_state.time += 1;	/* 移动时间 */
-			if (!visited[next_state.state.to_ullong()]) {
-				//visited[next_state.state.to_ullong()] = true;
-				Q.push(next_state);
-			}
-		}
-
-		/* 右走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size) {
-			++next_state.count;
-			next_pos = cus_pos + 1;
-			setPos(next_pos, next_state.state);
-			if (cus_state.dryedTime[next_pos] > cus_state.time) {
-				next_state.time = cus_state.dryedTime[next_pos];
-			}
-			next_state.time += 1;
-			if (!visited[next_state.state.to_ullong()]) {
-				//visited[next_state.state.to_ullong()] = true;
-				Q.push(next_state);
-			}
-		}
-
-		/* 左刷左走 */
-		next_state = cus_state;
-		if (cus_pos - 1 >= 0 && !cus_state.state.test(cus_pos-1)) {
-			++next_state.count;
-			next_pos = cus_pos - 1;
-			setPos(next_pos, next_state.state);
-			paint_pos = cus_pos - 1;
-
-			next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-			next_state.time += 1;			/* 刷的时间 */
-			next_state.finish_time = next_state.time;
-			next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-			next_state.time = next_state.dryedTime[paint_pos] + 1;
-
-			if (!visited[next_state.state.to_ullong()]) {
-				//visited[next_state.state.to_ullong()] = true;
-				Q.push(next_state);
-			}
-		}
-
-		/* 左刷右走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos-1)) {
-			++next_state.count;
-			next_pos = cus_pos + 1;
-			setPos(next_pos, next_state.state);
-			paint_pos = cus_pos - 1;
-
-			next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-			next_state.time += 1;			/* 刷的时间 */
-			next_state.finish_time = next_state.time;
-			next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-			if (next_state.dryedTime[next_pos] > next_state.time) {
-				next_state.time = next_state.dryedTime[next_pos];
-			}
-			next_state.time += 1;
-
-			if (!visited[next_state.state.to_ullong()]) {
-				//visited[next_state.state.to_ullong()] = true;
-				Q.push(next_state);
-			}
-		}
-
-
-		/* 右刷左走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos+1)) {
-				++next_state.count;
-				next_pos = cus_pos - 1;
-				setPos(next_pos, next_state.state);
-				paint_pos = cus_pos + 1;
-
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.finish_time = next_state.time;
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				if (next_state.dryedTime[next_pos] > next_state.time) {
-					next_state.time = next_state.dryedTime[next_pos];
-				}
-				next_state.time += 1;
-
-				if (!visited[next_state.state.to_ullong()]) {
-					//visited[next_state.state.to_ullong()] = true;
-					Q.push(next_state);
-				}
-		}
-
-		/* 右刷右走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && !cus_state.state.test(cus_pos+1)) {
-			++next_state.count;
-			next_pos = cus_pos + 1;
-			setPos(next_pos, next_state.state);
-			paint_pos = cus_pos + 1;
-
-			next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-			next_state.time += 1;			/* 刷的时间 */
-			next_state.finish_time = next_state.time;
-			next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-			if (next_state.dryedTime[next_pos] > next_state.time) {
-				next_state.time = next_state.dryedTime[next_pos];
-			}
-			next_state.time += 1;
-
-			if (!visited[next_state.state.to_ullong()]) {
-				//visited[next_state.state.to_ullong()] = true;
-				Q.push(next_state);
-			}
-		}
-
-		/* 左刷右刷左走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos-1) && !cus_state.state.test(cus_pos+1)) {
-				++next_state.count;
-				next_pos = cus_pos - 1;
-				setPos(next_pos, next_state.state);
-
-				paint_pos = cus_pos - 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				paint_pos = cus_pos + 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.finish_time = next_state.time;
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-
-				if (next_state.dryedTime[next_pos] > next_state.time) {
-					next_state.time = next_state.dryedTime[next_pos];
-				}
-				next_state.time += 1;
-
-				if (!visited[next_state.state.to_ullong()]) {
-					//visited[next_state.state.to_ullong()] = true;
-					Q.push(next_state);
-				}
-		}
-
-		/* 左刷右刷右走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos-1) && !cus_state.state.test(cus_pos+1)) {
-				++next_state.count;
-				next_pos = cus_pos + 1;
-				setPos(next_pos, next_state.state);
-
-				paint_pos = cus_pos - 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				paint_pos = cus_pos + 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.finish_time = next_state.time;
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-
-				if (next_state.dryedTime[next_pos] > next_state.time) {
-					next_state.time = next_state.dryedTime[next_pos];
-				}
-				next_state.time += 1;
-
-				if (!visited[next_state.state.to_ullong()]) {
-					//visited[next_state.state.to_ullong()] = true;
-					Q.push(next_state);
-				}
-		}
-
-		/* 右刷左刷左走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos-1) && !cus_state.state.test(cus_pos+1)) {
-				++next_state.count;
-				next_pos = cus_pos - 1;
-				setPos(next_pos, next_state.state);
-
-				paint_pos = cus_pos + 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				paint_pos = cus_pos - 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.finish_time = next_state.time;
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				if (next_state.dryedTime[next_pos] > next_state.time) {
-					next_state.time = next_state.dryedTime[next_pos];
-				}
-				next_state.time += 1;
-
-				if (!visited[next_state.state.to_ullong()]) {
-					//visited[next_state.state.to_ullong()] = true;
-					Q.push(next_state);
-				}
-		}
-
-		/* 右刷左刷右走 */
-		next_state = cus_state;
-		if (cus_pos + 1 <= paint_size-1 && cus_pos - 1 >= 0 
-			&& !cus_state.state.test(cus_pos-1) && !cus_state.state.test(cus_pos+1)) {
-				++next_state.count;
-				next_pos = cus_pos + 1;
-				setPos(next_pos, next_state.state);
-
-				paint_pos = cus_pos + 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				paint_pos = cus_pos - 1;
-				next_state.state.set(paint_pos);	/* 刷，相应位置1 */
-				next_state.time += 1;			/* 刷的时间 */
-				next_state.finish_time = next_state.time;
-				next_state.dryedTime[paint_pos] = next_state.time + dryingTime[paint_pos]; 
-
-				if (next_state.dryedTime[next_pos] > next_state.time) {
-					next_state.time = next_state.dryedTime[next_pos];
-				}
-				next_state.time += 1;
-
-				if (!visited[next_state.state.to_ullong()]) {
-					//visited[next_state.state.to_ullong()] = true;
-					Q.push(next_state);
-				}
-		}
-	}
-
-	return mintime;
+	return minTime;
 }
 
-bool finished(bitset <10> state, int size)
+/**
+ * seq为一个序列，0表示在被paint位置左边paint, 1表示在右边paint，paint的顺序由
+ * paint_order指定。
+ */
+long ColorTheCells::calc(int seq)
 {
-	for (int i = 0; i < size; i++) {
-		if (!state.test(i)) {
-			return false;
+	long time;			/* 所用时间 */
+	int num = dryingTime.size();
+	int paint_dir;			/* paint方向，在被paint位置左边还是右边paint */
+	int cur_pos;			/* 当前位置 */
+	int paint_pos;			/* paint位置，不是被paint的位置 */
+	int bias;			/* 从当前位置向左走还是向右走 */
+	
+	cur_pos = 0;
+	time = 0;
+	for (int i = 0; i < num; i++) {
+		paint_dir = seq & 1;
+		seq /= 2;
+		paint_dir = paint_dir ? 1 : -1;
+		paint_pos = paint_order[i] + paint_dir;
+		if (paint_pos < 0 || paint_pos >= num) {	/* 位置不合法 */
+			return INFINITY_TIME;
 		}
+
+		bias = 1;			/* 从当前位置向右走 */
+		if (cur_pos - paint_pos > 0) {	/* 从当前位置向左走 */
+			bias = -1;
+		}
+		
+		/* 用for循环到达paint位置，中间遇到还没有干燥的格子要等待 */
+		for (; cur_pos != paint_pos; cur_pos += bias) {
+			if (dryedTime[cur_pos+bias] > time) {	/* 等待干燥 */
+				time = dryedTime[cur_pos+bias];
+			}
+			time += MOVE_TIME;		/* 移动时间 */
+		}
+		time += PAINT_TIME;		/* 到达目的地，paint时间 */
+		dryedTime[paint_order[i]] = time + dryingTime[paint_order[i]];	/* 更新该格子干燥时间  */
 	}
-	return true;
+
+	return time;
 }
 
+int main()
+{
+	ColorTheCells color;
+	vector <int> dryingTime;
+	int dry[] = {35198, 26281, 72533, 91031, 44326, 43178, 80000};
+
+	for (int i = 0; i < (int)( sizeof(dry)/sizeof(dry[0]) ); i++) {
+		dryingTime.push_back(dry[i]);
+	}
+
+	cout << color.minimalTime(dryingTime) << endl;
+
+	return 0;
+}
 
 /* Ueddy 的代码 */
 class ColorTheCells_Ueddy
@@ -340,24 +114,27 @@ public:
 	int N;
 	int inf;
 	vector <int> p;
-	vector <int> d;
+	vector <int> d;			/* dryedTime */
 	vector <int> dryingTime;
 
 	int calc (int b)
 	{
-		int t = 0;
-		int x = 0;
+		int t = 0;		/* time */
+		int x = 0;		/* 当前位置 */
+		int f;			/* 在左边刷，在右边刷的标志 */
+		int dx;			/* 向左走-1, 向右走1 */
+		int nx;			/* nx为下一个要刷的位置 */
 		for (int i = 0; i < N; i++) {
-			int f = b & 1;
-			b /= 2;
-			int nx = p[i] + 1;
+			f = b & 1;		/* b的最低位, 0表示在左边刷，1表示在右边刷 */
+			b /= 2;			/* b = b / 2 */
+			nx = p[i] + 1;		/* 从右边刷 */
 			if (0 == f) {
 				nx = p[i] - 1;
 			}
 			if (nx < 0 || nx >= N) {
 				return inf;
 			}
-			int dx = 1;
+			dx = 1;
 			if (nx - x < 0) {
 				dx = -1;
 			}
@@ -367,7 +144,7 @@ public:
 				}
 				++t;
 			}
-			++t;
+			++t;		/* 刷是时间为1 */
 			d[p[i]] = t + dryingTime[p[i]];
 		}
 		return t;
@@ -390,26 +167,11 @@ public:
 				for (int j = 0; j < N; j++) {
 					d[j] = 0;
 				}
+				/* d[] 为0 */
 				ans = min(ans, calc(i));
 			}
 		} while (next_permutation(p.begin(), p.end()));
-		
+
 		return ans;
 	}
 };
-
-int main()
-{
-	ColorTheCells_Ueddy color;
-	vector <int> dryintTime;
-	int dry[] = {35198, 26281, 72533, 91031, 44326, 43178, 85530};
-
-	for (int i = 0; i < (int)( sizeof(dry)/sizeof(dry[0]) ); i++) {
-		dryintTime.push_back(dry[i]);
-	}
-
-	cout << color.minimalTime(dryintTime) << endl;
-
-	return 0;
-}
-
