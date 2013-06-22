@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
+#include <algorithm>
+#include <cassert>
 
 using namespace std;
 
@@ -9,18 +12,17 @@ using namespace std;
 #define Positive(exp) ((exp) >= 0 ? exp : -(exp))
 
 int D[MAX_SIZE][MAX_SIZE][MAX_SIZE][MAX_SIZE];
-class GameOnABoard
+class GameOnABoard_Floyd
 {
 public:
 	int optimalChoice(vector <string> cost);
 };
 
-int GameOnABoard::optimalChoice(vector<string> cost)
+int GameOnABoard_Floyd::optimalChoice(vector<string> cost)
 {
 	int i, j, k, m, q, p;
 	int tempMax, minL;
 	int dis;
-	int start_i, start_j;
 	
 	int board_rows, board_cols;
 	board_rows = cost.size();
@@ -100,13 +102,88 @@ int GameOnABoard::optimalChoice(vector<string> cost)
 	return minL;
 }
 
+#define entry(x, y) make_pair(dd[x][y], make_pair(x, y))
+
+int dijkstra(int x, int y);
+vector <string> bcost;
+
+int dd[MAX_SIZE][MAX_SIZE];
+int dx[] = {1, -1, 0, 0}, dy[] = {0, 0, 1, -1};
+int rows, cols;
+class GameOnABoard
+{
+public:
+	int optimalChoice(vector <string> cost);
+};
+
+int GameOnABoard::optimalChoice(vector<string> cost)
+{
+	int rows, cols, minL;
+	rows = cost.size();
+	cols = cost[0].size();
+	minL = INFINITY;
+	bcost = cost;
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			minL = min(minL, dijkstra(i, j));
+		}
+	}
+
+	return minL;
+}
+
+int dijkstra(int x, int y)
+{
+	int i, j, dir, maxC;
+	int cus_x, cus_y, next_x, next_y;
+	set < pair<int, pair<int, int>> > s;
+	rows = bcost.size();
+	cols = bcost[0].size();
+
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < cols; j++) {
+			dd[i][j] = INFINITY;
+		}
+	}
+	dd[x][y] = bcost[x][y] - '0';
+	s.insert(entry(x, y));
+
+	while (!s.empty()) {
+		cus_x = s.begin()->second.first;
+		cus_y = s.begin()->second.second;
+		s.erase(s.begin());
+
+		for (dir = 0; dir < 4; dir++) {
+			next_x = cus_x + dx[dir];
+			next_y = cus_y + dy[dir];
+			if (next_x < 0 || next_x >= rows || next_y < 0 || next_y >= cols) {
+				continue;
+			}
+
+			if (dd[next_x][next_y] <= dd[cus_x][cus_y] + bcost[next_x][next_y] - '0') {
+				continue;
+			}
+			s.erase( entry(next_x, next_y) );
+			dd[next_x][next_y] = dd[cus_x][cus_y] + bcost[next_x][next_y] - '0';
+			s.insert( entry(next_x, next_y) );
+		}
+	}
+	maxC = 0;
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < cols; j++) {
+			maxC = max(maxC, dd[i][j]);
+		}
+	}
+	return maxC;
+}
 
 int main()
 {
 	GameOnABoard game;
 	vector <string> cost;
 
-	string str[] = {"110010100101010110100010001100111011",
+	string str[] =
+	{"110010100101010110100010001100111011",
 		"001000000110100011010100000001001000",
 		"011000110111101001011101110111000100",
 		"111001011000100101111010100110110011",
@@ -152,6 +229,5 @@ int main()
 	}
 
 	cout << game.optimalChoice(cost) << endl;
-
 	return 0;
 }
