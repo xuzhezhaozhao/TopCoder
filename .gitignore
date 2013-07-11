@@ -5,6 +5,7 @@
 *.sdf
 *.suo
 *.vsp
+*.opensdf
 
 #GCC
 *.o
