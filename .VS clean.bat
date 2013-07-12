@@ -28,5 +28,3 @@ for /r . %%a in (*.sdf) do (
   del "%%a" 
  )
 )
-
-pause
