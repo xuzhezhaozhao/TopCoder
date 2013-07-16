@@ -1,19 +1,7 @@
-// BEGIN CUT HERE
-
-// END CUT HERE
-#include <algorithm>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <vector>
-#include <queue>
-#include <stack>
-#include <set>
-#include <map>
-#include <cstdio>
-#include <cstdlib>
-#include <cctype>
-#include <cmath>
+
 using namespace std;
 
 // BEGIN CUT HERE
@@ -77,52 +65,73 @@ static void eq( int n, string have, string need ) {
 }
 // END CUT HERE
 
-/*******************************************************/
-/******************************************************/
 /************** Program  Begin *********************/
-#define FOR(i,j,k) for(i=j;i<=k;i++) 
-#define REP(i,j) for(i=0;i<j;i++) 
-long long c[100][100],f[100][100]; 
-int num[100]; 
+#define MAX 51
+int cnt[MAX];			// found中每个元素出现的次数
+long long Cr[MAX][MAX];		// Cr[n][m] 表示从n个小球中选m个的不同选法
+vector < double > sels(MAX);	// 最后的结果，sels[K]保存的程序要返回的值
+vector < double > temp(MAX);	// 保存前一个步骤产生的结果
+
 class Excavations2 {
 public:
 	long long count(vector <int> kind, vector <int> found, int K) 
-	{ 
-		int i,j,k; 
-		for (int i = 0; i < 100; i++) {
-			num[i] = 0;
-			for (int j = 0; j < 100; j++) {
-				c[i][j] = f[i][j] = 0;
+	{	
+		// 下面是对全局变量进行初始化
+		for (int i = 0; i < MAX; i++) {
+			cnt[i] = 0;
+			sels[i] = 0;
+			temp[i] = 0;
+			for (int j = 0; j < MAX; j++) {
+				Cr[i][j] = 0;
+			}
+		}
+
+		// 下面是计算Cr数组的值，利用Cr[n][r] = Cr[n-1][r] + Cr[n-1][r-1]
+		Cr[0][0] = 1;
+		for (int i = 1; i < MAX; i++) {
+			Cr[i][0] = 1;
+			Cr[i][i] = 1;
+			for (int j = 1; j < i; j++) {
+				Cr[i][j] = Cr[i-1][j] + Cr[i-1][j-1];
+			}
+		}
+
+		// 下面是计算fonud中每个元素出现的次数，结果保存在cnt数组中
+		for (int i = 0; i < found.size(); i++) {
+			cnt[i] = 0;
+			for (int j = 0; j < kind.size(); j++) {
+				if (found[i] == kind[j]) {
+					++cnt[i];
+				}
 			}
 		}
 		
-		c[0][0]=1; 
-		FOR(i,1,50) 
-		{ 
-			c[i][0]=c[i][i]=1; 
-			FOR(j,1,i-1)c[i][j]=c[i-1][j]+c[i-1][j-1]; 
-		} 
-		for(i=0;i<kind.size();i++)num[kind[i]]++; 
-		f[0][0]=1; 
-		for(j=0;j<found.size();j++) 
-		{ 
-			for(i=0;i<=K;i++) 
-			{ 
-				FOR(k,1,num[found[j]]) 
-					if(i-k>=0) 
-					{ 
-						f[j+1][i]+=c[num[found[j]]][k]*f[j][i-k]; 
-					} 
-					f[j+1][0]=0; 
-			} 
-		} 
-		int m = found.size();
-		return f[m][K]; 
-	} 
+		// 下面是进行动态规划，step是表示只考虑found[step]及之前的元素
+		for (int step = 0; step < found.size(); step++) {
+			if (0 == step) {
+				for (int i = 1; i <= cnt[step]; i++) {
+					sels[i] = Cr[cnt[step]][i];
+				}
+				temp = sels;
+			} else {
+				for (int i = 0; i < MAX; i++) {
+					sels[i] = 0;
+				}
+				for (int i = 1; i <= MAX; i++) {
+					for (int j = 1; j <= MAX; j++) {
+						if (i + j <= K) {
+							sels[i+j] += temp[i] * Cr[cnt[step]][j];
+						}
+					}
+				}
+				temp = sels;
+			}
+		}
+
+		return sels[K];
+	}
 };
 /************** Program End ************************/
-/******************************************************/
-/******************************************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
@@ -151,12 +160,12 @@ void main( int argc, char* argv[] ) {
 	eq(2, theObject.count(kind, found, 3), 6LL);
     }
     {
-	int kindARRAY[] = {50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50};
+	int kindARRAY[] = {13, 6, 1, 13, 2, 6};
 	vector <int> kind( kindARRAY, kindARRAY+ARRSIZE(kindARRAY) );
-	int foundARRAY[] = {50};
+	int foundARRAY[] = {2, 6, 1, 13};
 	vector <int> found( foundARRAY, foundARRAY+ARRSIZE(foundARRAY) );
 	Excavations2 theObject;
-	eq(3, theObject.count(kind, found, 21),5567902560LL);
+	eq(3, theObject.count(kind, found, 5), 4LL);
     }
 }
 // END CUT HERE
