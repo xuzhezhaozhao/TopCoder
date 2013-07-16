@@ -103,43 +103,25 @@ static void eq( int n, string have, string need ) {
 
 /************** Program  Begin *********************/
 
-int cnt[50];
-
 class GroceryBagger {
 public:
     int minimumBags(int strength, vector <string> itemType) {
-	int res = 0;
-	set <string> S;
-	int num = 0;
-	vector <string> uniqItem;
-	for (int i = 0; i < 50; i++) {
-		cnt[i] = 0;
-	}
-	for (int i = 0; i < itemType.size(); i++) {
-		if ( S.insert(itemType[i]).second ) {
-			uniqItem.push_back(itemType[i]);
-			++cnt[num];
-			++num;
-		} else {
-			for (int j = 0; j < uniqItem.size(); j++) {
-				if (itemType[i] == uniqItem[j]) {
-					++cnt[j];
-				}
-			}
-		}
-	}
+	    int res = 0;
+	    map <string, int> msi;
+	    for (int i = 0; i < itemType.size(); i++) {
+	    	msi[ itemType[i] ] = 0;
+	    }
 
-	for (int i = 0; i < S.size(); i++) {
-		if (cnt[i] % strength == 0) {
-			res += cnt[i] / strength;
-		} else {
-			res += cnt[i] / strength + 1;
-		}
-	}
+	    for (int i = 0; i < itemType.size(); i++) {
+	    	++msi[ itemType[i] ];
+	    }
 
-	return res;
+	    for ( map<string, int>::iterator it = msi.begin(); 
+		    it != msi.end(); it++) {
+	    	res += (it->second + strength - 1) / strength;
+	    }
+	    return res;
     }
-
 };
 
 /************** Program End ************************/
