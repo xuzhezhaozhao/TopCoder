@@ -107,26 +107,28 @@ static void eq( int n, string have, string need ) {
 
 /************** Program  Begin *********************/
 
-class BlackAndRed {
+class JustifyText {
 public:
-    int cut(string deck) {
-	int res = 0;
-	int minpoint = 0;
-	int point = 0;
-	for (int i = 0; i < deck.size(); i++) {
-		if ('R' == deck[i]) {
-			--point;
-		} else {
-			++point;
-		}
-		if (point < minpoint) {
-			minpoint = point;
-			res = i + 1;
+    vector <string> format(vector <string> text) {
+	vector <string> res = text;
+	int maxlen = 0;
+
+	for (int i = 0; i < text.size(); i++) {
+		if (text[i].size() > maxlen) {
+			maxlen = text[i].size();
 		}
 	}
 
+	for (int i = 0; i < text.size(); i++) {
+		if (text[i].size() < maxlen) {
+			for (int j = 0; j < maxlen - text[i].size(); j++) {
+				res[i] = " " + res[i];
+			}
+		}
+	}
 	return res;
     }
+
 };
 
 /************** Program End ************************/
@@ -134,24 +136,28 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
     {
-	BlackAndRed theObject;
-	//eq(0, theObject.cut("BRBRBR"),0);
+	string textARRAY[] = {"BOB","TOMMY","JIM"};
+	vector <string> text( textARRAY, textARRAY+ARRSIZE(textARRAY) );
+	string retrunValueARRAY[] = {"  BOB", "TOMMY", "  JIM" };
+	vector <string> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	JustifyText theObject;
+	eq(0, theObject.format(text),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(1, theObject.cut("RBRBRB"),1);
+	string textARRAY[] = {"JOHN","JAKE","ALAN","BLUE"};
+	vector <string> text( textARRAY, textARRAY+ARRSIZE(textARRAY) );
+	string retrunValueARRAY[] = {"JOHN", "JAKE", "ALAN", "BLUE" };
+	vector <string> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	JustifyText theObject;
+	eq(1, theObject.format(text),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(2, theObject.cut("BBBRRRRB"),7);
-    }
-    {
-	BlackAndRed theObject;
-	eq(3, theObject.cut("BR"),0);
-    }
-    {
-	BlackAndRed theObject;
-	eq(4, theObject.cut("RBRBBRRRRBBBRBBRRBRBBRRRBRBBBRBRBRBRBRRB"),9);
+	string textARRAY[] = {"LONGEST","A","LONGER","SHORT"};
+	vector <string> text( textARRAY, textARRAY+ARRSIZE(textARRAY) );
+	string retrunValueARRAY[] = {"LONGEST", "      A", " LONGER", "  SHORT" };
+	vector <string> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	JustifyText theObject;
+	eq(2, theObject.format(text),retrunValue);
     }
 }
 // END CUT HERE

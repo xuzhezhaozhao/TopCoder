@@ -107,26 +107,32 @@ static void eq( int n, string have, string need ) {
 
 /************** Program  Begin *********************/
 
-class BlackAndRed {
+class Projections {
 public:
-    int cut(string deck) {
-	int res = 0;
-	int minpoint = 0;
-	int point = 0;
-	for (int i = 0; i < deck.size(); i++) {
-		if ('R' == deck[i]) {
-			--point;
-		} else {
-			++point;
-		}
-		if (point < minpoint) {
-			minpoint = point;
-			res = i + 1;
+    vector <int> count(string front, string right) {
+	vector <int> res;
+	int mingrid;
+	int maxgrid;
+	int colsize = 0;
+	for (int i = 0; i < front.size(); i++) {
+		if ('x' == front[i]) {
+			++colsize;
 		}
 	}
+	int rowsize = 0;
+	for (int i = 0; i < right.size(); i++) {
+		if ('x' == right[i]) {
+			++rowsize;
+		}
+	}
+	maxgrid = colsize * rowsize;
+	mingrid = max(colsize, rowsize);
+	res.push_back(mingrid);
+	res.push_back(maxgrid);
 
 	return res;
     }
+
 };
 
 /************** Program End ************************/
@@ -134,24 +140,34 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
     {
-	BlackAndRed theObject;
-	//eq(0, theObject.cut("BRBRBR"),0);
+	int retrunValueARRAY[] = {1, 1 };
+	vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	Projections theObject;
+	eq(0, theObject.count("x", "x"),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(1, theObject.cut("RBRBRB"),1);
+	int retrunValueARRAY[] = {1, 1 };
+	vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	Projections theObject;
+	eq(1, theObject.count("x.", ".x"),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(2, theObject.cut("BBBRRRRB"),7);
+	int retrunValueARRAY[] = {4, 8 };
+	vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	Projections theObject;
+	eq(2, theObject.count("xxxx", "x..x"),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(3, theObject.cut("BR"),0);
+	int retrunValueARRAY[] = {4, 16 };
+	vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	Projections theObject;
+	eq(3, theObject.count("x.x.x.x", "x.x.x.x"),retrunValue);
     }
     {
-	BlackAndRed theObject;
-	eq(4, theObject.cut("RBRBBRRRRBBBRBBRRBRBBRRRBRBBBRBRBRBRBRRB"),9);
+	int retrunValueARRAY[] = {10, 70 };
+	vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+	Projections theObject;
+	eq(4, theObject.count("x...xx..x.xxx..x.xx.", ".xx..xxx.xx."),retrunValue);
     }
 }
 // END CUT HERE

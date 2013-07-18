@@ -107,26 +107,32 @@ static void eq( int n, string have, string need ) {
 
 /************** Program  Begin *********************/
 
-class BlackAndRed {
+class PipeCuts {
 public:
-    int cut(string deck) {
-	int res = 0;
-	int minpoint = 0;
-	int point = 0;
-	for (int i = 0; i < deck.size(); i++) {
-		if ('R' == deck[i]) {
-			--point;
-		} else {
-			++point;
-		}
-		if (point < minpoint) {
-			minpoint = point;
-			res = i + 1;
+    double probability(vector <int> weldLocations, int L) {
+	double res;
+	int all = 0;
+	int good = 0;
+	int front, below;
+	for (int i = 0; i < weldLocations.size() - 1; i++) {
+		for (int j = i + 1; j < weldLocations.size(); j++) {
+			++all;
+			front = max(weldLocations[i], weldLocations[j]);
+			below = min(weldLocations[i], weldLocations[j]);
+
+			if (	front - below > L ||
+				below > L ||
+				100 - front > L) {
+				++good;
+			}
 		}
 	}
 
+	res = (double) good / all;
+
 	return res;
     }
+
 };
 
 /************** Program End ************************/
@@ -134,24 +140,28 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
     {
-	BlackAndRed theObject;
-	//eq(0, theObject.cut("BRBRBR"),0);
+	int weldLocationsARRAY[] = {25, 50, 75};
+	vector <int> weldLocations( weldLocationsARRAY, weldLocationsARRAY+ARRSIZE(weldLocationsARRAY) );
+	PipeCuts theObject;
+	eq(0, theObject.probability(weldLocations, 25),1.0);
     }
     {
-	BlackAndRed theObject;
-	eq(1, theObject.cut("RBRBRB"),1);
+	int weldLocationsARRAY[] = {25, 50, 75};
+	vector <int> weldLocations( weldLocationsARRAY, weldLocationsARRAY+ARRSIZE(weldLocationsARRAY) );
+	PipeCuts theObject;
+	eq(1, theObject.probability(weldLocations, 50),0.0);
     }
     {
-	BlackAndRed theObject;
-	eq(2, theObject.cut("BBBRRRRB"),7);
+	int weldLocationsARRAY[] = {25, 50, 75};
+	vector <int> weldLocations( weldLocationsARRAY, weldLocationsARRAY+ARRSIZE(weldLocationsARRAY) );
+	PipeCuts theObject;
+	eq(2, theObject.probability(weldLocations, 24),1.0);
     }
     {
-	BlackAndRed theObject;
-	eq(3, theObject.cut("BR"),0);
-    }
-    {
-	BlackAndRed theObject;
-	eq(4, theObject.cut("RBRBBRRRRBBBRBBRRBRBBRRRBRBBBRBRBRBRBRRB"),9);
+	int weldLocationsARRAY[] = {99, 88, 77, 66, 55, 44, 33, 22, 11};
+	vector <int> weldLocations( weldLocationsARRAY, weldLocationsARRAY+ARRSIZE(weldLocationsARRAY) );
+	PipeCuts theObject;
+	eq(3, theObject.probability(weldLocations, 50),0.7222222222222222);
     }
 }
 // END CUT HERE
