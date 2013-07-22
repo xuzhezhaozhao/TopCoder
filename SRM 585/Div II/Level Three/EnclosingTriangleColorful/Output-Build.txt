@@ -1,0 +1,21 @@
+﻿1>------ Build started: Project: EnclosingTriangleColorful, Configuration: Debug Win32 ------
+1>Build started 2013/7/22 3:10:12.
+1>InitializeBuildStatus:
+1>  Creating "Debug\EnclosingTriangleColorful.unsuccessfulbuild" because "AlwaysCreate" was specified.
+1>ClCompile:
+1>  EnclosingTriangleColorful.cpp
+1>ManifestResourceCompile:
+1>  All outputs are up-to-date.
+1>Manifest:
+1>  All outputs are up-to-date.
+1>LinkEmbedManifest:
+1>  All outputs are up-to-date.
+1>  EnclosingTriangleColorful.vcxproj -> D:\TopCoder\SRM 585\Div II\Level Three\EnclosingTriangleColorful\Debug\EnclosingTriangleColorful.exe
+1>FinalizeBuildStatus:
+1>  Deleting file "Debug\EnclosingTriangleColorful.unsuccessfulbuild".
+1>  Touching "Debug\EnclosingTriangleColorful.lastbuildstate".
+1>
+1>Build succeeded.
+1>
+1>Time Elapsed 00:00:00.87
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
