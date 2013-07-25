@@ -76,7 +76,7 @@ static void eq( int n, string have, string need ) {
 }
 // END CUT HERE
 
-/************** Program  Begin *********************/
+/************** Program Begin *********************/
 
 class UndoHistory {
 public:
@@ -122,7 +122,6 @@ public:
 
 	return res;
     }
-
 };
 
 /************** Program End ************************/

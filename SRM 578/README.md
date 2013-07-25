@@ -1,7 +1,7 @@
 ##Caution ！！！
 
 Div II Level Three 的Dynamic Programming解法没有看懂，Editorial提供的[解法](http://www.baidu.com)看懂了。
-代码如下：
+没有看懂的代码如下：
 
 	#include <algorithm>
 	#include <iostream>
