@@ -1,0 +1,41 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+There is a H times W rectangle divided into unit cells.
+The rows of cells are numbered 0 to H-1 from top to bottom, and the columns are numbered 0 to W-1 from left to right.
+The corners of cells are called lattice points.
+By definition, there are (H+1)*(W+1) lattice points in our rectangle.
+</p>
+<p>
+Each of the four edges of each cell is painted white.
+Additionally, in each cell exactly one of the two diagonals is painted white.
+Two lattice points are called <i>adjacent</i> if they are connected by a white line segment.
+(In other words, consecutive corners of a cell are always adjacent, opposite corners of a cell are adjacent if and only if they are connected by a painted diagonal, and no other pairs of lattice points are adjacent.)
+</p>
+<p>
+We now want to color each of the lattice points using one of three available colors: red, green, or blue.
+There is only one constraint: adjacent lattice points are not allowed to share the same color.
+</p>
+<p>
+You are given a vector &lt;string&gt; <b>cells</b> with H elements, each consisting of W characters.
+If <b>cells</b>[i][j] is 'N', there is a diagonal line from the top left to the bottom right corner in the cell in row i, column j.
+If <b>cells</b>[i][j] is 'Z', there is a diagonal line from the top right to the bottom left corner in the cell in row i, column j.
+</p>
+<p>
+If there is at least one valid way to color all lattice points, return "Yes" (quotes for clarity).
+Otherwise, return "No".
+</p>
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>ThreeColorabilityEasy</td></tr><tr><td>Method:</td><td>isColorable</td></tr><tr><td>Parameters:</td><td>vector &lt;string&gt;</td></tr><tr><td>Returns:</td><td>string</td></tr><tr><td>Method signature:</td><td>string isColorable(vector &lt;string&gt; cells)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td>&#160;&#160;&#160;&#160;</td></tr><tr><td></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>cells</b> will contain between 1 and 50 elements, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>cells</b> will contain between 1 and 50 characters, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>All elements of <b>cells</b> will contain the same number of characters.</td></tr><tr><td align="center" valign="top">-</td><td>Each character of <b>cells</b> will be either 'N' or 'Z'.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;Z&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Yes&quot;</pre></td></tr><tr><td><table><tr><td colspan="2">One of the possible colorings is as follows.
+<p>
+<img src="http://www.topcoder.com/contest/problem/ThreeColorability/cole1.png"></img>
+</p></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NZ&quot;
+,&quot;NZ&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Yes&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"><p>
+<img src="http://www.topcoder.com/contest/problem/ThreeColorability/cole2.png"></img>
+</p></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;ZZZ&quot;
+,&quot;ZNZ&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;No&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NZNZNNN&quot;
+,&quot;NNZNNNZ&quot;
+,&quot;NNNNZZZ&quot;
+,&quot;ZZZNZZN&quot;
+,&quot;ZZNZNNN&quot;
+,&quot;NZZZZNN&quot;
+,&quot;ZZZNZNN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;No&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;ZZZZ&quot;
+,&quot;ZZZZ&quot;
+,&quot;ZZZZ&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Yes&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
