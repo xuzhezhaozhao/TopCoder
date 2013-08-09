@@ -1,23 +1,25 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+
 #include <string>
 #include <vector>
-#include <queue>
 #include <stack>
+#include <deque>
+#include <queue>
 #include <set>
 #include <map>
+
 #include <cstdio>
 #include <cstdlib>
 #include <cctype>
-#include <climits>
 #include <cmath>
+#include <cstring>
 
 using namespace std;
 
 $BEGINCUT$
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
-
 template<typename T> void print( T a ) {
     cerr << a;
 }
@@ -76,7 +78,7 @@ static void eq( int n, string have, string need ) {
 }
 $ENDCUT$
 
-/************** Program  Begin *********************/
+/*************** Program Begin **********************/
 
 class $CLASSNAME$ {
 public:

@@ -1,0 +1,70 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><i>This problem statement contains superscripts and/or subscripts. These may not display properly outside the applet.</i>
+<br></br><br></br>
+Manao is studying graph theory and simple cycles in particular. A simple cycle of length L &ge; 3 in graph G is a sequence of vertices (v<sub>0</sub>, v<sub>1</sub>, ..., v<sub>L-1</sub>) such that all v<sub>0</sub>, v<sub>1</sub>, ..., v<sub>L-1</sub> are pairwise distinct and for each i=0..L-1, an edge between v<sub>i</sub> and v<sub>(i+1) mod L</sub> exists in G.
+<br></br><br></br>
+Manao is interested in graphs formed by connecting two trees. The connection process is as follows. Manao takes two trees composed of N vertices each. The vertices in each tree are labeled from 0 to N - 1. Then, he generates some permutation P of numbers from 0 to N - 1. Finally, the graph is formed by connecting vertex i of the first tree to vertex P[i] of the second tree, for each i from 0 to N - 1. To remove ambiguity, the vertices of the first tree within the graph are referred to as A<sub>0</sub>, A<sub>1</sub>, ..., A<sub>N-1</sub> and the vertices of the second graph are referred to as B<sub>0</sub>, B<sub>1</sub>, ..., B<sub>N-1</sub>. Manao wants to know the maximum number of simple cycles of length <b>K</b> which the resulting graph could contain if he chooses P optimally.
+<br></br><br></br>
+You are given two vector &lt;string&gt;s, <b>tree1</b> and <b>tree2</b>. Both contain N elements, each of them N characters long. The j-th character in the i-th element of <b>tree1</b> is 'X' if vertices i and j in the first tree are connected and '-' otherwise. <b>tree2</b> describes the second tree in the same fashion.
+<br></br><br></br>
+Compute and return the maximum possible number of simple cycles of length <b>K</b> in the graph formed by connecting the two given trees as described above. Two simple cycles are equal if one of them can be cyclically shifted, or reversed and cyclically shifted, to coincide with the second. According to this definition, (1, 2, 3, 4), (2, 3, 4, 1) and (3, 2, 1, 4) are all equal.</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>TreeUnionDiv2</td></tr><tr><td>Method:</td><td>maximumCycles</td></tr><tr><td>Parameters:</td><td>vector &lt;string&gt;, vector &lt;string&gt;, int</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int maximumCycles(vector &lt;string&gt; tree1, vector &lt;string&gt; tree2, int K)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td>&#160;&#160;&#160;&#160;</td></tr><tr><td></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>tree1</b> and <b>tree2</b> will each contain N elements, where N is between 1 and 9, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>tree1</b> and <b>tree2</b> will be N characters long.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>tree1</b> and <b>tree2</b> will consist of 'X' and '-' characters only.</td></tr><tr><td align="center" valign="top">-</td><td><b>tree1</b>[i][i] and <b>tree2</b>[i][i] will be '-' for each i between 0 and N-1.</td></tr><tr><td align="center" valign="top">-</td><td><b>tree1</b>[i][j] will be equal to <b>tree1</b>[j][i] for each i, j between 0 and N-1.</td></tr><tr><td align="center" valign="top">-</td><td><b>tree2</b>[i][j] will be equal to <b>tree2</b>[j][i] for each i, j between 0 and N-1.</td></tr><tr><td align="center" valign="top">-</td><td>Both <b>tree1</b> and <b>tree2</b> will describe a graph which is a tree.</td></tr><tr><td align="center" valign="top">-</td><td><b>K</b> will be between 3 and 7, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;-X&quot;,
+ &quot;X-&quot;}
+</pre></td></tr><tr><td><pre>{&quot;-X&quot;,
+ &quot;X-&quot;}
+</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">Manao has two trees with two vertices each. He can connect them in two ways:
+<br></br><br></br>
+<img src="http://www.topcoder.com/contest/problem/TreeUnionDiv2/2e3y3k3.jpg"></img>
+<br></br><br></br>
+Either way, the resulting graph is a single cycle of length 4.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;-X-&quot;,
+ &quot;X-X&quot;,
+ &quot;-X-&quot;}
+</pre></td></tr><tr><td><pre>{&quot;-X-&quot;,
+ &quot;X-X&quot;,
+ &quot;-X-&quot;}
+</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">These are the possible six graphs which can be obtained by connecting the two given trees:
+<br></br><br></br>
+<img src="http://www.topcoder.com/contest/problem/TreeUnionDiv2/a0jpk8.jpg"></img>
+<br></br><br></br>
+Except for the two topmost graphs, all the graphs contain two cycles of length 5.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;-X-&quot;,
+ &quot;X-X&quot;,
+ &quot;-X-&quot;}</pre></td></tr><tr><td><pre>{&quot;-X-&quot;,
+ &quot;X-X&quot;,
+ &quot;-X-&quot;}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0</pre></td></tr><tr><td><table><tr><td colspan="2">These are the same trees as in the previous example. You can see at the pictures that none of the obtained graphs contains a cycle of length 3.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;-X---&quot;,
+ &quot;X-XXX&quot;,
+ &quot;-X---&quot;,
+ &quot;-X---&quot;,
+ &quot;-X---&quot;}
+</pre></td></tr><tr><td><pre>{&quot;-X-X-&quot;,
+ &quot;X-X-X&quot;,
+ &quot;-X---&quot;,
+ &quot;X----&quot;,
+ &quot;-X---&quot;}
+</pre></td></tr><tr><td><pre>6</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5</pre></td></tr><tr><td><table><tr><td colspan="2">When the permutation P is {0, 3, 2, 1, 4}, the resulting graph contains the following five simple cycles of length 6:
+<ul>
+<li>A0, A1, A4, B4, B1, B0</li>
+<li>A0, A1, A2, B2, B1, B0</li>
+<li>A1, A2, B2, B1, B0, B3</li>
+<li>A1, A2, B2, B1, B4, A4</li>
+<li>A1, A4, B4, B1, B0, B3</li>
+</ul>
+The corresponding graph is the following:
+<br></br><br></br>
+<img src="http://www.topcoder.com/contest/problem/TreeUnionDiv2/15s6def.jpg"></img></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;-XX------&quot;,
+ &quot;X------X-&quot;,
+ &quot;X--XX-X--&quot;,
+ &quot;--X--X---&quot;,
+ &quot;--X------&quot;,
+ &quot;---X----X&quot;,
+ &quot;--X------&quot;,
+ &quot;-X-------&quot;,
+ &quot;-----X---&quot;}
+
+</pre></td></tr><tr><td><pre>{&quot;-X-------&quot;,
+ &quot;X-X------&quot;,
+ &quot;-X-XX----&quot;,
+ &quot;--X---X--&quot;,
+ &quot;--X--X---&quot;,
+ &quot;----X--XX&quot;,
+ &quot;---X-----&quot;,
+ &quot;-----X---&quot;,
+ &quot;-----X---&quot;}
+</pre></td></tr><tr><td><pre>7</pre></td></tr></table></td></tr><tr><td><pre>Returns: 17</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

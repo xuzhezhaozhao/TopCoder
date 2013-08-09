@@ -1,50 +1,25 @@
-$BEGINCUT$
-$PROBLEMDESC$
-$ENDCUT$
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+
 #include <string>
 #include <vector>
+#include <stack>
+#include <deque>
 #include <queue>
 #include <set>
 #include <map>
+
 #include <cstdio>
 #include <cstdlib>
 #include <cctype>
 #include <cmath>
+#include <cstring>
+
 using namespace std;
-
-vector<string> split( const string& s, const string& delim =" " ) {
-    vector<string> res;
-    string t;
-    for ( int i = 0 ; i != s.size() ; i++ ) {
-        if ( delim.find( s[i] ) != string::npos ) {
-            if ( !t.empty() ) {
-                res.push_back( t );
-                t = "";
-            }
-        } else {
-            t += s[i];
-        }
-    }
-    if ( !t.empty() ) {
-        res.push_back(t);
-    }
-    return res;
-}
-
-vector<int> splitInt( const string& s, const string& delim =" " ) {
-    vector<string> tok = split( s, delim );
-    vector<int> res;
-    for ( int i = 0 ; i != tok.size(); i++ )
-        res.push_back( atoi( tok[i].c_str() ) );
-    return res;
-}
 
 $BEGINCUT$
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
-
 template<typename T> void print( T a ) {
     cerr << a;
 }
@@ -102,6 +77,9 @@ static void eq( int n, string have, string need ) {
     }
 }
 $ENDCUT$
+
+/*************** Program Begin **********************/
+
 class $CLASSNAME$ {
 public:
     $RC$ $METHODNAME$($METHODPARMS$) {
@@ -110,6 +88,9 @@ public:
     }
 $WRITERCODE$
 };
+
+/************** Program End ************************/
+
 $BEGINCUT$
 void main( int argc, char* argv[] ) {
 $MAINBODY$
