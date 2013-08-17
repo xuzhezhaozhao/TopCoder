@@ -82,7 +82,7 @@ static void eq( int n, string have, string need ) {
 /*************** Program Begin **********************/
 
 const int INF = 1000;
-int disA[9][9], disB[9][9];	// 两点间的距离
+int disA[9][9], disB[9][9];	// 两点间的距 离
 int P[9];
 class TreeUnionDiv2 {
 public:

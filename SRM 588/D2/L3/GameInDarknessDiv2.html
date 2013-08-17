@@ -1,0 +1,104 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td>Alice and Bob are playing a game on a rectangular board.
+Rows and columns are both numbered starting from 0.
+We will use (i, j) to denote the cell in row i, column j.
+The cell (0, 0) is in the top left corner of the board.
+Some cells contain walls, others are empty.
+The game is played on empty cells only. <br></br>
+
+The game is played as follows:
+Each player has one piece on the board.
+Initially, each piece occupies a different cell.
+The players take alternating turns, Alice starts.
+In each turn, the player moves his/her piece onto one of the adjacent empty cells.
+(Note that moving the piece is mandatory, it is not allowed to keep it in its current cell.) <br></br>
+
+If at any moment the two tokens occupy the same cell, Alice wins.
+If Alice gives up (described below), Bob wins. <br></br>
+
+You are given a vector &lt;string&gt; <b>field</b> that describes the game board.
+Character j of element i of <b>field</b> describes the initial content of the cell (i, j).
+The character '.' represents an empty cell, '#' represents a wall, 'A' is an empty cell where Alice's piece starts, and 'B' is an empty cell where Bob's piece starts. <br></br>
+
+Here is the twist:
+The game board is completely in the dark.
+Alice and Bob each know the initial location of both pieces.
+During the game, Alice has no idea how Bob moves his piece.
+However, Bob knows exactly how Alice will play the game.
+(Note that this is actually possible: as Alice does not gain any information during the game, she may as well determine her entire strategy in advance.) <br></br>
+
+You are given a vector &lt;string&gt; <b>moves</b> that represents Alice's strategy.
+Concatenate all elements of <b>moves</b> to obtain a string M.
+For each i, in her i-th turn, Alice will move her piece according to the character M[i-1].
+Assume that before Alice's i-th turn her piece was at (y, x).
+In the i-th turn she moves as follows:
+<ul>
+<li>If M[i-1] is 'U' (quotes for clarity): she moves to (y-1, x). </li>
+<li>If M[i-1] is 'R' (quotes for clarity): she moves to (y, x+1). </li>
+<li>If M[i-1] is 'L' (quotes for clarity): she moves to (y, x-1). </li>
+<li>If M[i-1] is 'D' (quotes for clarity): she moves to (y+1, x). </li>
+</ul>
+It is guaranteed that M will represent a valid sequence of moves that only uses empty cells and never leaves the board.
+If Alice gets to the situation where she has to make a move but has no more letters in M, she gives up and Bob wins the game. <br></br>
+
+Bob can use his knowledge of M and his knowledge of the game board when planning his own moves.
+If it is possible for Bob to win the game, return "Bob wins" (quotes for clarity).
+Otherwise, return "Alice wins".
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>GameInDarknessDiv2</td></tr><tr><td>Method:</td><td>check</td></tr><tr><td>Parameters:</td><td>vector &lt;string&gt;, vector &lt;string&gt;</td></tr><tr><td>Returns:</td><td>string</td></tr><tr><td>Method signature:</td><td>string check(vector &lt;string&gt; field, vector &lt;string&gt; moves)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td>&#160;&#160;&#160;&#160;</td></tr><tr><td></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>Note that the return value is case sensitive.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>field</b> and <b>moves</b> will contain between 1 and 50 elements, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>field</b> and <b>moves</b> will contain between 1 and 50 characters, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>field</b> will contain the same number of characters.</td></tr><tr><td align="center" valign="top">-</td><td>Each character of each element of <b>field</b> will be either '.', '#', 'A' or 'B' (quotes for clarity).</td></tr><tr><td align="center" valign="top">-</td><td><b>field</b> will contain exactly one 'A' and 'B' each.</td></tr><tr><td align="center" valign="top">-</td><td>Each character of <b>moves</b> will be either 'U', 'D', 'L' or 'R' (quotes for clarity).</td></tr><tr><td align="center" valign="top">-</td><td>The sequence of moves represented by <b>moves</b> will be a valid sequence of moves for Alice's piece.</td></tr><tr><td align="center" valign="top">-</td><td>In the starting position each player will have at least one possible move.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;A.B..&quot;,
+ &quot;##.##&quot;,
+ &quot;##.##&quot;}</pre></td></tr><tr><td><pre>{&quot;RRDUR&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Alice wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2">In this game, M="RRDUR".
+In this case Alice can always win regardless of how Bob moves.
+One possible game is as follows:
+<ul>
+<li>Alice moves her piece to (0, 1).</li>
+<li>Bob moves his piece to (0, 3).</li>
+<li>Alice moves to (0, 2).</li>
+<li>Bob moves to (0, 4).</li>
+<li>Alice moves to (1, 2).</li>
+<li>Bob moves to (0, 3).</li>
+<li>Alice moves to (0, 2).</li>
+<li>Bob moves to (0, 4).</li>
+<li>Alice moves to (0, 3).</li>
+<li>Bob moves to (0, 3). Alice and Bob are on the same cell, so Alice wins.</li>
+</ul>
+Note that Alice has used up all characters of M. Even so, Alice doesn't give up unless she needs to make her 6-th move.
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;A.B..&quot;,
+ &quot;##.##&quot;,
+ &quot;##...&quot;}</pre></td></tr><tr><td><pre>{&quot;RRRLD&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Bob wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;###.#&quot;,
+ &quot;###..&quot;,
+ &quot;A..B#&quot;,
+ &quot;###..&quot;,
+ &quot;###.#&quot;}</pre></td></tr><tr><td><pre>{&quot;RR&quot;, &quot;R&quot;, &quot;UDD&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Alice wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2">Make sure to concatenate the elements of <b>moves</b>.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;A.###&quot;,
+ &quot;.B...&quot;}</pre></td></tr><tr><td><pre>{&quot;RDRRRLLLLUDUDRLURDLUD&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Bob wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;.....&quot;,
+ &quot;.#.#.&quot;,
+ &quot;##.#.&quot;,
+ &quot;A###.&quot;,
+ &quot;B....&quot;}</pre></td></tr><tr><td><pre>{&quot;D&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Alice wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;.#...#....#.......#....#......&quot;,
+ &quot;...###.#.#..#.#.#..###...#.#.#&quot;,
+ &quot;.#.#...#...#..#..#.....##.#...&quot;,
+ &quot;#..#.##..##..#.#..###.#....#.#&quot;,
+ &quot;..#..#..#...#...#....#..##.#..&quot;,
+ &quot;#..##..#..##.#.#.####..#.#...#&quot;,
+ &quot;.#....##.#.....#......##.#.#..&quot;,
+ &quot;.###.#...#.#.#..#.#.##...##.#.&quot;,
+ &quot;.....#.#.##..#.#..##...##...#.&quot;,
+ &quot;#.#.#...#...#.#.#...#.#.#.##.#&quot;,
+ &quot;.#..##.#..##..#.###...........&quot;,
+ &quot;..##.....####.......##.#.#.##.&quot;,
+ &quot;#....##.#.#...####.#...#.#.#..&quot;,
+ &quot;#.#.#......##.#...#..#.#..#..#&quot;,
+ &quot;..#..#.#.##...#.#..#..#..#..#.&quot;,
+ &quot;.#..#...#...#..#..#.#..#..#A#.&quot;,
+ &quot;..#..#.#.B##.##..#...#.#.##...&quot;,
+ &quot;#.#.##..#......#.#.#.#.#...#.#&quot;,
+ &quot;#.#...#.######...#.#.#.#.#.#..&quot;,
+ &quot;..#.##.#.....#.##..#...#.#.#.#&quot;,
+ &quot;.#..#..#.#.#.#.#..#.#####..#.#&quot;,
+ &quot;..#.#.##.#.#.##.#......#..#...&quot;,
+ &quot;#..#.....#.#.....#.#.##..##.#.&quot;,
+ &quot;##..###.#..#.#.#.#..##..#...##&quot;,
+ &quot;##.#...#..##.#.#..#.#..#.#.#..&quot;,
+ &quot;#..#.#.####..#..#..#..#......#&quot;,
+ &quot;..#..#.....####..#.##.#.###.#.&quot;,
+ &quot;.#..#.####.#.#..#.....#...#...&quot;,
+ &quot;..##.......#...#..####.##.#.#.&quot;,
+ &quot;#....#.#.#..#.###....#....#..#&quot;}</pre></td></tr><tr><td><pre>{&quot;UURURUULLLLLLLLLLDLLLLUDLLUDDLRDDDULLDLLDDRRRRRDDU&quot;,&quot;RRUUURUULLD&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: &quot;Alice wins&quot;</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
