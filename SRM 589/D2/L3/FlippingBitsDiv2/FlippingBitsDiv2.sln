@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlippingBitsDiv2", "FlippingBitsDiv2\FlippingBitsDiv2.vcxproj", "{AF305C09-C448-456B-860A-4C0DAA992C52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF305C09-C448-456B-860A-4C0DAA992C52}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AF305C09-C448-456B-860A-4C0DAA992C52}.Debug|Win32.Build.0 = Debug|Win32
+		{AF305C09-C448-456B-860A-4C0DAA992C52}.Release|Win32.ActiveCfg = Release|Win32
+		{AF305C09-C448-456B-860A-4C0DAA992C52}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
