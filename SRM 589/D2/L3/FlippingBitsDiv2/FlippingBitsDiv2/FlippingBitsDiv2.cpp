@@ -80,45 +80,54 @@ static void eq( int n, string have, string need ) {
 // END CUT HERE
 
 /*************** Program Begin **********************/
-
-
+int dp[2500][2][2];
+int c[2][2500];
+int N, F;
 class FlippingBitsDiv2 {
+private:
+	int flip(int t, int pre, int allFlipped)
+	{
+		if (t == F) {
+			return allFlipped;
+		}
+		if (dp[t][pre][allFlipped] != -1) {
+			return dp[t][pre][allFlipped];
+		}
+
+		int res = 10000000;
+		for (int f = 0; f <= 1; f++) {
+			int cost = 0;
+			cost += c[f][t] + flip(t+1, f, allFlipped && f);
+			if (t != 0 && f != pre) {
+				++cost;
+			}
+			res = min(res, cost);
+		}
+		dp[t][pre][allFlipped] = res;
+		return res;
+	}
 public:
     int getmin(vector <string> S, int M) {
-	int res = 0;
-	string s;
-	for (int i = 0; i < S.size(); i++) {
-		s += S[i];
-	}
-	int N = s.size();
-	int K = N / M;
-	string one(N, '1');
-	bitset <2500> B(s);
-	bitset <2500> O(one);
-	queue < pair <bitset<2500>, int> > Q;
-	Q.push(make_pair(O, 0));
-	map < bitset<2500>, int > Map;
-	Map[O] = 0;
-	while ( !Q.empty() ) {
-		 pair <bitset<2500>, int> temp = Q.front();
-		 Q.pop();
-		 if (temp.first == B) {
-		 	return temp.second;
-		 }
-		 for (int i = 0; i < N; i++) {
-		 	temp.first.flip(i);
-			++temp.second;
-			if (Map.insert(temp).second) {
-				Q.push(temp);
+	    string B;
+	    for (int i = 0; i < S.size(); i++) {
+	    	B += S[i];
+	    }
+	    N = B.size();
+	    F = N / M;
+	    memset(c[0], 0, sizeof(c[0]));
+	    memset(c[1], 0, sizeof(c[1]));
+	    for (int i = 0; i < F; i++) {
+	    	for (int j = 0; j < M; j++) {
+	    		if (B[i*M + j] == '1') {
+	    			++c[1][i];
+	    		} else {
+				++c[0][i];
 			}
-			temp.first.flip(i);
-			--temp.second;
-		 }
-	}
-
-	return res;
+	    	}
+	    }
+	    memset(dp, -1, sizeof(dp));
+	    return flip(0, 0, 1);
     }
-
 };
 
 /************** Program End ************************/

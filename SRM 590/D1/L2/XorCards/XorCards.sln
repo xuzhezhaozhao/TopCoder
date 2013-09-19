@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XorCards", "XorCards\XorCards.vcxproj", "{EDF2F8E1-A6F5-41F4-ADA8-07B303EC50A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF2F8E1-A6F5-41F4-ADA8-07B303EC50A6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EDF2F8E1-A6F5-41F4-ADA8-07B303EC50A6}.Debug|Win32.Build.0 = Debug|Win32
+		{EDF2F8E1-A6F5-41F4-ADA8-07B303EC50A6}.Release|Win32.ActiveCfg = Release|Win32
+		{EDF2F8E1-A6F5-41F4-ADA8-07B303EC50A6}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
