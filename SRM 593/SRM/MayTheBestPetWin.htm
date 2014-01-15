@@ -1,0 +1,28 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td>The pony Rainbow Dash wants to choose her pet.
+There are N animals who want to be her pet.
+Rainbow Dash numbered them 0 through N-1.<br></br><br></br>
+
+To help her make the decision, Rainbow Dash decided to organize a relay race for the animals.
+The race track is already known, and for each animal we know how fast it is.
+More precisely, you are given vector &lt;int&gt;s <b>A</b> and <b>B</b> with the following meaning:
+For each i, the animal number i will take between <b>A</b>[i] and <b>B</b>[i] seconds (inclusive) to complete the track.<br></br><br></br>
+
+For the race the animals will be divided into two competing teams.
+This is a relay race, so the team members of each team will all run the same track, one after another --
+when the first team member finishes, the second one may start, and so on.
+Thus the total time in which a team completes the race is the sum of the times of all team members.
+Note that we can use the estimates given by <b>A</b> and <b>B</b> to estimate the total time for any team of animals.<br></br><br></br>
+
+Given two teams S and T, the value maxdiff(S,T) is defined as the largest possible difference in seconds
+between the time in which team S finishes the course and the time in which team T finishes the course.<br></br><br></br>
+
+Rainbow Dash now needs to assign each of the animals to one of the two competing teams.
+She wants to see a close competition, so she wants the teams to finish as close to each other as possible.
+Formally, she wants to divide all animals into teams S and T in a way that minimizes maxdiff(S,T).
+Return the smallest possible value of maxdiff(S,T).</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>MayTheBestPetWin</td></tr><tr><td>Method:</td><td>calc</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int calc(vector &lt;int&gt; A, vector &lt;int&gt; B)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td>&#160;&#160;&#160;&#160;</td></tr><tr><td></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>The teams are not required to contain the same number of animals.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>A</b> will contain between 2 and 50 elements, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td><b>A</b> and <b>B</b> will contain the same number of elements.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>A</b> will be between 1 and 10,000, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>B</b> will be between 1 and 10,000, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>For each i, <b>B</b>[i] will be greater than or equal to <b>A</b>[i].</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{3,4,4,7}</pre></td></tr><tr><td><pre>{3,4,4,7}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">In this test case we know the exact time in which each of the animals completes the track.
+An optimal solution is to choose teams S={0,3} and T={1,2}.
+Then team S will certainly complete the track in 3+7 = 10 seconds, and team T in 4+4 = 8 seconds.
+Thus, maxdiff(S,T)=2.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1,3,5,4,5}</pre></td></tr><tr><td><pre>{2,5,6,8,7}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5</pre></td></tr><tr><td><table><tr><td colspan="2">Here one of the optimal solutions is S={2,3} and T={0,1,4}.
+For these two teams we have maxdiff(S,T)=5.
+For example, it is possible that S will complete the track in 6+8 = 14 seconds, and T will complete it in 1+3+5 = 9 seconds.
+It is also possible that S will complete the track up to 5 seconds before T does.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{2907,949,1674,6092,8608,5186,2630,970,1050,2415,1923,2697,5571,6941,8065,4710,716,756,5185,1341,993,5092,248,1895,4223,1783,3844,3531,2431,1755,2837,4015}</pre></td></tr><tr><td><pre>{7296,6954,4407,9724,8645,8065,9323,8433,1352,9618,6487,7309,9297,8999,9960,5653,4721,7623,6017,7320,3513,6642,6359,3145,7233,5077,6457,3605,2911,4679,5381,6574}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 52873</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
