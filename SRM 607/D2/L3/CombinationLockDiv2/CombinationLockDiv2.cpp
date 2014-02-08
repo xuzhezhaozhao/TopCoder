@@ -15,12 +15,10 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
-#include <ctime>
-
 
 using namespace std;
 
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -78,26 +76,49 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class CombinationLockDiv2 {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int minimumMoves(string S, string T) {
+        int res = 0;
+
         return res;
     }
-$WRITERCODE$
 };
 
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        CombinationLockDiv2 theObject;
+        eq(0, theObject.minimumMoves("123", "112"),1);
+    }
+    {
+        CombinationLockDiv2 theObject;
+        eq(1, theObject.minimumMoves("1", "7"),4);
+    }
+    {
+        CombinationLockDiv2 theObject;
+        eq(2, theObject.minimumMoves("607", "607"),0);
+    }
+    {
+        CombinationLockDiv2 theObject;
+        eq(3, theObject.minimumMoves("1234", "4567"),3);
+    }
+    {
+        CombinationLockDiv2 theObject;
+        eq(4, theObject.minimumMoves("020", "909"),2);
+    }
+    {
+        CombinationLockDiv2 theObject;
+        eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+    }
 }
-$ENDCUT$
+// END CUT HERE

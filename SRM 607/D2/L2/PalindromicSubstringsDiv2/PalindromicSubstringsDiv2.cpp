@@ -15,12 +15,12 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
-#include <ctime>
 
+#include<ctime>
 
 using namespace std;
 
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -78,26 +78,80 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
+
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+bool dp[5000][5001];
+
+class PalindromicSubstringsDiv2 {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int count(vector <string> S1, vector <string> S2) {
+        memset(dp, 0, sizeof(dp));
+	int res = 0;
+	string S;
+	for (int i = 0; i < S1.size(); i++) {
+		S += S1[i];
+	}
+	for (int i = 0; i < S2.size(); i++) {
+		S += S2[i];
+	}
+	int N = S.size();
+
+	for (int i = 0; i < N; i++) {
+		dp[i][i] = true;
+		++res;
+	}
+	for (int len = 2; len <= N; len++) {
+		for (int i = 0; i <= N - len; i++) {
+			if (S[i] == S[i + len - 1]) {
+				if (len == 2 || dp[i+1][i + len - 2] == true) {
+					dp[i][i+ len - 1] = true;
+					++res;
+				}
+
+			}
+		}
+	}
+
         return res;
     }
-$WRITERCODE$
 };
-
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        string S1ARRAY[] = {"a","a",""};
+        vector <string> S1( S1ARRAY, S1ARRAY+ARRSIZE(S1ARRAY) );
+        string S2ARRAY[] = {"a"};
+        vector <string> S2( S2ARRAY, S2ARRAY+ARRSIZE(S2ARRAY) );
+        PalindromicSubstringsDiv2 theObject;
+        eq(0, theObject.count(S1, S2),6);
+    }
+    {
+        string S1ARRAY[] = {"zaz"};
+        vector <string> S1( S1ARRAY, S1ARRAY+ARRSIZE(S1ARRAY) );
+        PalindromicSubstringsDiv2 theObject;
+        eq(1, theObject.count(S1, vector <string>()),4);
+    }
+    {
+        string S1ARRAY[] = {"top"};
+        vector <string> S1( S1ARRAY, S1ARRAY+ARRSIZE(S1ARRAY) );
+        string S2ARRAY[] = {"coder"};
+        vector <string> S2( S2ARRAY, S2ARRAY+ARRSIZE(S2ARRAY) );
+        PalindromicSubstringsDiv2 theObject;
+        eq(2, theObject.count(S1, S2),8);
+    }
+    {
+	    string S2ARRAY[] = {"daata"};
+	    vector <string> S2( S2ARRAY, S2ARRAY+ARRSIZE(S2ARRAY) );
+        PalindromicSubstringsDiv2 theObject;
+        eq(3, theObject.count(vector <string>(), S2),7);
+    }
 }
-$ENDCUT$
+// END CUT HERE

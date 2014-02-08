@@ -15,12 +15,10 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
-#include <ctime>
-
 
 using namespace std;
 
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -78,26 +76,55 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
-
-#define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
+// END CUT HERE
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class EllysSubstringSorter {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    string getMin(string S, int L) {
+        string res;
+	set <string> st;
+	int len = S.size();
+	string t;
+	for (int i = 0; i <= len - L; i++) {
+		t = S;
+		sort(t.begin() + i, t.begin() + i + L);
+		st.insert(t);
+	}
+	res = ( *st.begin() );
         return res;
     }
-$WRITERCODE$
-};
 
+};
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        EllysSubstringSorter theObject;
+        eq(0, theObject.getMin("TOPCODER", 4),"COPTODER");
+    }
+    {
+        EllysSubstringSorter theObject;
+        eq(1, theObject.getMin("ESPRIT", 3),"EPRSIT");
+    }
+    {
+        EllysSubstringSorter theObject;
+        eq(2, theObject.getMin("AAAAAAAAA", 2),"AAAAAAAAA");
+    }
+    {
+        EllysSubstringSorter theObject;
+        eq(3, theObject.getMin("ABRACADABRA", 5),"AAABCRDABRA");
+    }
+    {
+        EllysSubstringSorter theObject;
+        eq(4, theObject.getMin("BAZINGA", 6),"ABGINZA");
+    }
+    {
+        EllysSubstringSorter theObject;
+        eq(5, theObject.getMin("AAAWDIUAOIWDESBEAIWODJAWDBPOAWDUISAWDOOPAWD", 21),"AAAAAABDDDEEIIIJOOSUWWWWDBPOAWDUISAWDOOPAWD");
+    }
 }
-$ENDCUT$
+// END CUT HERE
