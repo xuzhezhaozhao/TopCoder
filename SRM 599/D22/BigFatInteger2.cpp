@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+
 
 using namespace std;
 
@@ -82,95 +90,69 @@ static void eq( int n, string have, string need ) {
 
 /*************** Program Begin **********************/
 
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+class BigFatInteger2 {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+	map < long long, long long > extractPrimeFactors(int x)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
-		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
+		map <long long, long long> ap;
+		for (int p = 2; p * p <= x; p++) {
+			int ex = 0;
+			bool flag = false;
+			while (x % p == 0) {
+				flag = true;
+				++ex;
+				x /= p;
+			}
+			if (flag) {
+				ap[p] = ex;
 			}
 		}
-		return res;
+		if (x != 1) {
+			ap[x] = 1;
+		}
+		return ap;
 	}
 
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
+	string isDivisible(int A, int B, int C, int D) {
+		auto ap = extractPrimeFactors(A);
+		auto cp = extractPrimeFactors(C);
+		for (auto it = cp.begin(); it != cp.end(); it++) {
+			if (ap[ (*it).first ] * B < (*it).second * D) {
+				return "not divisible";
 			}
 		}
-		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
+		return "divisible";
 	}
+
 };
-
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		BigFatInteger2 theObject;
+		eq(0, theObject.isDivisible(735134400, 1000000000, 64, 1000000000),"divisible");
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		BigFatInteger2 theObject;
+		eq(1, theObject.isDivisible(2, 1, 6, 1),"not divisible");
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		BigFatInteger2 theObject;
+		eq(2, theObject.isDivisible(1000000000, 1000000000, 1000000000, 200000000),"divisible");
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		BigFatInteger2 theObject;
+		eq(3, theObject.isDivisible(8, 100, 4, 200),"not divisible");
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
+		BigFatInteger2 theObject;
+		eq(4, theObject.isDivisible(999999937, 1000000000, 999999929, 1),"not divisible");
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		BigFatInteger2 theObject;
+		eq(5, theObject.isDivisible(2, 2, 4, 1),"divisible");
 	}
 }
 // END CUT HERE

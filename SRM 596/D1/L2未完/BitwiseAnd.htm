@@ -1,0 +1,34 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+For non-negative integers A and B, let A&B denote the bitwise AND operation.
+That is, for each i, the i-th bit of A&B in binary representation is 1 if and only if the i-th bits of A and B are 1.
+</p>
+
+<p>
+We call a set of non-negative integers S <i>cool</i> if the following conditions are satisfied.
+</p>
+<ul>
+<li>For any two distinct elements A, B in S, A&B &gt; 0.</li>
+<li>For any three distinct elements A, B, C in S, A&B&C = 0.</li>
+</ul>
+
+<p>
+You are given a vector&lt;long long&gt; <b>subset</b> and an int <b>N</b>.
+All elements in <b>subset</b> are distinct.
+Compute a cool set with <b>N</b> distinct elements such that the cool set contains each element of <b>subset</b> and each element is between 1 and 2^60 - 1, inclusive.
+Return one such cool set as a vector&lt;long long&gt; with elements in increasing order.
+If there are multiple solutions, return the lexicographically smallest one.
+If there are no such cool sets, return an empty vector&lt;long long&gt; instead.
+</p>
+
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>BitwiseAnd</td></tr><tr><td>Method:</td><td>lexSmallest</td></tr><tr><td>Parameters:</td><td>vector&lt;long long&gt;, int</td></tr><tr><td>Returns:</td><td>vector&lt;long long&gt;</td></tr><tr><td>Method signature:</td><td>vector&lt;long long&gt; lexSmallest(vector&lt;long long&gt; subset, int N)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>64</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>N</b> will be between 3 and 50, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>subset</b> will contain between 0 and <b>N</b> elements, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>subset</b> will be between 1 and 2^60 - 1, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>All the elements in <b>subset</b> will be distinct.</td></tr><tr><td align="center" valign="top">-</td><td>Elements in <b>subset</b> will be sorted in increasing order.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{14, 20}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: {14, 18, 20 }</pre></td></tr><tr><td><table><tr><td colspan="2">There are several possible cool sets.
+For example, the following sets are cool and each of them contains all the elements of <b>subset</b>.
+<ul>
+<li>{14, 18, 20}</li>
+<li>{14, 20, 26}</li>
+<li>{14, 20, 50}</li>
+<li>...</li>
+</ul>  
+Among these sets, the first one is the lexicographically smallest one.
+
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{11, 17, 20}</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: { }</pre></td></tr><tr><td><table><tr><td colspan="2">There is no cool set because (11&20) equals 0.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{99, 157}</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: {99, 157, 262, 296 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1152921504606846975}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: { }</pre></td></tr><tr><td><table><tr><td colspan="2">The element in <b>subset</b> equals to 2^60-1.
+Note that each element of your cool set should be less than or equal to 2^60-1. </td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{}</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: {15, 113, 402, 676, 840 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1, 3, 5, 7, 9, 11}</pre></td></tr><tr><td><pre>6</pre></td></tr></table></td></tr><tr><td><pre>Returns: { }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

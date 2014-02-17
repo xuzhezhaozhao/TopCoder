@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+
 
 using namespace std;
 
@@ -81,96 +89,63 @@ static void eq( int n, string have, string need ) {
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
 /*************** Program Begin **********************/
-
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+class BinPackingEasy {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
-	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
-		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
+	int minBins(vector <int> item) {
+		int res = 0;
+		int n = item.size();
+		sort(item.begin(), item.end());
+		int i = 0, j = n - 1;
+		while (i < j) {
+			if (item[i] + item[j] <= 300) {
+				++i; --j;
+				++res;
+			} else {
+				--j;
+				++res;
 			}
+		}
+		if (i == j) {
+			++res;
 		}
 		return res;
 	}
 
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
-		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
-	}
 };
-
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		int itemARRAY[] = {150, 150, 150, 150, 150};
+		vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+		BinPackingEasy theObject;
+		eq(0, theObject.minBins(item),3);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		int itemARRAY[] = {130, 140, 150, 160};
+		vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+		BinPackingEasy theObject;
+		eq(1, theObject.minBins(item),2);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		int itemARRAY[] = {101, 101, 101, 101, 101, 101, 101, 101, 101};
+		vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+		BinPackingEasy theObject;
+		eq(2, theObject.minBins(item),5);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		int itemARRAY[] = {101, 200, 101, 101, 101, 101, 200, 101, 200};
+		vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+		BinPackingEasy theObject;
+		eq(3, theObject.minBins(item),6);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
-	}
-	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		int itemARRAY[] = {123, 145, 167, 213, 245, 267, 289, 132, 154, 176, 198};
+		vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+		BinPackingEasy theObject;
+		eq(4, theObject.minBins(item),8);
 	}
 }
 // END CUT HERE

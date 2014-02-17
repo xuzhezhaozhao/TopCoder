@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,56 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class PackingBallsDiv1 {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int minPacks(int K, int A, int B, int C, int D) {
+        long long res = 0;
+	vector <long long> X;
+	X.resize(K);
+	X[0] = A;
+	for (int i = 1; i <= K - 1; i++) {
+		X[i] = (X[i-1] * B + C) % D + 1;
+	}
+	int sum = 0;
+	for (int i = 0; i < K; i++) {
+		sum += X[i] / K;
+		X[i] %= K;
+	}
+	res = sum + K;
+	sort(X.begin(), X.end());
+	for (int i = 0; i < K; i++) {
+		res = min(res, sum + X[i] + K - (i+1));
+	}
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        PackingBallsDiv1 theObject;
+        eq(0, theObject.minPacks(3, 4, 2, 5, 6),4);
+    }
+    {
+        PackingBallsDiv1 theObject;
+        eq(1, theObject.minPacks(1, 58, 23, 39, 93),58);
+    }
+    {
+        PackingBallsDiv1 theObject;
+        eq(2, theObject.minPacks(23, 10988, 5573, 4384, 100007),47743);
+    }
+    {
+        PackingBallsDiv1 theObject;
+        eq(3, theObject.minPacks(100000, 123456789, 234567890, 345678901, 1000000000),331988732);
+    }
 }
-$ENDCUT$
+// END CUT HERE

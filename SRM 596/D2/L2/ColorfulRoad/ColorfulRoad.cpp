@@ -15,6 +15,8 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
 
 using namespace std;
 
@@ -82,64 +84,44 @@ static void eq( int n, string have, string need ) {
 
 /*************** Program Begin **********************/
 
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
+int dp[20][20];
 
-class CombinationLockDiv2 {
+class ColorfulRoad {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
-	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
-		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
-			}
-		}
-		return res;
-	}
-
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
+	int getMin(string road) {
+		int res = 0;
+		int n = road.size();
+		vector <int> v;
+		for (int i = 0; i < n; i++) {
+			if (road[i] == 'R') {
+				v.push_back(0);
+			} else if (road[i] == 'G') {
+				v.push_back(1);
 			} else {
-				d[i] = s[i] + 10 - t[i];
+				v.push_back(2);
 			}
 		}
+
 		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
+		for (int len = 1; len <= n - 1; len++) {
+			for (int i = 0; i <= n - len - 1; i++) {
+				int & ans = dp[i][i+len];
+				if ( (v[i] + 1) % 3 == v[i+len] ) {
+					ans = len * len;
+				}
+				for (int j = i + 1; j < i + len; j++) {
+					if (dp[i][j] == -1 || dp[j][i+len] == -1) {
+						continue;
+					}
+					if (ans == -1) {
+						ans = dp[i][j] + dp[j][i+len];
+					}
+					ans = min(ans, dp[i][j] + dp[j][i+len]);
+				}
+			}
+		}
+		res = dp[0][n-1];
+		return res;
 	}
 };
 
@@ -149,28 +131,28 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		ColorfulRoad theObject;
+		eq(0, theObject.getMin("RGGGB"),8);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		ColorfulRoad theObject;
+		eq(1, theObject.getMin("RGBRGBRGB"),8);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		ColorfulRoad theObject;
+		eq(2, theObject.getMin("RBBGGGRR"),-1);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		ColorfulRoad theObject;
+		eq(3, theObject.getMin("RBRRBGGGBBBBR"),50);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
+		ColorfulRoad theObject;
+		eq(4, theObject.getMin("RG"),1);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		ColorfulRoad theObject;
+		eq(5, theObject.getMin("RBRGBGBGGBGRGGG"),52);
 	}
 }
 // END CUT HERE

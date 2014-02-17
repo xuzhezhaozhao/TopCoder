@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,64 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class ConvexPolygonGame {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    string winner(vector <int> X, vector <int> Y) {
+        string res;
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int XARRAY[] = {0, 1, 0};
+        vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+        int YARRAY[] = {0, 0, 1};
+        vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+        ConvexPolygonGame theObject;
+        eq(0, theObject.winner(X, Y),"Petya");
+    }
+    {
+        int XARRAY[] = {0, 4, 2};
+        vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+        int YARRAY[] = {0, 0, 2};
+        vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+        ConvexPolygonGame theObject;
+        eq(1, theObject.winner(X, Y),"Masha");
+    }
+    {
+        int XARRAY[] = {0, 100, 100, 0};
+        vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+        int YARRAY[] = {0, 0, 100, 100};
+        vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+        ConvexPolygonGame theObject;
+        eq(2, theObject.winner(X, Y),"Masha");
+    }
+    {
+        int XARRAY[] = {0, 50, 100, 50};
+        vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+        int YARRAY[] = {0, -1, 0, 1};
+        vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+        ConvexPolygonGame theObject;
+        eq(3, theObject.winner(X, Y),"Petya");
+    }
+    {
+        int XARRAY[] = {-100000, 100000, 100000, -100000};
+        vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+        int YARRAY[] = {-1, -1, 1, 1};
+        vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+        ConvexPolygonGame theObject;
+        eq(4, theObject.winner(X, Y),"Masha");
+    }
 }
-$ENDCUT$
+// END CUT HERE

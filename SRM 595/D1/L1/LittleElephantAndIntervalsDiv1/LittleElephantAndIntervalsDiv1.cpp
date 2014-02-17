@@ -1,12 +1,7 @@
 #include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
 #include <iostream>
 #include <sstream>
-#include <iomanip>
 
-#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -21,13 +16,10 @@
 #include <cmath>
 #include <cstring>
 #include <ctime>
-#include <climits>
-
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +77,75 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
-
-class $CLASSNAME$ {
+int v[1005];
+class LittleElephantAndIntervalsDiv1 {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
-        return res;
+    long long getNumber(int M, vector <int> L, vector <int> R) {
+        long long res = 1;
+	int n = L.size();
+	memset(v, 0, sizeof(v));
+	for (int i = 0; i < n; i++) {
+		for (int j = L[i]; j <= R[i]; j++) {
+			v[j] = i + 1;
+		}
+	}
+	set <int> s;
+	for (int i = 1; i <= M; i++) {
+		if (v[i] != 0) {
+			s.insert(v[i]);
+		}
+	}
+	res = 1;
+	for (int i = 0; i < s.size(); i++) {
+		res *= 2;
+	}
+
+	return res;
     }
-$WRITERCODE$
+
 };
+
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int LARRAY[] = {1, 2, 3};
+        vector <int> L( LARRAY, LARRAY+ARRSIZE(LARRAY) );
+        int RARRAY[] = {1, 2, 3};
+        vector <int> R( RARRAY, RARRAY+ARRSIZE(RARRAY) );
+        LittleElephantAndIntervalsDiv1 theObject;
+        eq(0, theObject.getNumber(4, L, R),8LL);
+    }
+    {
+        int LARRAY[] = {1, 1, 2};
+        vector <int> L( LARRAY, LARRAY+ARRSIZE(LARRAY) );
+        int RARRAY[] = {3, 1, 3};
+        vector <int> R( RARRAY, RARRAY+ARRSIZE(RARRAY) );
+        LittleElephantAndIntervalsDiv1 theObject;
+        eq(1, theObject.getNumber(3, L, R),4LL);
+    }
+    {
+        int LARRAY[] = {47};
+        vector <int> L( LARRAY, LARRAY+ARRSIZE(LARRAY) );
+        int RARRAY[] = {747};
+        vector <int> R( RARRAY, RARRAY+ARRSIZE(RARRAY) );
+        LittleElephantAndIntervalsDiv1 theObject;
+        eq(2, theObject.getNumber(1000, L, R),2LL);
+    }
+    {
+        int LARRAY[] = {5, 23, 4, 1, 15, 2, 22, 26, 13, 16, 28, 13, 27, 9, 18, 4, 10, 3, 4, 4, 3, 4, 1, 18, 18, 2, 38, 4, 10, 12, 3, 30, 11, 38, 2, 13, 1, 13, 18, 16, 13, 2, 14, 27, 13, 3, 26, 19, 5, 10};
+        vector <int> L( LARRAY, LARRAY+ARRSIZE(LARRAY) );
+        int RARRAY[] = {30, 41, 17, 1, 21, 6, 28, 30, 15, 19, 31, 28, 35, 27, 30, 13, 31, 5, 8, 25, 40, 10, 3, 26, 23, 9, 40, 8, 40, 23, 12, 37, 35, 39, 11, 34, 10, 21, 22, 21, 24, 5, 39, 27, 17, 16, 26, 35, 25, 36};
+        vector <int> R( RARRAY, RARRAY+ARRSIZE(RARRAY) );
+        LittleElephantAndIntervalsDiv1 theObject;
+        eq(3, theObject.getNumber(42, L, R),256LL);
+    }
 }
-$ENDCUT$
+// END CUT HERE

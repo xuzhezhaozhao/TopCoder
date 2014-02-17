@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,87 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class IncrementAndDoubling {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int getMin(vector <int> desiredArray) {
+        int res = 0;
+	int n = desiredArray.size();
+	bool flag1, flag2;
+	while (true) {
+		flag1 = flag2 = false;
+		for (int i = 0; i < n; i++) {
+			if (desiredArray[i] & 1) {
+				++res;
+				--desiredArray[i];
+				flag2 = true;
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			if (desiredArray[i] != 0) {
+				desiredArray[i] /= 2;
+				flag1 =true;
+			}
+		}
+
+		if (flag1) {
+			++res;
+		}
+		if (!flag1 && !flag2) {
+			break;
+		}
+	}
+
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int desiredArrayARRAY[] = {2, 1};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(0, theObject.getMin(desiredArray),3);
+    }
+    {
+        int desiredArrayARRAY[] = {16, 16, 16};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(1, theObject.getMin(desiredArray),7);
+    }
+    {
+        int desiredArrayARRAY[] = {100};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(2, theObject.getMin(desiredArray),9);
+    }
+    {
+        int desiredArrayARRAY[] = {0, 0, 1, 0, 1};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(3, theObject.getMin(desiredArray),2);
+    }
+    {
+        int desiredArrayARRAY[] = {123, 234, 345, 456, 567, 789};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(4, theObject.getMin(desiredArray),40);
+    }
+    {
+        int desiredArrayARRAY[] = {7,5,8,1,8,6,6,5,3,5,5,2,8,9,9,4,6,9,4,4,1,9,9,2,8,4,7,4,8,8,6,3,9,4,3,4,5,1,9,8,3,8,3,7,9,3,8,4,4,7};
+        vector <int> desiredArray( desiredArrayARRAY, desiredArrayARRAY+ARRSIZE(desiredArrayARRAY) );
+        IncrementAndDoubling theObject;
+        eq(5, theObject.getMin(desiredArray),84);
+    }
 }
-$ENDCUT$
+// END CUT HERE

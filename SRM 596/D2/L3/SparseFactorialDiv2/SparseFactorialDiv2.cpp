@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+
 
 using namespace std;
 
@@ -81,96 +89,74 @@ static void eq( int n, string have, string need ) {
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
 /*************** Program Begin **********************/
-
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+//long long bestK[1000];
+class SparseFactorialDiv2 {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+	// 计算 [0, uppderbound] 区间内，模divisor值为 d 的数的个数。
+	long long getC(long long upperbound, long long divisor, long long d)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
+		if (upperbound % divisor >= d) {
+			return upperbound / divisor + 1;
+		} else {
+			return upperbound / divisor;
 		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
+	}
 
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
+	// 计算 区间 [0, upperbound] 内，F(n) % divisor == 0 的数的个数。
+	long long calc(long long uppperbound, long long divisor)
+	{
+		long long res = 0;
+		vector <long long> bestK(divisor, -1);
+		for (long long k = 0; k * k < uppperbound; k++) {
+			// 找的最小的k, 使 k * k % divisor == d
+			if (bestK[ (k * k) % divisor ] == -1) {
+				bestK[ (k * k) % divisor ] = k;
 			}
+		}
+		for (int d = 0; d < divisor; d++) {
+			if (bestK[d] == -1) {
+				continue;
+			}
+			res += ( getC(uppperbound, divisor, d) - getC(bestK[d] * bestK[d], divisor, d) );
 		}
 		return res;
 	}
 
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
-		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
-	}
-};
+	long long getCount(long long lo, long long hi, long long divisor) {
 
+
+		return calc(hi, divisor) - calc(lo - 1, divisor);
+	}
+
+};
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		SparseFactorialDiv2 theObject;
+		eq(0, theObject.getCount(4L, 8L, 3L),3LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		SparseFactorialDiv2 theObject;
+		eq(1, theObject.getCount(9L, 11L, 7L),1LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		SparseFactorialDiv2 theObject;
+		eq(2, theObject.getCount(1L, 1000000000000L, 2L),999999999999LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		SparseFactorialDiv2 theObject;
+		eq(3, theObject.getCount(16L, 26L, 11L),4LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
+		SparseFactorialDiv2 theObject;
+		eq(4, theObject.getCount(10000L, 20000L, 997L),1211LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		SparseFactorialDiv2 theObject;
+		eq(5, theObject.getCount(123456789L, 987654321L, 71L),438184668LL);
 	}
 }
 // END CUT HERE

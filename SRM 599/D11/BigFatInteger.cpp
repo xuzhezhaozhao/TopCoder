@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+
 
 using namespace std;
 
@@ -82,95 +90,65 @@ static void eq( int n, string have, string need ) {
 
 /*************** Program Begin **********************/
 
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+class BigFatInteger {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+	map < long long, long long > extractPrimeFactors(int x)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
-		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
+		map <long long, long long> ap;
+		for (int p = 2; p * p <= x; p++) {
+			int ex = 0;
+			bool flag = false;
+			while (x % p == 0) {
+				flag = true;
+				++ex;
+				x /= p;
 			}
+			if (flag) {
+				ap[p] = ex;
+			}
+		}
+		if (x != 1) {
+			ap[x] = 1;
+		}
+		return ap;
+	}
+	int minOperations(int A, int B) {
+		int res = 0;
+		auto ap = extractPrimeFactors(A);
+		res = ap.size();
+		int mxex = 0;
+		for (auto it = ap.begin(); it != ap.end(); it++) {
+			if (mxex < (*it).second) {
+				mxex = (*it).second;
+			}
+		}
+		for (int i = 1; i < mxex * B; i *= 2) {
+			++res;
 		}
 		return res;
 	}
 
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
-		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
-	}
 };
-
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		BigFatInteger theObject;
+		eq(0, theObject.minOperations(6, 1),2);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		BigFatInteger theObject;
+		eq(1, theObject.minOperations(162, 1),4);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		BigFatInteger theObject;
+		eq(2, theObject.minOperations(999983, 9),5);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
-	}
-	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
-	}
-	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		BigFatInteger theObject;
+		eq(3, theObject.minOperations(360, 8),8);
 	}
 }
 // END CUT HERE

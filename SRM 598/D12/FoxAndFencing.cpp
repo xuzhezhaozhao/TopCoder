@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,71 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class FoxAndFencing {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    string WhoCanWin(int mov1, int mov2, int rng1, int rng2, int d) {
+        string res;
+	if (mov1 + rng1 >= d) {
+		return "Ciel";
+	} else {
+		if (mov1 > mov2 && mov1 + rng1 > mov2 + rng2 + mov2) {
+			return "Ciel";
+		} else if (mov2 + rng2 >= d + mov1 || (mov2 > mov1 && mov2 + rng2 > mov1 + rng1 + mov1) ) {
+			return "Liss";
+		} else {
+			return "Draw";
+		}
+	}
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        FoxAndFencing theObject;
+        eq(0, theObject.WhoCanWin(1212548, 4702178, 5032818, 1951676, 7426047),"Draw");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(1, theObject.WhoCanWin(2, 1, 1, 100, 50),"Liss");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(2, theObject.WhoCanWin(2, 1, 1, 100, 150),"Draw");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(3, theObject.WhoCanWin(100, 100, 100, 100, 100000000),"Draw");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(4, theObject.WhoCanWin(100, 1, 100, 1, 100000000),"Ciel");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(5, theObject.WhoCanWin(100, 1, 100, 250, 100000000),"Draw");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(6, theObject.WhoCanWin(100, 1, 100, 150, 100000000),"Ciel");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(7, theObject.WhoCanWin(100, 50, 100, 1, 100000000),"Ciel");
+    }
+    {
+        FoxAndFencing theObject;
+        eq(8, theObject.WhoCanWin(100, 150, 100, 1, 100000000),"Draw");
+    }
 }
-$ENDCUT$
+// END CUT HERE

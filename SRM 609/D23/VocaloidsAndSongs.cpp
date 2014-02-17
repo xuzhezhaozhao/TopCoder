@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+
 
 using namespace std;
 
@@ -81,96 +89,75 @@ static void eq( int n, string have, string need ) {
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
 /*************** Program Begin **********************/
-
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+int dp[51][51][51][51];
+int d1[] = {1, 0, 1, 0, 1, 0, 1};
+int d2[] = {0, 1, 1, 0, 0, 1, 1};
+int d3[] = {0, 0, 0, 1, 1, 1, 1};
+const int MOD = 1e9 + 7;
+class VocaloidsAndSongs {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+	int S, gumi, ia, mayu;
+	int rec(int cur, int v1, int v2, int v3)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
+		if (cur == S) { 
+			if (v1 == gumi && v2 == ia && v3 == mayu) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
+		int & res = dp[cur][v1][v2][v3];
 		if (res != -1) {
 			return res;
 		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
-				}
+		res = 0;
+		for (int i = 0; i < 7; i++) {
+			int t1 = v1 + d1[i];
+			int t2 = v2 + d2[i];
+			int t3 = v3 + d3[i];
+			if (t1 > gumi || t2 > ia || t3 > mayu) {
+				continue;
+			} else {
+				res += rec(cur + 1, t1, t2, t3);
+				res %= MOD;
 			}
 		}
 		return res;
 	}
-
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
+	int count(int S, int gumi, int ia, int mayu) {
+		this->S = S;
+		this->gumi = gumi;
+		this->ia = ia;
+		this->mayu = mayu;
 		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
+		return rec(0, 0, 0, 0);
 	}
-};
 
+};
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		VocaloidsAndSongs theObject;
+		eq(0, theObject.count(3, 1, 1, 1),6);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		VocaloidsAndSongs theObject;
+		eq(1, theObject.count(3, 3, 1, 1),9);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		VocaloidsAndSongs theObject;
+		eq(2, theObject.count(50, 10, 10, 10),0);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		VocaloidsAndSongs theObject;
+		eq(3, theObject.count(18, 12, 8, 9),81451692);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
-	}
-	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		VocaloidsAndSongs theObject;
+		eq(4, theObject.count(50,25,25,25), 198591037);
 	}
 }
 // END CUT HERE

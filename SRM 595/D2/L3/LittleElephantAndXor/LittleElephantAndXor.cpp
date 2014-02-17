@@ -15,6 +15,7 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 
 using namespace std;
 
@@ -81,66 +82,81 @@ static void eq( int n, string have, string need ) {
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 
 /*************** Program Begin **********************/
-
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
+long long dp[31][2][2][2];
+vector <int> dA, dB, dC;
+class LittleElephantAndXor {
 public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+	long long rec(int t, int eqA, int eqB, int eqC)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
+
+		if (t == -1) {
+			return 1;
 		}
+
+		long long & res = dp[t][eqA][eqB][eqC];
 		if (res != -1) {
 			return res;
 		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
+		res = 0;
+		for (int a = 0; a <= 1; a++) {
+			for (int b = 0; b <= 1; b++) {
+				int eqA2, eqB2, eqC2;
+				if (eqA == 1) {
+					if (a > dA[t]) {
 						continue;
+					} else if (a == dA[t]) {
+						eqA2 = 1;
+					} else {
+						eqA2 = 0;
 					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
+				} else {
+					eqA2 = 0;
+				}
+				if (eqB == 1) {
+					if (b > dB[t]) {
 						continue;
+					} else if (b == dB[t]) {
+						eqB2 = 1;
+					} else {
+						eqB2 = 0;
 					}
+				} else {
+					eqB2 = 0;
 				}
 
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
+				int c = a ^ b;
+
+				if (eqC == 1) {
+					if (c > dC[t]) {
+						continue;
+					} else if (c == dC[t]) {
+						eqC2 = 1;
+					} else {
+						eqC2 = 0;
+					}
+				} else {
+					eqC2 = 0;
 				}
+				res += rec(t - 1, eqA2, eqB2, eqC2);
 			}
 		}
 		return res;
 	}
-
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
+	long long getNumber(int A, int B, int C) {
+		long long res = 0;
 		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
+		dA.clear(); dB.clear(); dC.clear();
+		for (int i = 0; i < 31; i++) {
+			dA.push_back(A & 1);
+			dB.push_back(B & 1);
+			dC.push_back(C & 1);
+			A >>= 1; B >>= 1; C >>= 1;
+		}
+
+		res = rec(30, 1, 1, 1);
+		return res;
 	}
+
 };
 
 
@@ -149,28 +165,24 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		LittleElephantAndXor theObject;
+		eq(0, theObject.getNumber(2, 2, 1),5LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		LittleElephantAndXor theObject;
+		eq(1, theObject.getNumber(4, 7, 3),20LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		LittleElephantAndXor theObject;
+		eq(2, theObject.getNumber(10, 10, 5),57LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		LittleElephantAndXor theObject;
+		eq(3, theObject.getNumber(774, 477, 447),214144LL);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
-	}
-	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		LittleElephantAndXor theObject;
+		eq(4, theObject.getNumber(1000000000, 1000000000, 500000000),468566946385621507LL);
 	}
 }
 // END CUT HERE

@@ -1,7 +1,12 @@
 #include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
+#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +20,10 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <ctime>
+#include <climits>
+#include <cassert>
+
 
 using namespace std;
 
@@ -82,95 +91,72 @@ static void eq( int n, string have, string need ) {
 
 /*************** Program Begin **********************/
 
-static const int INF = 1000000000;
-static const int MAX_N = 50;
-static const int MAX_OP = 450;
-int dp[MAX_N + 1][MAX_OP + 1][2];
-
-class CombinationLockDiv2 {
-public:
-	int N;
-	vector<int> d;
-
-	int rec(int p, int x, int up )
+class LittleElephantAndString {
+public:		
+	// 判断 seastr 是否是 str 的子序列
+	bool searchstr(string str, string seastr)
 	{
-		int & res = dp[p][x][up];
-		if (p == N) {		// base case
-			res = 0;
-			return res;
-		}
-		if (res != -1) {
-			return res;
-		}
-		res = INF;
-		for (int i = 0; i <= 1; i++) {
-			for (int y = 0; y <= MAX_OP; y++) {
-				if (0 == i) {	// down
-					if (d[p] - y % 10 != 0) {
-						// invalid
-						continue;
-					}
-				} else {	// up
-					if ( (d[p] + y) % 10 != 0 ) {
-						// invalid
-						continue;
-					}
-				}
-
-				if (i == up) {	// not necessary open new intervals
-					res = min(res, max(y - x, 0) + rec(p + 1, y, i) );
-				} else {	// must open y new intervals
-					res = min(res, y + rec(p + 1, y, i) );
+		int p1, p2;
+		p1 = p2 = 0;
+		for (; p2 < seastr.size(); p2++, p1++) {
+			for (; p1 < str.size(); p1++) {
+				if (seastr[p2] == str[p1]) {
+					break;
 				}
 			}
+			if (p1 == str.size()) {
+				return false;
+			}
 		}
+		return true;
+	}
+	int getNumber(string A, string B) {
+		int res = 0;
+		if ( multiset <char> (A.begin(), A.end()) != multiset <char> (B.begin(), B.end()) ) {
+			return -1;
+		}
+		int n = A.size();
+		res = n;
+		string nextB;
+		for (int i = 0; i < n; i++) {
+			nextB = B.substr(i, n - i);
+			if (searchstr(A, nextB)) {
+				res = i;
+				break;
+			}
+		}
+
 		return res;
 	}
-
-	int minimumMoves(string s, string t)
-	{
-		this->N = s.size();
-		d.resize(this->N);
-		for (int i = 0; i < this->N; i++) {
-			if (s[i] >= t[i]) {
-				d[i] = s[i] - t[i];
-			} else {
-				d[i] = s[i] + 10 - t[i];
-			}
-		}
-		memset(dp, -1, sizeof(dp));
-		return rec(0,0,0);
-	}
 };
-
 
 /************** Program End ************************/
 
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		CombinationLockDiv2 theObject;
-		eq(0, theObject.minimumMoves("123", "112"),1);
+		LittleElephantAndString theObject;
+		eq(0, theObject.getNumber("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ"),19);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(1, theObject.minimumMoves("1", "7"),4);
+		LittleElephantAndString theObject;
+		eq(1, theObject.getNumber("DCABA", "DACBA"),2);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(2, theObject.minimumMoves("607", "607"),0);
+		LittleElephantAndString theObject;
+		eq(2, theObject.getNumber("AAABBB", "BBBAAA"),3);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(3, theObject.minimumMoves("1234", "4567"),3);
+		LittleElephantAndString theObject;
+		eq(3, theObject.getNumber("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ZYXWVUTSRQPONMLKJIHGFEDCBA"),25);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(4, theObject.minimumMoves("020", "909"),2);
+		LittleElephantAndString theObject;
+		eq(4, theObject.getNumber("A", "A"),0);
 	}
 	{
-		CombinationLockDiv2 theObject;
-		eq(5, theObject.minimumMoves("4423232218340", "6290421476245"),18);
+		LittleElephantAndString theObject;
+		eq(5, theObject.getNumber("DCA", "DAC"),2);
 	}
 }
 // END CUT HERE

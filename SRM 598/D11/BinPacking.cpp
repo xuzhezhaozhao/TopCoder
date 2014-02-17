@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,76 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class BinPacking {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
-        return res;
+    int minBins(vector <int> item) {
+        int ans = 1000;
+	int n = item.size();
+	sort(item.begin(), item.end());
+	int cnt_100 = count(item.begin(), item.end(), 100);
+	int t = cnt_100 / 3;
+	for (int k = 0; k <= t; k++) {
+		int i = k * 3, j = n - 1;
+		int res = k;
+		while (i < j) {
+			if (item[i] + item[j] <= 300) {
+				++i; --j;
+				++res;
+			} else {
+				--j;
+				++res;
+			}
+		}
+		if (i == j) {
+			++res;
+		}
+		ans = min(ans, res);
+	}
+
+        return ans;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int itemARRAY[] = {150, 150, 150, 150, 150};
+        vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+        BinPacking theObject;
+        eq(0, theObject.minBins(item),3);
+    }
+    {
+        int itemARRAY[] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 189, 126, 158, 181, 132};
+        vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+        BinPacking theObject;
+        eq(1, theObject.minBins(item),9);
+    }
+    {
+        int itemARRAY[] = {100, 100, 100, 100, 100, 100, 100, 100, 100};
+        vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+        BinPacking theObject;
+        eq(2, theObject.minBins(item),3);
+    }
+    {
+        int itemARRAY[] = {100, 200, 100, 100, 100, 100, 200, 100, 200};
+        vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+        BinPacking theObject;
+        eq(3, theObject.minBins(item),4);
+    }
+    {
+        int itemARRAY[] = {157, 142, 167, 133, 135, 157, 143, 160, 141, 123, 162, 159, 165, 137, 138, 152};
+        vector <int> item( itemARRAY, itemARRAY+ARRSIZE(itemARRAY) );
+        BinPacking theObject;
+        eq(4, theObject.minBins(item),8);
+    }
 }
-$ENDCUT$
+// END CUT HERE

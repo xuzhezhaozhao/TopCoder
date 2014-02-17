@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,94 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class TPS {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int minimalBeacons(vector <string> linked) {
+        int res;
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        string linkedARRAY[] = {"NYNN",
+            "YNYN",
+            "NYNY",
+            "NNYN"};
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(0, theObject.minimalBeacons(linked),1);
+    }
+    {
+        string linkedARRAY[] = {"NYYY",
+            "YNNN",
+            "YNNN",
+            "YNNN"};
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(1, theObject.minimalBeacons(linked),2);
+    }
+    {
+        string linkedARRAY[] = {"NNYNNNNNNN",
+            "NNNNNYNNNN",
+            "YNNYNNYNNN",
+            "NNYNYNNYNN",
+            "NNNYNYNNYN",
+            "NYNNYNNNNY",
+            "NNYNNNNNNN",
+            "NNNYNNNNNN",
+            "NNNNYNNNNN",
+            "NNNNNYNNNN"}
+           ;
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(2, theObject.minimalBeacons(linked),2);
+    }
+    {
+        string linkedARRAY[] = {"NYNYNNYNN",
+            "YNYNYNNYN",
+            "NYNNNYNNY",
+            "YNNNNNNNN",
+            "NYNNNNNNN",
+            "NNYNNNNNN",
+            "YNNNNNNNN",
+            "NYNNNNNNN",
+            "NNYNNNNNN"};
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(3, theObject.minimalBeacons(linked),3);
+    }
+    {
+        string linkedARRAY[] = {"NYYYYYYYYY",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN",
+            "YNNNNNNNNN"}
+           ;
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(4, theObject.minimalBeacons(linked),8);
+    }
+    {
+        string linkedARRAY[] = {"N"};
+        vector <string> linked( linkedARRAY, linkedARRAY+ARRSIZE(linkedARRAY) );
+        TPS theObject;
+        eq(5, theObject.minimalBeacons(linked),0);
+    }
 }
-$ENDCUT$
+// END CUT HERE

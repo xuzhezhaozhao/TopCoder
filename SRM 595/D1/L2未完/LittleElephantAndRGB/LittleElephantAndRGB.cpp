@@ -1,12 +1,7 @@
 #include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
 #include <iostream>
 #include <sstream>
-#include <iomanip>
 
-#include <bitset>
 #include <string>
 #include <vector>
 #include <stack>
@@ -21,13 +16,10 @@
 #include <cmath>
 #include <cstring>
 #include <ctime>
-#include <climits>
-
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +77,63 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class LittleElephantAndRGB {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    long long getNumber(vector <string> list, int minGreen) {
+        long long res = 0;
+	string s;
+	for (int i = 0; i < list.size(); i++) {
+		s += list[i];
+	}
+	int n = s.size();
+
+
+
         return res;
     }
-$WRITERCODE$
+
 };
+
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        string listARRAY[] = {"GRG"};
+        vector <string> list( listARRAY, listARRAY+ARRSIZE(listARRAY) );
+        LittleElephantAndRGB theObject;
+        eq(0, theObject.getNumber(list, 2),1L);
+    }
+    {
+        string listARRAY[] = {"GG", "GG"};
+        vector <string> list( listARRAY, listARRAY+ARRSIZE(listARRAY) );
+        LittleElephantAndRGB theObject;
+        eq(1, theObject.getNumber(list, 3),9L);
+    }
+    {
+        string listARRAY[] = {"GRBGRBBRG"};
+        vector <string> list( listARRAY, listARRAY+ARRSIZE(listARRAY) );
+        LittleElephantAndRGB theObject;
+        eq(2, theObject.getNumber(list, 2),11L);
+    }
+    {
+        string listARRAY[] = {"RRBRBBRRR", "R", "B"};
+        vector <string> list( listARRAY, listARRAY+ARRSIZE(listARRAY) );
+        LittleElephantAndRGB theObject;
+        eq(3, theObject.getNumber(list, 1),0L);
+    }
+    {
+        string listARRAY[] = {"GRGGGRBRGG", "GGGGGGGG", "BRGRBRB"};
+        vector <string> list( listARRAY, listARRAY+ARRSIZE(listARRAY) );
+        LittleElephantAndRGB theObject;
+        eq(4, theObject.getNumber(list, 4),12430L);
+    }
 }
-$ENDCUT$
+// END CUT HERE

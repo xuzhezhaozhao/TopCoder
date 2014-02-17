@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,60 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class PackingBallsDiv2 {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int minPacks(int R, int G, int B) {
+        int res = 0;
+	res = min(R, G);
+	res = min(res, B);
+	R -= res;
+	G -= res;
+	B -= res;
+	res += R / 3 + G / 3 + B / 3;
+	R %= 3;
+	G %= 3;
+	B %= 3;
+	int s = R + G + B;
+	if (s == 1 || s == 2) {
+		res += 1;
+	} else if (s == 3 || s == 4) {
+		res += 2;
+	}
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        PackingBallsDiv2 theObject;
+        eq(0, theObject.minPacks(4, 2, 4),4);
+    }
+    {
+        PackingBallsDiv2 theObject;
+        eq(1, theObject.minPacks(1, 7, 1),3);
+    }
+    {
+        PackingBallsDiv2 theObject;
+        eq(2, theObject.minPacks(2, 3, 5),4);
+    }
+    {
+        PackingBallsDiv2 theObject;
+        eq(3, theObject.minPacks(78, 53, 64),66);
+    }
+    {
+        PackingBallsDiv2 theObject;
+        eq(4, theObject.minPacks(100, 100, 100),100);
+    }
 }
-$ENDCUT$
+// END CUT HERE

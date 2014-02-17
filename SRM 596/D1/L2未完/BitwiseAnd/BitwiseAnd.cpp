@@ -26,8 +26,7 @@
 
 using namespace std;
 
-
-$BEGINCUT$
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -85,29 +84,65 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
-typedef pair<int, int> pii;
-typedef long long llong;
-typedef pair<llong, llong> pll;
-#define mkp make_pair
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class BitwiseAnd {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    vector<long long> lexSmallest(vector<long long> subset, int N) {
+        vector<long long> res;
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        long subsetARRAY[] = {14L, 20L};
+        vector<long long> subset( subsetARRAY, subsetARRAY+ARRSIZE(subsetARRAY) );
+        long retrunValueARRAY[] = {14L, 18L, 20L };
+        vector<long long> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        BitwiseAnd theObject;
+        eq(0, theObject.lexSmallest(subset, 3),retrunValue);
+    }
+    {
+        long subsetARRAY[] = {11L, 17L, 20L};
+        vector<long long> subset( subsetARRAY, subsetARRAY+ARRSIZE(subsetARRAY) );
+        BitwiseAnd theObject;
+        eq(1, theObject.lexSmallest(subset, 4),vector<long long>());
+    }
+    {
+        long subsetARRAY[] = {99L, 157L};
+        vector<long long> subset( subsetARRAY, subsetARRAY+ARRSIZE(subsetARRAY) );
+        long retrunValueARRAY[] = {99L, 157L, 262L, 296L };
+        vector<long long> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        BitwiseAnd theObject;
+        eq(2, theObject.lexSmallest(subset, 4),retrunValue);
+    }
+    {
+        long subsetARRAY[] = {1152921504606846975L};
+        vector<long long> subset( subsetARRAY, subsetARRAY+ARRSIZE(subsetARRAY) );
+        BitwiseAnd theObject;
+        eq(3, theObject.lexSmallest(subset, 3),vector<long long>());
+    }
+    {
+        long retrunValueARRAY[] = {15L, 113L, 402L, 676L, 840L };
+        vector<long long> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        BitwiseAnd theObject;
+        eq(4, theObject.lexSmallest(vector<long long>(), 5),retrunValue);
+    }
+    {
+        long subsetARRAY[] = {1L, 3L, 5L, 7L, 9L, 11L};
+        vector<long long> subset( subsetARRAY, subsetARRAY+ARRSIZE(subsetARRAY) );
+        BitwiseAnd theObject;
+        eq(5, theObject.lexSmallest(subset, 6),vector<long long>());
+    }
 }
-$ENDCUT$
+// END CUT HERE
