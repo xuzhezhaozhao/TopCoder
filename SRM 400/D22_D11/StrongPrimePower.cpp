@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -91,19 +95,92 @@ typedef pair<llong, llong> pll;
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class StrongPrimePower {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
-        return res;
+	bool isPrime(int n)
+	{
+		int limit = sqrt(n * 1.0 + 0.5);
+		for (int i = 2; i <= limit; i++) {
+			if (n % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+    vector <int> baseAndExponent(string _n) {
+        vector <long long> res;
+	vector <int> ans;
+
+	long long n = 0;
+	for (int i = 0; i < _n.size(); i++) {
+		n = 10LL * n + _n[i] - '0';
+	}
+	int limit = sqrt(n * 1.0 + 0.5);
+	if ( (long long) limit * limit == n) {
+		if (isPrime(limit)) {
+			ans.push_back(limit);
+			ans.push_back(2);
+			return ans;
+		}
+	}
+	limit = min<int>(limit, 1e6 + 1);
+	for (int i = 2; i <= limit; i++) {
+		while (n % i == 0) {
+			res.push_back(i);
+			n /= i;
+		}
+	}
+	if (n != 1) {
+		res.push_back(n);
+	}
+	if (res.size() > 1) {
+		int d = res[0];
+		for (int i = 1; i < res.size(); i++) {
+			if (d != res[i]) {
+				return ans;
+			}
+		}
+		ans.push_back( (long long)res[0] );
+		ans.push_back( (int)res.size() );
+	}
+	return ans;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int retrunValueARRAY[] = {3, 3 };
+        vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        StrongPrimePower theObject;
+        eq(0, theObject.baseAndExponent("435307306210734208"),vector <int>());
+    }
+    {
+        StrongPrimePower theObject;
+        eq(1, theObject.baseAndExponent("10"),vector <int>());
+    }
+    {
+        StrongPrimePower theObject;
+        eq(2, theObject.baseAndExponent("7"),vector <int>());
+    }
+    {
+        StrongPrimePower theObject;
+        eq(3, theObject.baseAndExponent("1296"),vector <int>());
+    }
+    {
+        int retrunValueARRAY[] = {2, 59 };
+        vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        StrongPrimePower theObject;
+        eq(4, theObject.baseAndExponent("576460752303423488"),retrunValue);
+    }
+    {
+        int retrunValueARRAY[] = {999999937, 2 };
+        vector <int> retrunValue( retrunValueARRAY, retrunValueARRAY+ARRSIZE(retrunValueARRAY) );
+        StrongPrimePower theObject;
+        eq(5, theObject.baseAndExponent("999999874000003969"),retrunValue);
+    }
 }
-$ENDCUT$
+// END CUT HERE

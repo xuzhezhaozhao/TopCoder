@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -91,19 +95,35 @@ typedef pair<llong, llong> pll;
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class CollectingBonuses {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    double expectedBuy(string n, string k) {
+        double res;
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        CollectingBonuses theObject;
+        eq(0, theObject.expectedBuy("1", "1"),1.0);
+    }
+    {
+        CollectingBonuses theObject;
+        eq(1, theObject.expectedBuy("2", "1"),1.0);
+    }
+    {
+        CollectingBonuses theObject;
+        eq(2, theObject.expectedBuy("2", "2"),3.0);
+    }
+    {
+        CollectingBonuses theObject;
+        eq(3, theObject.expectedBuy("4", "3"),4.333333333333333);
+    }
 }
-$ENDCUT$
+// END CUT HERE

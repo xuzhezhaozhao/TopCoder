@@ -94,40 +94,35 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-class ORSolitaireDiv2 {
+
+const int MOD = 1e9 + 7;
+int dp[55];
+class PilingRectsDiv2
+{
 public:
-	int goal, n;
-	vector <int> valid;
-	int mininum;
-
-	int backtrack(int cur, int X, int removed)
+	int getmax(vector <int> X, vector <int> Y, int limit)
 	{
-		if (cur == n) {
-			if (X != goal) {
-				mininum = min(mininum, removed);
+		int res = 0;
+		int n = X.size();
+		for (int i = 1; i <= 200; i++) {
+			for (int j = 1; j <= 200; j++) {
+				if (i * j < limit) {
+					continue;
+				}
+				int cnt = 0;
+				for (int k = 0; k < n; k++) {
+					if ( (i <= X[k] && j <= Y[k]) ||
+						(i <= Y[k] && j <= X[k]) ) {
+							++cnt;
+					}
+				}
+				res = max(res, cnt);
+				break;
 			}
-			return 0;
 		}
-		backtrack(cur + 1, X, removed + 1);
-		backtrack(cur + 1, X | valid[cur], removed);
-		return 0;
+		res = (res ? res : -1);
+		return res;
 	}
-	int getMinimum(vector <int> numbers, int goal) {
-		this->goal = goal;
-		mininum = 20;
-		vector <int> valid;
-		for (int i = 0; i < numbers.size(); i++) {
-			if (goal == (goal | numbers[i])) {
-				valid.push_back(numbers[i]);
-			}
-		}
-		this->valid = valid;
-		this->n = valid.size();
-		backtrack(0, 0, 0);
-
-		return mininum;
-	}
-
 };
 
 /************** Program End ************************/
@@ -135,34 +130,52 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		int numbersARRAY[] = {1, 2, 4};
-		vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-		ORSolitaireDiv2 theObject;
-		eq(0, theObject.getMinimum(numbers, 7),1);
+		int XARRAY[] = {1,2,3,1};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {3,2,4,4};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(0, theObject.getmax(X, Y, 3),3);
 	}
 	{
-		int numbersARRAY[] = {1, 2, 4, 7, 8};
-		vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-		ORSolitaireDiv2 theObject;
-		eq(1, theObject.getMinimum(numbers, 7),2);
+		int XARRAY[] = {4,7};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {7,4};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(1, theObject.getmax(X, Y, 25),2);
 	}
 	{
-		int numbersARRAY[] = {12571295, 2174218, 2015120};
-		vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-		ORSolitaireDiv2 theObject;
-		eq(2, theObject.getMinimum(numbers, 1),0);
+		int XARRAY[] = {10};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {10};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(2, theObject.getmax(X, Y, 9999),-1);
 	}
 	{
-		int numbersARRAY[] = {5, 2, 4, 52, 62, 9, 8, 3, 1, 11, 6};
-		vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-		ORSolitaireDiv2 theObject;
-		eq(3, theObject.getMinimum(numbers, 11),3);
+		int XARRAY[] = {10};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {3};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(3, theObject.getmax(X, Y, 30),1);
 	}
 	{
-		int numbersARRAY[] = {503, 505, 152, 435, 491, 512, 1023, 355, 510, 500, 502, 255, 63, 508, 509, 511, 60, 250, 254, 346};
-		vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-		ORSolitaireDiv2 theObject;
-		eq(4, theObject.getMinimum(numbers, 510),5);
+		int XARRAY[] = {3,6,5,8,2,9,14};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {14,6,13,8,15,6,3};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(4, theObject.getmax(X, Y, 27),4);
+	}
+	{
+		int XARRAY[] = {121,168,86,106,36,10,125,97,53,26,148,129,41,18,173,55,13,73,91,174,177,190,28,164,122,92,5,26,58,188,14,67,48,196,41,94,24,89,54,117,12,6,155,103,200,128,184,29,92,149};
+		vector <int> X( XARRAY, XARRAY+ARRSIZE(XARRAY) );
+		int YARRAY[] = {199,182,43,191,2,145,15,53,38,37,61,45,157,129,119,123,177,178,183,188,132,108,112,137,92,59,75,196,102,152,114,121,181,93,32,3,24,116,4,163,96,159,196,43,59,150,79,113,20,146};
+		vector <int> Y( YARRAY, YARRAY+ARRSIZE(YARRAY) );
+		PilingRectsDiv2 theObject;
+		eq(5, theObject.getmax(X, Y, 5345),24);
 	}
 }
 // END CUT HERE

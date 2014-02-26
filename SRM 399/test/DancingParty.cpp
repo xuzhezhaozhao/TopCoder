@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -91,19 +95,57 @@ typedef pair<llong, llong> pll;
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class DancingParty {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
-        return res;
+    int maxDances(vector <string> likes, int k) {
+        int res = 0;
+	int n = likes.size();
+	res = n;
+	for (int i = 0; i < n; i++) {
+		int cnt1 = 0, cnt2 = 0;
+		for (int j = 0; j < n; j++) {
+			if (likes[i][j] == 'Y') {
+				++cnt1;
+			}
+			if (likes[j][i] == 'Y') {
+				++cnt2;
+			}
+		}
+		res = min(res, cnt1);
+		res = min(res, cnt2);
+	}
+        return min(n, res + k);
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        string likesARRAY[] = {"YYY", "YYY", "YYY"};
+        vector <string> likes( likesARRAY, likesARRAY+ARRSIZE(likesARRAY) );
+        DancingParty theObject;
+        eq(0, theObject.maxDances(likes, 0),3);
+    }
+    {
+        string likesARRAY[] = {"YYY", "YYN", "YNY"};
+        vector <string> likes( likesARRAY, likesARRAY+ARRSIZE(likesARRAY) );
+        DancingParty theObject;
+        eq(1, theObject.maxDances(likes, 0),2);
+    }
+    {
+        string likesARRAY[] = {"YN", "YN"};
+        vector <string> likes( likesARRAY, likesARRAY+ARRSIZE(likesARRAY) );
+        DancingParty theObject;
+        eq(2, theObject.maxDances(likes, 0),0);
+    }
+    {
+        string likesARRAY[] = {"YN", "YN"};
+        vector <string> likes( likesARRAY, likesARRAY+ARRSIZE(likesARRAY) );
+        DancingParty theObject;
+        eq(3, theObject.maxDances(likes, 1),1);
+    }
 }
-$ENDCUT$
+// END CUT HERE

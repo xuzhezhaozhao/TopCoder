@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -90,20 +94,59 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-
-class $CLASSNAME$ {
+int cnt[51];
+class WinterAndCandies {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int getNumber(vector <int> type) {
+        int res = 0;
+	int n = type.size();
+	memset(cnt, 0, sizeof(cnt));
+	for (int i = 0; i < n; i++) {
+		++cnt[ type[i] ];
+	}
+	int mul = 1;
+	for (int i = 1; i <= 50; i++) {
+		mul *= cnt[i];
+		res += mul;
+	}
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int typeARRAY[] = {1, 3, 2};
+        vector <int> type( typeARRAY, typeARRAY+ARRSIZE(typeARRAY) );
+        WinterAndCandies theObject;
+        eq(0, theObject.getNumber(type),3);
+    }
+    {
+        int typeARRAY[] = {1, 1, 2};
+        vector <int> type( typeARRAY, typeARRAY+ARRSIZE(typeARRAY) );
+        WinterAndCandies theObject;
+        eq(1, theObject.getNumber(type),4);
+    }
+    {
+        int typeARRAY[] = {1, 3, 2, 5, 7, 4, 5, 4};
+        vector <int> type( typeARRAY, typeARRAY+ARRSIZE(typeARRAY) );
+        WinterAndCandies theObject;
+        eq(2, theObject.getNumber(type),9);
+    }
+    {
+        int typeARRAY[] = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5};
+        vector <int> type( typeARRAY, typeARRAY+ARRSIZE(typeARRAY) );
+        WinterAndCandies theObject;
+        eq(3, theObject.getNumber(type),62);
+    }
+    {
+        int typeARRAY[] = {2};
+        vector <int> type( typeARRAY, typeARRAY+ARRSIZE(typeARRAY) );
+        WinterAndCandies theObject;
+        eq(4, theObject.getNumber(type),0);
+    }
 }
-$ENDCUT$
+// END CUT HERE

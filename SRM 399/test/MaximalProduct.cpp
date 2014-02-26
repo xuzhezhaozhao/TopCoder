@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -91,19 +95,48 @@ typedef pair<llong, llong> pll;
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class MaximalProduct {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    long long maximalProduct(int s, int k) {
+        long long res = 1;
+	int b = s / k;
+	int r = s - b * k;
+	for (int i = 0; i < k; i++) {
+		if (i < r) {
+			res *= (b + 1);
+		} else {
+			res *= b;
+		}
+	}
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        MaximalProduct theObject;
+        eq(0, theObject.maximalProduct(10, 3),36LL);
+    }
+    {
+        MaximalProduct theObject;
+        eq(1, theObject.maximalProduct(10, 1),10LL);
+    }
+    {
+        MaximalProduct theObject;
+        eq(2, theObject.maximalProduct(10, 10),1LL);
+    }
+    {
+        MaximalProduct theObject;
+        eq(3, theObject.maximalProduct(13, 8),32LL);
+    }
+    {
+        MaximalProduct theObject;
+        eq(4, theObject.maximalProduct(7, 2),12LL);
+    }
 }
-$ENDCUT$
+// END CUT HERE

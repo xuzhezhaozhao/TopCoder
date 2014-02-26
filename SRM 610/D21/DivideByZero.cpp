@@ -94,30 +94,37 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-
-class ORSolitaire {
+bool v[105];
+class DivideByZero {
 public:
-    int getMinimum(vector <int> numbers, int goal) {
-        int res;
-	vector <int> valid;
-	for (int i = 0; i < numbers.size(); i++) {
-		if (goal == (goal | numbers[i])) {
-			valid.push_back(numbers[i]);
-		}
+    int CountNumbers(vector <int> numbers) {
+        int res = 0;
+	int n = numbers.size();
+	memset(v, 0, sizeof(v));
+	for (int i = 0; i < n; i++) {
+		v[numbers[i]] = true;
 	}
-	res = 50;
-	int n = valid.size();
-	for (int i = 0; i < 32; i++) {
-		int sum = 0;
-		if ( 1 & (goal >> i) ) {
-			for (int j = 0; j < n; j++) {
-				if (1 & (valid[j] >> i)) {
-					++sum;
-				}
+	sort(numbers.begin(), numbers.end());
+	while (1) {
+		bool over = true;
+		n = numbers.size();
+		sort(numbers.begin(), numbers.end());		
+		for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			int t = numbers[j] / numbers[i];
+			if (!v[t]) {
+				numbers.push_back(t);
+				over = false;
+				v[t] = true;
 			}
-			res = min(res, sum);
+		}
+		}
+		if (over) {
+			break;
 		}
 	}
+	res = numbers.size();
+
         return res;
     }
 
@@ -128,34 +135,40 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
     {
-        int numbersARRAY[] = {1, 2, 4};
+        int numbersARRAY[] = {9, 2};
         vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-        ORSolitaire theObject;
-        eq(0, theObject.getMinimum(numbers, 7),1);
+        DivideByZero theObject;
+        eq(0, theObject.CountNumbers(numbers),3);
     }
     {
-        int numbersARRAY[] = {1, 2, 4, 7, 8};
+        int numbersARRAY[] = {8, 2};
         vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-        ORSolitaire theObject;
-        eq(1, theObject.getMinimum(numbers, 7),2);
+        DivideByZero theObject;
+        eq(1, theObject.CountNumbers(numbers),3);
     }
     {
-        int numbersARRAY[] = {12571295, 2174218, 2015120};
+        int numbersARRAY[] = {50};
         vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-        ORSolitaire theObject;
-        eq(2, theObject.getMinimum(numbers, 1),0);
+        DivideByZero theObject;
+        eq(2, theObject.CountNumbers(numbers),1);
     }
     {
-        int numbersARRAY[] = {5,2,4,52,62,9,8,3,1,11,6};
+        int numbersARRAY[] = {1, 5, 8, 30, 15, 4};
         vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-        ORSolitaire theObject;
-        eq(3, theObject.getMinimum(numbers, 11),3);
+        DivideByZero theObject;
+        eq(3, theObject.CountNumbers(numbers),11);
     }
     {
-        int numbersARRAY[] = {503, 505, 152, 435, 491, 512, 1023, 355, 510, 500, 502, 255, 63, 508, 509, 511, 60, 250, 254, 346};
+        int numbersARRAY[] = {1, 2, 4, 8, 16, 32, 64};
         vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
-        ORSolitaire theObject;
-        eq(4, theObject.getMinimum(numbers, 510),5);
+        DivideByZero theObject;
+        eq(4, theObject.CountNumbers(numbers),7);
+    }
+    {
+        int numbersARRAY[] = {6, 2, 18};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(5, theObject.CountNumbers(numbers),7);
     }
 }
 // END CUT HERE

@@ -22,8 +22,12 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
+
+
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +85,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -90,20 +94,81 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-
-class $CLASSNAME$ {
+bool v[105];
+class DivideByZero {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int CountNumbers(vector <int> numbers) {
+        int res = 0;
+	int n = numbers.size();
+	memset(v, 0, sizeof(v));
+	for (int i = 0; i < n; i++) {
+		v[numbers[i]] = true;
+	}
+	sort(numbers.begin(), numbers.end());
+	while (1) {
+		bool over = true;
+		n = numbers.size();
+		sort(numbers.begin(), numbers.end());		
+		for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			int t = numbers[j] / numbers[i];
+			if (!v[t]) {
+				numbers.push_back(t);
+				over = false;
+				v[t] = true;
+			}
+		}
+		}
+		if (over) {
+			break;
+		}
+	}
+	res = numbers.size();
+
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int numbersARRAY[] = {9, 2};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(0, theObject.CountNumbers(numbers),3);
+    }
+    {
+        int numbersARRAY[] = {8, 2};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(1, theObject.CountNumbers(numbers),3);
+    }
+    {
+        int numbersARRAY[] = {50};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(2, theObject.CountNumbers(numbers),1);
+    }
+    {
+        int numbersARRAY[] = {1, 5, 8, 30, 15, 4};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(3, theObject.CountNumbers(numbers),11);
+    }
+    {
+        int numbersARRAY[] = {1, 2, 4, 8, 16, 32, 64};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(4, theObject.CountNumbers(numbers),7);
+    }
+    {
+        int numbersARRAY[] = {6, 2, 18};
+        vector <int> numbers( numbersARRAY, numbersARRAY+ARRSIZE(numbersARRAY) );
+        DivideByZero theObject;
+        eq(5, theObject.CountNumbers(numbers),7);
+    }
 }
-$ENDCUT$
+// END CUT HERE

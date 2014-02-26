@@ -23,7 +23,9 @@
 #include <ctime>
 #include <climits>
 using namespace std;
-$BEGINCUT$
+
+
+// BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
     cerr << a;
@@ -81,7 +83,7 @@ static void eq( int n, string have, string need ) {
         cerr << "." << endl;
     }
 }
-$ENDCUT$
+// END CUT HERE
 
 #define CHECKTIME() printf("%.2lf\n", (double)clock() / CLOCKS_PER_SEC)
 typedef pair<int, int> pii;
@@ -91,19 +93,66 @@ typedef pair<llong, llong> pll;
 
 /*************** Program Begin **********************/
 
-class $CLASSNAME$ {
+class AlbertoTheAviator {
 public:
-    $RC$ $METHODNAME$($METHODPARMS$) {
-        $RC$ res;
+    int MaximumFlights(int F, vector <int> duration, vector <int> refuel) {
+        int res = 0;
         return res;
     }
-$WRITERCODE$
+
 };
 
 /************** Program End ************************/
 
-$BEGINCUT$
+// BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
-$MAINBODY$
+    {
+        int durationARRAY[] = {10};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {0};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(0, theObject.MaximumFlights(10, duration, refuel),1);
+    }
+    {
+        int durationARRAY[] = {8, 4};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {0, 2};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(1, theObject.MaximumFlights(10, duration, refuel),2);
+    }
+    {
+        int durationARRAY[] = {4, 8, 2, 1};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {2, 0, 0, 0};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(2, theObject.MaximumFlights(12, duration, refuel),3);
+    }
+    {
+        int durationARRAY[] = {4, 6};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {0, 1};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(3, theObject.MaximumFlights(9, duration, refuel),2);
+    }
+    {
+        int durationARRAY[] = {101};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {100};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(4, theObject.MaximumFlights(100, duration, refuel),0);
+    }
+    {
+        int durationARRAY[] = {2407, 2979, 1269, 2401, 3227, 2230, 3991, 2133, 3338, 356, 2535, 3859, 3267, 365};
+        vector <int> duration( durationARRAY, durationARRAY+ARRSIZE(durationARRAY) );
+        int refuelARRAY[] = {2406, 793, 905, 2400, 1789, 2229, 1378, 2132, 1815, 355, 72, 3858, 3266, 364};
+        vector <int> refuel( refuelARRAY, refuelARRAY+ARRSIZE(refuelARRAY) );
+        AlbertoTheAviator theObject;
+        eq(5, theObject.MaximumFlights(1947, duration, refuel),3);
+    }
 }
-$ENDCUT$
+// END CUT HERE
