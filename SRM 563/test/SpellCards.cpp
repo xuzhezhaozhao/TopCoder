@@ -22,11 +22,7 @@
 #include <cstring>
 #include <ctime>
 #include <climits>
-
-
 using namespace std;
-
-
 // BEGIN CUT HERE
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 template<typename T> void print( T a ) {
@@ -94,38 +90,25 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-int dp[55][55];
-class SpellCardsEasy {
+const int MAX = 55;
+int dp[MAX][MAX];
+class SpellCards {
 public:
-	int n;
 	vector <int> level, damage;
-	int rec(int cur, int owned)
+	int n;
+	int rec()
 	{
-		if (n - cur == owned) {
-			return 0;
-		}
-		int & res = dp[cur][owned];
-		if (res != -1) {
-			return res;
-		}
-		// not choose
-		res = rec(cur + 1, max(0, owned - 1) );
-		// choose
-		if ( owned + level[cur] - 1 <= n - cur - 1) {
-			res = max(res, damage[cur] + rec(cur + 1, owned + level[cur] - 1) );
-		}
-	
-		return res;
+
 	}
 	int maxDamage(vector <int> level, vector <int> damage) {
 		int res = 0;
-		n = level.size();
 		this->level = level;
 		this->damage = damage;
+		n = level.size();
 		memset(dp, -1, sizeof(dp));
-		res = rec(0, 0);
 		return res;
 	}
+
 };
 
 /************** Program End ************************/
@@ -133,27 +116,27 @@ public:
 // BEGIN CUT HERE
 void main( int argc, char* argv[] ) {
 	{
-		int levelARRAY[] = {5, 31, 5, 9, 31, 20, 3, 20};
+		int levelARRAY[] = {1,1,1};
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
-		int damageARRAY[] = {145, 356, 142, 514, 284, 639, 117, 377};
+		int damageARRAY[] = {10,20,30};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
-		eq(0, theObject.maxDamage(level, damage),145);
+		SpellCards theObject;
+		//eq(0, theObject.maxDamage(level, damage),60);
 	}
 	{
-		int levelARRAY[] = {2,2};
+		int levelARRAY[] = {3,3,3};
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
-		int damageARRAY[] = {10,20};
+		int damageARRAY[] = {10,20,30};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
-		eq(1, theObject.maxDamage(level, damage),10);
+		SpellCards theObject;
+		eq(1, theObject.maxDamage(level, damage),30);
 	}
 	{
 		int levelARRAY[] = {4,4,4};
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
 		int damageARRAY[] = {10,20,30};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
+		SpellCards theObject;
 		eq(2, theObject.maxDamage(level, damage),0);
 	}
 	{
@@ -161,7 +144,7 @@ void main( int argc, char* argv[] ) {
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
 		int damageARRAY[] = {10,20,30,40,50};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
+		SpellCards theObject;
 		eq(3, theObject.maxDamage(level, damage),60);
 	}
 	{
@@ -169,7 +152,7 @@ void main( int argc, char* argv[] ) {
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
 		int damageARRAY[] = {40,40,10};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
+		SpellCards theObject;
 		eq(4, theObject.maxDamage(level, damage),80);
 	}
 	{
@@ -177,16 +160,16 @@ void main( int argc, char* argv[] ) {
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
 		int damageARRAY[] = {10,40,10,10,90,40,10};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
-		eq(5, theObject.maxDamage(level, damage),150);
+		SpellCards theObject;
+		eq(5, theObject.maxDamage(level, damage),170);
 	}
 	{
 		int levelARRAY[] = {1,2,2,3,1,4,2};
 		vector <int> level( levelARRAY, levelARRAY+ARRSIZE(levelARRAY) );
 		int damageARRAY[] = {113,253,523,941,250,534,454};
 		vector <int> damage( damageARRAY, damageARRAY+ARRSIZE(damageARRAY) );
-		SpellCardsEasy theObject;
-		eq(6, theObject.maxDamage(level, damage),1577);
+		SpellCards theObject;
+		eq(6, theObject.maxDamage(level, damage),1918);
 	}
 }
 // END CUT HERE

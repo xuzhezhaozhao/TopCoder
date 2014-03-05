@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SpellCardsEasy.cpp">
+    <ClCompile Include="SpellCards.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

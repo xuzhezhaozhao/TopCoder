@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AlbertoTheAviator.cpp">
+    <ClCompile Include="PolygonTraversal.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
