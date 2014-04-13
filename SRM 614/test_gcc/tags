@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARRSIZE	TorusSailingEasy.cpp	27;"	d	file:
+CHECKTIME	TorusSailingEasy.cpp	86;"	d	file:
+FOREACH	TorusSailingEasy.cpp	91;"	d	file:
+TorusSailingEasy	TorusSailingEasy.cpp	/^class TorusSailingEasy {$/;"	c	file:
+TorusSailingEasy::expectedTime	TorusSailingEasy.cpp	/^    double expectedTime(int N, int M, int goalX, int goalY) {$/;"	f	class:TorusSailingEasy	access:public	signature:(int N, int M, int goalX, int goalY)
+eq	TorusSailingEasy.cpp	/^static void eq( int n, string have, string need ) {$/;"	f	file:	signature:( int n, string have, string need )
+eq	TorusSailingEasy.cpp	/^template<typename T> void eq( int n, T have, T need ) {$/;"	f	signature:( int n, T have, T need )
+eq	TorusSailingEasy.cpp	/^template<typename T> void eq( int n, vector<T> have, vector<T> need ) {$/;"	f	signature:( int n, vector<T> have, vector<T> need )
+expectedTime	TorusSailingEasy.cpp	/^    double expectedTime(int N, int M, int goalX, int goalY) {$/;"	f	class:TorusSailingEasy	access:public	signature:(int N, int M, int goalX, int goalY)
+llong	TorusSailingEasy.cpp	/^typedef long long llong;$/;"	t	file:
+main	TorusSailingEasy.cpp	/^int main( int argc, char* argv[] ) {$/;"	f	signature:( int argc, char* argv[] )
+mkp	TorusSailingEasy.cpp	90;"	d	file:
+pii	TorusSailingEasy.cpp	/^typedef pair<int, int> pii;$/;"	t	file:
+pll	TorusSailingEasy.cpp	/^typedef pair<llong, llong> pll;$/;"	t	file:
+print	TorusSailingEasy.cpp	/^static void print( long long a ) {$/;"	f	file:	signature:( long long a )
+print	TorusSailingEasy.cpp	/^static void print( string a ) {$/;"	f	file:	signature:( string a )
+print	TorusSailingEasy.cpp	/^template<typename T> void print( T a ) {$/;"	f	signature:( T a )
+print	TorusSailingEasy.cpp	/^template<typename T> void print( vector<T> a ) {$/;"	f	signature:( vector<T> a )

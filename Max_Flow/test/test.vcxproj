@@ -10,6 +10,9 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PlayingCubes.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D88169EB-E1FD-488E-A3CE-553B1A354BD4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

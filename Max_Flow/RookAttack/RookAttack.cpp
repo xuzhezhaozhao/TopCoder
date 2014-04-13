@@ -90,63 +90,32 @@ typedef pair<llong, llong> pll;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-bool cut[605][605];	// 位置是否可放置
-int cap[605][605];	// 每条边的容量
-int from[605];		// 保留最短路径上到达该点的上一个顶点
-bool v[605];		// 访问数组
-const int INF = 1000000;
+bool cut[305][305];	// 位置是否可放置
+int col_match[305];	// col_match[i] 表示与i列匹配的行
+bool v[305];		// 访问数组
+
 class RookAttack {
 public:
 	int rows, cols;
-
-	// 使用增广路径法求最大流，返回值为0时说明残留图中不存在增广路径
-	int bfs()
-	{		
-		memset(v, 0, sizeof(v));
-		memset(from, -1, sizeof(from));
-		queue <int> Q;
-		int start = rows, end = rows + cols + 1;	// 添加两个超级顶点，将问题转化为单源单汇
-		Q.push(start);
-		v[start] = true;
-		int where;
-		// bfs 求最短路径
-		bool ok = false;
-		while (!Q.empty()) {
-			where = Q.front();
-			Q.pop();
-			for (int i = 0; i <= rows + cols + 1; i++) {
-				if (cap[where][i] > 0 && !v[i]) {	// 有边且点未被访问
-					from[i] = where;
-					v[i] = true;
-					if (i == end) {
-						ok = true;
-						break;
-					}
-					Q.push(i);
-				}
+	int find_path(int where)
+	{
+		if (-1 == where) {		// 找到一条增广路
+			return 1;
+		}
+		for (int i = 0; i < cols; i++) {
+			if (cut[where][i] || v[i]) {
+				continue;
 			}
-			if (ok) {
-				break;
+			//if (col_match[i] == where) {	// 不用加这个判断，实际上这个条件永远不会成立
+			//	continue;
+			//}
+			v[i] = true;
+			if (find_path(col_match[i])) {
+				col_match[i] = where;		// 相当于更新残留图
+				return 1;
 			}
 		}
-		// 求最短路径上的最小容量
-		int path_cap = INF;
-		where = end;
-		while (from[where] != -1) {
-			int pre = from[where];
-			path_cap = min(path_cap, cap[pre][where]);
-			where = pre;
-		}
-		// 更新残留图，cap[]数组
-		where = end;
-		while (from[where] != -1) {
-			int pre = from[where];
-			cap[pre][where] -= path_cap;
-			cap[where][pre] += path_cap;
-			where = pre;
-		}
-		
-		return (path_cap == INF ? 0 : path_cap);
+		return 0;
 	}
 
 	int howMany(int rows, int cols, vector <string> cutouts) {
@@ -166,25 +135,13 @@ public:
 		}
 		int r, c;
 		stringstream ss(S);
-		// 每行、每列代表一个顶点，行顶点编号为0...rows - 1，超级源点为rows；
-		// 列顶点编号为rows + 1 ... rows + cols，超级汇点为rows + cols + 1.
 		while (ss >> r >> c) {
-			cut[r][c + rows + 1] = true;
+			cut[r][c] = true;
 		}
-
-		memset(cap, 0, sizeof(cap));
+		memset(col_match, -1, sizeof(col_match));
 		for (int i = 0; i < rows; i++) {
-			for (int j = rows + 1; j < rows + cols + 1; j++) {
-				if (!cut[i][j]) {
-					cap[i][j] = 1;		// 有边，容量为1
-				}
-				cap[j][rows + cols + 1] = 1;	// 每个汇点到超级汇点的容量为1
-			}
-			cap[rows][i] = 1;	// 超级源点到每个源点的容量为1
-		}
-		int add;
-		while ( (add = bfs()) != 0 ) {	// 不断调用BFS，直到没有残留图中没有增广路径为止
-			res += add;
+			memset(v, 0, sizeof(v));
+			res += find_path(i);		// dfs找增广路径
 		}
 		return res;
 	}

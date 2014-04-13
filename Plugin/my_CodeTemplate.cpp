@@ -88,6 +88,7 @@ typedef pair<int, int> pii;
 typedef long long llong;
 typedef pair<llong, llong> pll;
 #define mkp make_pair
+#define FOREACH(it, X) for(__typeof((X).begin()) it = (X).begin(); it != (X).end(); ++it)
 
 /*************** Program Begin **********************/
 
@@ -103,7 +104,8 @@ $WRITERCODE$
 /************** Program End ************************/
 
 $BEGINCUT$
-void main( int argc, char* argv[] ) {
+int main( int argc, char* argv[] ) {
 $MAINBODY$
+	return 0;
 }
 $ENDCUT$
