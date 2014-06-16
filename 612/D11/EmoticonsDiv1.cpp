@@ -120,7 +120,7 @@ public:
 /************** Program End ************************/
 
 // BEGIN CUT HERE
-void main( int argc, char* argv[] ) {
+int main( int argc, char* argv[] ) {
 	{
 		EmoticonsDiv1 theObject;
 		eq(0, theObject.printSmiles(2),2);
@@ -141,5 +141,6 @@ void main( int argc, char* argv[] ) {
 		EmoticonsDiv1 theObject;
 		eq(4, theObject.printSmiles(11),8);
 	}
+	return 0;
 }
 // END CUT HERE

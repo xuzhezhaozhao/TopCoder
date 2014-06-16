@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARRSIZE	CandidatesSelection.cpp	27;"	d	file:
+CHECKTIME	CandidatesSelection.cpp	86;"	d	file:
+CandidatesSelection	CandidatesSelection.cpp	/^class CandidatesSelection {$/;"	c	file:
+CandidatesSelection::possible	CandidatesSelection.cpp	/^    string possible(vector <string> score, vector <int> result) {$/;"	f	class:CandidatesSelection	access:public	signature:(vector <string> score, vector <int> result)
+FOREACH	CandidatesSelection.cpp	91;"	d	file:
+eq	CandidatesSelection.cpp	/^static void eq( int n, string have, string need ) {$/;"	f	file:	signature:( int n, string have, string need )
+eq	CandidatesSelection.cpp	/^template<typename T> void eq( int n, T have, T need ) {$/;"	f	signature:( int n, T have, T need )
+eq	CandidatesSelection.cpp	/^template<typename T> void eq( int n, vector<T> have, vector<T> need ) {$/;"	f	signature:( int n, vector<T> have, vector<T> need )
+llong	CandidatesSelection.cpp	/^typedef long long llong;$/;"	t	file:
+main	CandidatesSelection.cpp	/^int main( int argc, char* argv[] ) {$/;"	f	signature:( int argc, char* argv[] )
+mkp	CandidatesSelection.cpp	90;"	d	file:
+pii	CandidatesSelection.cpp	/^typedef pair<int, int> pii;$/;"	t	file:
+pll	CandidatesSelection.cpp	/^typedef pair<llong, llong> pll;$/;"	t	file:
+possible	CandidatesSelection.cpp	/^    string possible(vector <string> score, vector <int> result) {$/;"	f	class:CandidatesSelection	access:public	signature:(vector <string> score, vector <int> result)
+print	CandidatesSelection.cpp	/^static void print( long long a ) {$/;"	f	file:	signature:( long long a )
+print	CandidatesSelection.cpp	/^static void print( string a ) {$/;"	f	file:	signature:( string a )
+print	CandidatesSelection.cpp	/^template<typename T> void print( T a ) {$/;"	f	signature:( T a )
+print	CandidatesSelection.cpp	/^template<typename T> void print( vector<T> a ) {$/;"	f	signature:( vector<T> a )
