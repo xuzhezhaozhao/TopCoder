@@ -1,0 +1,20 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Alice and Bob are playing a game.
+Alice has an <b>a</b>-sided die.
+Bob has a <b>b</b>-sided die.
+(The faces of an n-sided die have numbers 1 through n written on them.)
+</p>
+
+<p>
+The game is simple:
+Each player rolls their die, and the player who rolls a strictly larger number wins.
+(It is possible that neither player wins.)
+</p>
+
+<p>
+You are given the ints <b>a</b> and <b>b</b>.
+The players already rolled their dice.
+You do not know what numbers they rolled, but you know that Alice won the game.
+Compute and return the expected value of the number Alice rolled.
+</p>
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>FixedDiceGameDiv2</td></tr><tr><td>Method:</td><td>getExpectation</td></tr><tr><td>Parameters:</td><td>int, int</td></tr><tr><td>Returns:</td><td>double</td></tr><tr><td>Method signature:</td><td>double getExpectation(int a, int b)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>Your return value must have absolute or relative error smaller than 1e-9.</td></tr><tr><td align="center" valign="top">-</td><td>The expected value can be seen as the average of many experiments. In our case, suppose that you folow a lot of games, and each time Alice wins, you write down her score. As you watch more and more games, the average of all numbers you have written down will converge to the expected value you should return. </td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>a</b> and <b>b</b> will each be between 2 and 1000, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>2</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2.0</pre></td></tr><tr><td><table><tr><td colspan="2">Alice can only win if she rolls a 2 and Bob rolls a 1. Thus, if we know Alice wins, we know she rolled a 2.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>4</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3.2</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>3</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2.6666666666666665</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>11</pre></td></tr><tr><td><pre>13</pre></td></tr></table></td></tr><tr><td><pre>Returns: 7.999999999999999</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

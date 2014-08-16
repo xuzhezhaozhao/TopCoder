@@ -1,0 +1,22 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>The Happy Letter game is played as follows:
+At the beginning, several players enter the field.
+Each player has a lowercase English letter on their back.
+The game is played in turns.
+In each turn, you select two players with different letters, and both selected players leave the field.
+The game ends once it is impossible to take another turn.</p>
+
+<p>If there are some players left in the field at the end of the game, they must all have the same letter.
+That letter is called the winning letter.
+If there are no players left in the field at the end of the game, there is no winning letter.</p>
+
+<p>In general, there may be many different ways how to play the game, and these may lead to different outcomes of the game.
+However, sometimes we can look at the initial players and determine that each possible sequence of turns leads to the same winning letter.
+That winning letter is then called a happy letter.</p>
+
+<p>You are given a string <b>letters</b>.
+The characters in <b>letters</b> are the characters carried by the players at the beginning of the game.
+Return a string with one character: either the happy letter (if it exists), or a period ('.') if there is no happy letter.</p>
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>HappyLetterDiv2</td></tr><tr><td>Method:</td><td>getHappyLetter</td></tr><tr><td>Parameters:</td><td>string</td></tr><tr><td>Returns:</td><td>char</td></tr><tr><td>Method signature:</td><td>char getHappyLetter(string letters)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>letters will contain between 1 and 50 elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of letters will be a lowercase English letter ('a'-'z').</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;aacaaa&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 'a'</pre></td></tr><tr><td><table><tr><td colspan="2">In the first turn we send away the player with the 'c' and one of the players with an 'a'. All remaining players have an 'a', hence the game ends and 'a' is the winning letter.
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;dcdjx&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: '.'</pre></td></tr><tr><td><table><tr><td colspan="2">Each of the letters 'c', 'd', 'j', and 'x' can be the winning letter. Thus there is no happy letter.
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;bcbbbbba&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 'b'</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;aabc&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: '.'</pre></td></tr><tr><td><table><tr><td colspan="2">Here, only 'a' can be the winning letter. However, it is also possible that there is no winning letter at the end of the game. Therefore 'a' is <i>not</i> considered to be the happy letter.
+</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

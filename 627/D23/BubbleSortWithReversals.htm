@@ -1,0 +1,25 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td>The pseudocode shown below is an implementation of BubbleSort.
+Note that the array <b>A</b> used in the implementation is 0-based.
+That is, elements of <b>A</b> have indices 0 through Length(<b>A</b>)-1, inclusive.
+
+<pre>
+BubbleSort(A):
+        Repeat Length(A)-1 times:
+               For every i from 0 to Length(A)-2, inclusive:
+                      If A[i] &gt; A[i+1] then:
+                               Swap A[i] and A[i+1]
+</pre>
+
+We are going to sort the array <b>A</b> using the above algorithm.
+However, before we do that, you are allowed to reverse at most <b>K</b> disjoint subarrays of <b>A</b>.
+
+For example, suppose that <b>A</b>={10, 20, 30, 40, 50, 60, 70} and that <b>K</b>=1.
+In this case you may, for example, reverse the subarray [2,5] - that is, the elements at (0-based) indices 2 through 5.
+This would produce the array {10, 20, 60, 50, 40, 30, 70}.
+
+We are interested in minimizing the number of swaps executed by our BubbleSort.
+You are given the vector &lt;int&gt; <b>A</b> and the int <b>K</b>.
+Return the smallest possible number of swaps performed by our BubbleSort after you reverse at most <b>K</b> disjoint subarrays of <b>A</b>.
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>BubbleSortWithReversals</td></tr><tr><td>Method:</td><td>getMinSwaps</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, int</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int getMinSwaps(vector &lt;int&gt; A, int K)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>A</b> will contain between 2 and 50 elements.</td></tr><tr><td align="center" valign="top">-</td><td><b>K</b> will be between 1 and 50.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>A</b> will be between 1 and 1000, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{6,8,8,7,7}</pre></td></tr><tr><td><pre>1</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0</pre></td></tr><tr><td><table><tr><td colspan="2">By reversing the subarray [1,4] we obtain a new array {6,7,7,8,8}. This array is already sorted and we can easily verify that our BubbleSort never swaps anything.
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{7,2,2,13,5,5,2}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{12,5,1,10,12,6,6,10,6,8}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 12</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{2,3,1}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">Note that the subarrays we are reversing must all be disjoint. For example, it is <i>not</i> allowed to reverse first the subarray [0,1] and then the subarray [0,2].
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{482,619,619,601,660,660,691,691,77,77,96,77}</pre></td></tr><tr><td><pre>9</pre></td></tr></table></td></tr><tr><td><pre>Returns: 22</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
