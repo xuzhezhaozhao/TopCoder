@@ -1,0 +1,40 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td>John, Gogo, and Brus came to the zoo today.
+The most interesting thing in the zoo was the eagle cage.<br></br><br></br>
+
+There was a big tree in the cage.
+For the purpose of this problem, the tree is a connected graph with N vertices and N-1 edges.
+The vertices are numbered 0 through N-1, with 0 being the root of the tree.
+You are given the description of the tree in a vector &lt;int&gt; <b>parent</b> with N-1 elements.
+For each i between 1 and N, inclusive, the vertex number <b>parent</b>[i-1] is the parent of the vertex number i.
+The root vertex 0 has no parent.<br></br><br></br>
+
+You are also given an int <b>K</b>.
+There are <b>K</b> eagles in the cage.
+The eagles like to sit on vertices of the tree.
+Initially, the tree is empty.
+Then, one after another, each of the eagles makes one attempt to sit on the tree.
+When attempting to sit on the tree, each eagle follows the algorithm described below.<br></br><br></br>
+
+An eagle who tries to sit on the tree starts by flying to the root vertex.
+Then, the eagle repeats the following steps until the algorithm terminates:
+<ol>
+<li>If the eagle is at an empty vertex, the eagle sits there and the algorithm terminates.</li>
+<li>If the eagle is at a vertex where another eagle sits, and the vertex has no children, the current eagle gives up and flies away from the tree. The algorithm terminates.</li>
+<li>If the eagle is at a vertex where another eagle sits, and the vertex has one or more children, the current eagle chooses one of the children uniformly at random, and flies to that vertex.</li>
+</ol><br></br><br></br>
+
+Return the probability that the last eagle (i.e., the <b>K</b>-th eagle who attempts to sit on the tree) will actually sit on the tree.</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>EagleInZoo</td></tr><tr><td>Method:</td><td>calc</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, int</td></tr><tr><td>Returns:</td><td>double</td></tr><tr><td>Method signature:</td><td>double calc(vector &lt;int&gt; parent, int K)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>Vertex Y is a child of vertex X if and only if vertex X is the parent of vertex Y.</td></tr><tr><td align="center" valign="top">-</td><td>The constraints guarantee that <b>parent</b> describes a valid tree.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>parent</b> will contain between 1 and 50 elements, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>For each i, element i of <b>parent</b> will be between 0 and i, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td><b>K</b> will be between 1 and 100, inclusive.<br></br></td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1.0</pre></td></tr><tr><td><table><tr><td colspan="2">The first eagle will start at the root vertex.
+It will find that the vertex is empty, and it will sit there.
+
+The second eagle will also start at the root vertex, but the vertex is already occupied.
+Vertex 0 has two children: vertices 1 and 2.
+The second eagle will pick one of them uniformly at random, fly to that vertex, and sit there.
+
+Thus, the second eagle will always sit on the tree, hence the probability we want to compute is 1.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0.5</pre></td></tr><tr><td><table><tr><td colspan="2">There are four equally likely ways how the process can look like:
+<ul>
+<li>First eagle sits at 0. Second eagle flies from 0 to 1 and sits there. Third eagle flies from 0 to 1, finds it occupied and flies away from the tree.</li>
+<li>First eagle sits at 0. Second eagle flies from 0 to 1 and sits there. Third eagle flies from 0 to 2 and sits there.</li>
+<li>First eagle sits at 0. Second eagle flies from 0 to 2 and sits there. Third eagle flies from 0 to 1 and sits there.</li>
+<li>First eagle sits at 0. Second eagle flies from 0 to 2 and sits there. Third eagle flies from 0 to 2, finds it occupied and flies away from the tree.</li>
+</ul>
+Thus, the probability that the third eagle will sit on the tree is 2/4.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,1,0,3}</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0.75</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0,1,1,2,4,4,4,5,5,6,6}</pre></td></tr><tr><td><pre>20</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0.14595168754091617</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,1,2,3,2,1,1,7,0,9,10,11,12,13,14,15,16,17,18,14,9}</pre></td></tr><tr><td><pre>24</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0.3272154791654077</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,1,2,3,4,5,6,7,8,9,10}</pre></td></tr><tr><td><pre>50</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0.0</pre></td></tr><tr><td><table><tr><td colspan="2">For this particular tree, the 50-th eagle will certainly have no place to sit.</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

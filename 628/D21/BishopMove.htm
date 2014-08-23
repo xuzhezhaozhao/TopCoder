@@ -1,0 +1,24 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>Janusz is learning how to play chess.
+He is using the standard chessboard with 8 rows and 8 columns.
+Both the rows and the columns are numbered 0 through 7.
+Thus, we can describe each cell using its two coordinates: (row, column).</p>
+
+<p>Janusz recently learned about one of the chess pieces: the bishop.
+The bishop is a piece that moves diagonally by an arbitrary number of cells.
+Formally, if a bishop is currently on the cell (r,c) of an empty chessboard,
+the set of all cells reachable in a single move contains the following cells:
+<ul>
+<li>All cells of the form (r+k,c+k), where k is a positive integer.</li>
+<li>All cells of the form (r+k,c-k), where k is a positive integer.</li>
+<li>All cells of the form (r-k,c+k), where k is a positive integer.</li>
+<li>All cells of the form (r-k,c-k), where k is a positive integer.</li>
+</ul>
+(Of course, the bishop's destination must always be a valid cell on the chessboard.)</p>
+
+<p>Janusz took an empty chessboard and he placed a single bishop onto the cell (<b>r1</b>,<b>c1</b>).
+He now wants to move it to the cell (<b>r2</b>,<b>c2</b>) using as few moves as possible.</p>
+
+<p>You are given the ints <b>r1</b>, <b>c1</b>, <b>r2</b>, and <b>c2</b>.
+Compute and return the smallest number of moves a bishop needs to get from (<b>r1</b>,<b>c1</b>) to (<b>r2</b>,<b>c2</b>).
+If it is impossible for a bishop to reach the target cell, return -1 instead.</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>BishopMove</td></tr><tr><td>Method:</td><td>howManyMoves</td></tr><tr><td>Parameters:</td><td>int, int, int, int</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int howManyMoves(int r1, int c1, int r2, int c2)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>r1,c1,r2,c2</b> will be between 0 and 7, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>4</pre></td></tr><tr><td><pre>6</pre></td></tr><tr><td><pre>7</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">The bishop can go from (4,6) to (7,3) in a single move.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>2</pre></td></tr><tr><td><pre>5</pre></td></tr><tr><td><pre>2</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0</pre></td></tr><tr><td><table><tr><td colspan="2">The bishop is already where it should be, no moves are necessary.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>1</pre></td></tr><tr><td><pre>3</pre></td></tr><tr><td><pre>5</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">In the first move Janusz can move the bishop to the cell (4,6).
+Please note that this is the largest possible return value: whenever there is a solution, there is a solution that uses at most two moves.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>4</pre></td></tr><tr><td><pre>6</pre></td></tr><tr><td><pre>7</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: -1</pre></td></tr><tr><td><table><tr><td colspan="2">If the bishop starts at (4,6), it can never reach (7,4).</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

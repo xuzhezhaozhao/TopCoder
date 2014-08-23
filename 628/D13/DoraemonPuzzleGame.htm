@@ -1,0 +1,43 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Doraemon is fond of playing puzzle games.
+Today he found a new puzzle game.
+This problem is about the first episode of this game.</p>
+
+<p>The episode is divided into N levels, numbered 0 through N-1.
+You are allowed to play the levels in any order you like.
+Each time you play a level it takes you one minute.
+There are three possible outcomes: you either fail the level, or you clear it and get one star, or you clear it and get two stars.
+If you play the same level multiple times, only the best result is stored by the game.
+(Clearing is better than not clearing, and two stars are better than one.)</p>
+
+<p>In order to advance to the next episode, you must clear all N levels, and the total number of stars you received must be at least <b>m</b>.
+(If you have enough stars but you did not clear some levels, you do not advance yet.)</p>
+
+<p>You already know how good Doraemon is in each of the levels.
+You are given this information as vector &lt;int&gt;s <b>X</b> and <b>Y</b>.
+For each i, the values <b>X</b>[i] and <b>Y</b>[i] describe what happens when Doraemon plays level i:
+<ul>
+<li>With probability (1000 - <b>X</b>[i] - <b>Y</b>[i])*0.001, Doraemon will not clear the level.</li>
+<li>With probability <b>X</b>[i]*0.001, Doraemon will clear the level and get one star.</li>
+<li>With probability <b>Y</b>[i]*0.001, Doraemon will clear the level and get two stars.</li>
+</ul></p>
+
+<p>You are also given the int <b>m</b>: the number of stars Doraemon needs to collect.
+Doraemon is trying to minimize the expected time he will need to finish the current episode.
+Assume that he always picks the next level to play optimally.
+Compute and return the expected number of minutes from the beginning to the episode to the moment when Doraemon finishes it.</p>
+
+</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>DoraemonPuzzleGame</td></tr><tr><td>Method:</td><td>solve</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;, int</td></tr><tr><td>Returns:</td><td>double</td></tr><tr><td>Method signature:</td><td>double solve(vector &lt;int&gt; X, vector &lt;int&gt; Y, int m)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>When Doraemon plays the same level multiple times, we assume that the outcomes are mutually independent.</td></tr><tr><td align="center" valign="top">-</td><td>Your return value must have an absolute or relative error smaller than 1e-9.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>N will be between 1 and 2000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>X</b> and <b>Y</b> will each contain exactly N elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>X</b> and <b>Y</b> will between 1 and 1000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>For each i, <b>X</b>[i] + <b>Y</b>[i] will not exceed 1000.</td></tr><tr><td align="center" valign="top">-</td><td><b>m</b> will be between N and 2*N, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{800}</pre></td></tr><tr><td><pre>{200}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5.0</pre></td></tr><tr><td><table><tr><td colspan="2">There is only one level. Doraemon needs two stars to finish the episode. The only strategy is to play level 0 until he gets two stars. As that happens with probability 0.2, the expected time is 5 minutes.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1,999,999}</pre></td></tr><tr><td><pre>{999,1,1}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3.0</pre></td></tr><tr><td><table><tr><td colspan="2">In this episode, Doraemon will surely clear each level he plays.
+Thus, he needs to play each level at least once.
+The optimal strategy is to play each level exactly once, in any order.
+Once he clears all of them, he will also have enough stars.
+
+Note that for example after playing levels 0 and 1 Doraemon will almost certainly have enough stars.
+However, that is not enough - he is also required to clear all levels.
+</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{500,500}</pre></td></tr><tr><td><pre>{500,500}</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2.5</pre></td></tr><tr><td><table><tr><td colspan="2">Here is one optimal strategy:
+Doraemon will start by playing each level once.
+With probability 0.75 he will collect enough stars and finish the episode.
+With probability 0.25 he will clear both levels but he will have only two stars.
+In this unlucky case, he can now play level 0 again and again, until he clears it for two stars.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{250,250,250,250}</pre></td></tr><tr><td><pre>{250,250,250,250}</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: 8.25</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{250,500,250}</pre></td></tr><tr><td><pre>{500,250,500}</pre></td></tr><tr><td><pre>5</pre></td></tr></table></td></tr><tr><td><pre>Returns: 4.962962962962963</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{600,900,800,500,900,200,400,100,800,300,900,300,800,700,800,600,800,900,400,100,100,700,600,100,500,
+800,700,600,900,600,300,100,300,100,700,500,900,200,800,400,300,700,300,400,700,300,400,800,300,200}</pre></td></tr><tr><td><pre>{400,100,200,500,100,800,600,900,200,700,100,700,200,300,200,400,200,100,600,900,900,300,400,900,500,
+200,300,400,100,400,700,900,700,900,300,500,100,800,200,600,700,300,700,600,300,700,600,200,700,800}</pre></td></tr><tr><td><pre>95</pre></td></tr></table></td></tr><tr><td><pre>Returns: 119.33578280666175</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
