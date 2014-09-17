@@ -1,0 +1,39 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Alice likes eating candies.
+Her favorite type of candy are the Surprise Candies.
+Surprise Candies come in N different flavors and in N different shapes.
+You know the following facts about the shapes and flavors of Surprise Candies:
+<ul>
+<li>The shapes are numbered 0 through N-1.</li>
+<li>The flavors are numbered 0 through N-1.</li>
+<li>You can tell the shape of a candy before buying it. (Thus, you can do stuff like "buy exactly 47 candies of shape 3".)</li>
+<li>You can only tell the flavor of a candy when eating it. (Thus, you <i>do not</i> know the flavor when you are buying the candy.)</li>
+<li>For each shape of Surprise Candies, there are exactly two flavors that can have that shape.</li>
+<li>For each flavor of Surprise Candies, there are exactly two shapes that can have that flavor.</li>
+</ul>
+</p>
+
+<p>
+In Alice's street there is a store that sells Surprise Candies.
+Alice knows the exact inventory of this store.
+You are given this information in vector &lt;int&gt;s <b>Type1</b>, <b>Number1</b>, <b>Type2</b>, and <b>Number2</b>.
+Each of these vector &lt;int&gt;s has exactly N elements.
+For each i, their elements at index i correspond to the shape number i, as follows:
+<ul>
+<li>The store contains exactly <b>Number1</b>[i] candies with shape i and flavor <b>Type1</b>[i].</li>
+<li>The store contains exactly <b>Number2</b>[i] candies with shape i and flavor <b>Type2</b>[i].</li>
+</ul>
+</p>
+
+<p>
+Alice wants to eat candies of all N flavors today.
+However, she is lazy to go to the store, so she sent Kirito to do the shopping for her.
+Kirito must buy a set of candies that is guaranteed to contain all N flavors.
+Return the smallest number of candies Kirito may buy.
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>CandyCollection</td></tr><tr><td>Method:</td><td>solve</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;, vector &lt;int&gt;, vector &lt;int&gt;</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int solve(vector &lt;int&gt; Type1, vector &lt;int&gt; Number1, vector &lt;int&gt; Type2, vector &lt;int&gt; Number2)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>N will between 1 and 1000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>Type1</b>, <b>Number1</b>, <b>Type2</b>, <b>Number2</b> will each contain exactly N elements.</td></tr><tr><td align="center" valign="top">-</td><td>For each i, <b>Type1</b>[i] and <b>Types2</b>[i] will be different.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>Type1</b> and <b>Type2</b> will be between 0 and N-1, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>Number1</b> and <b>Number2</b> will be between 1 and 1000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each of the values 0 through N-1 will appear exactly twice in <b>Type1</b> and <b>Type2</b> together.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0}</pre></td></tr><tr><td><pre>{1,1}</pre></td></tr><tr><td><pre>{1,1}</pre></td></tr><tr><td><pre>{1,1}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">In this test case we have N=2.
+Thus, there are two shapes and two flavors.
+The store has exactly one candy for each combination (shape,flavor).
+Kirito can simply buy two candies with the same shape, their flavors must be different.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0}</pre></td></tr><tr><td><pre>{2,5}</pre></td></tr><tr><td><pre>{1,1}</pre></td></tr><tr><td><pre>{2,5}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3</pre></td></tr><tr><td><table><tr><td colspan="2">In this test case we have N=2 again, but now the supply of candies in the store is larger.
+There are 2+2 = 4 candies of shape 0, and 5+5 = 10 candies of shape 1.
+The optimal strategy for Kirito is to buy 3 candies of shape 0.
+Both flavors have to be present in those three candies.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,0,2,3}</pre></td></tr><tr><td><pre>{1,1,2,2}</pre></td></tr><tr><td><pre>{1,1,3,2}</pre></td></tr><tr><td><pre>{1,1,2,2}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5</pre></td></tr><tr><td><table><tr><td colspan="2">One optimal solution is to buy two candies of shape 0 and three candies of shape 2.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0,1,2,3}</pre></td></tr><tr><td><pre>{5,5,10,13}</pre></td></tr><tr><td><pre>{1,2,3,0}</pre></td></tr><tr><td><pre>{8,8,10,15}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 20</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{12,9,0,16,9,18,12,3,6,0,8,2,10,6,5,2,14,10,5,13}</pre></td></tr><tr><td><pre>{895,704,812,323,334,674,665,142,712,254,869,548,645,663,758,38,860,724,742,530}</pre></td></tr><tr><td><pre>{1,4,7,11,15,8,18,13,17,17,19,14,7,11,4,1,15,19,3,16}</pre></td></tr><tr><td><pre>{779,317,36,191,843,289,107,41,943,265,649,447,806,891,730,371,351,7,102,394}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5101</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

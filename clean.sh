@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm *.out
-rm *.cpp
-rm *.htm
-rm *.bak
+rm /home/xzz/Desktop/Arena/*.out
+rm /home/xzz/Desktop/Arena/*.cpp
+rm /home/xzz/Desktop/Arena/*.htm
+rm /home/xzz/Desktop/Arena/*.bak
