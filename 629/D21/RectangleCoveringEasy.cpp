@@ -109,7 +109,7 @@ public:
 /************** Program End ************************/
 
 // BEGIN CUT HERE
-void main( int argc, char* argv[] ) {
+int main( int argc, char* argv[] ) {
     {
         RectangleCoveringEasy theObject;
         eq(0, theObject.solve(1, 1, 1, 1),-1);
@@ -126,5 +126,6 @@ void main( int argc, char* argv[] ) {
         RectangleCoveringEasy theObject;
         eq(3, theObject.solve(3, 10, 3, 12),1);
     }
+	return 0;
 }
 // END CUT HERE
