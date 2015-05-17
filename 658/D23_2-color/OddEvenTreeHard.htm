@@ -1,0 +1,37 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td>In a tree, the distance between two nodes is the number of edges on the (only) simple path that connects them.
+<br></br>
+<br></br>
+You are given a tuple (string) <b>x</b> with N elements, each containing N characters.
+Draw a tree with N nodes, numbered 0 through N-1.<br></br>
+The tree must have the following properties:<br></br>
+<br></br>
+For each i and j, if <b>x</b>[i][j] is one of 'E', 'O' (uppercase o), and '?'.
+<ul>
+<li>If <b>x</b>[i][j]='E', the distance between i and j must be even.</li>
+<li>If <b>x</b>[i][j]='O', the distance between i and j must be odd.</li>
+<li>If <b>x</b>[i][j]='?', the distance between i and j may be arbitrary.</li>
+</ul>
+<br></br>
+<br></br>
+If there is no tree with these properties, return {-1}.
+Otherwise, return a tuple (integer) with 2N-2 elements: the list of edges in one such tree.
+For example, if N=3 and your tree contains the edges 0-2 and 1-2, return {0,2,1,2}.
+If there are multiple correct outputs you may output any of them.</td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>OddEvenTreeHard</td></tr><tr><td>Method:</td><td>getTree</td></tr><tr><td>Parameters:</td><td>tuple (string)</td></tr><tr><td>Returns:</td><td>tuple (integer)</td></tr><tr><td>Method signature:</td><td>def getTree(self, x):</td></tr><tr><td colspan="2"></td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>If you use plugins to test your solution, be careful. Plugins cannot tell you whether your solution is correct -- they'll just tell you whether it matches the example output exactly.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>n will be between 2 and 50, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>x</b> will contain exactly n elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element in <b>x</b> will have exactly n characters.</td></tr><tr><td align="center" valign="top">-</td><td>Each character in <b>x</b> will be 'O', 'E' or '?'.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;EOE&quot;,
+ &quot;OEO&quot;,
+ &quot;EOE&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {0, 1, 2, 1 }</pre></td></tr><tr><td><table><tr><td colspan="2">The tree 0-1-2 is a valid solution.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;????&quot;,
+ &quot;????&quot;,
+ &quot;????&quot;,
+ &quot;????&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {0, 1, 0, 3, 2, 1 }</pre></td></tr><tr><td><table><tr><td colspan="2">Any tree with 4 nodes is a valid solution.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;????&quot;,
+ &quot;????&quot;,
+ &quot;??O?&quot;,
+ &quot;????&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {-1 }</pre></td></tr><tr><td><table><tr><td colspan="2">dist[2][2] should be zero, can't be an odd number.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;??O?&quot;,
+ &quot;????&quot;,
+ &quot;E???&quot;,
+ &quot;????&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {-1 }</pre></td></tr><tr><td><table><tr><td colspan="2">dist[0][2] = dist[2][0], they should be both even or both odd.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;?O??&quot;,
+ &quot;??O?&quot;,
+ &quot;???O&quot;,
+ &quot;????&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {0, 1, 0, 3, 2, 1 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;?E??&quot;,
+ &quot;??E?&quot;,
+ &quot;???E&quot;,
+ &quot;????&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {-1 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">6)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;?????????????&quot;,&quot;??????????OE?&quot;,&quot;?????????????&quot;,&quot;?????????????&quot;,&quot;?????????????&quot;,&quot;?????????????&quot;,&quot;?????????????&quot;,&quot;???????E?????&quot;,&quot;???????E?????&quot;,
+&quot;?????????????&quot;,&quot;???????????O?&quot;,&quot;???????????E?&quot;,&quot;????????????E&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {0, 1, 0, 3, 0, 5, 0, 7, 0, 8, 0, 11, 0, 12, 2, 1, 4, 1, 6, 1, 9, 1, 10, 1 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

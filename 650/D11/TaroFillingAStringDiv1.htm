@@ -1,0 +1,24 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Cat Taro likes strings.
+He is currently constructing a string S of length <b>N</b>.
+Each character of S will be either 'A' or 'B'.
+Taro has already chosen some of the characters.
+You are given these choices as a vector &lt;int&gt; <b>position</b> and a string <b>value</b>.
+For each valid i, the character at the 1-based index <b>position</b>[i] in S is the character <b>value</b>[i].
+</p>
+<p>
+</p>
+<p>
+To Taro, the ugliness of a string is the number of pairs of equal consecutive characters.
+For example, the ugliness of "ABABAABBB" is 3: there is one pair "AA" and two (overlapping) pairs "BB".
+</p>
+<p>
+</p>
+<p>
+Taro now wants to finish S by filling in the remaining characters.
+His goal is to create a string with the smallest possible ugliness.
+Let X be the number of possible strings Taro may produce.
+Return the value (X modulo 1,000,000,007).
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>TaroFillingAStringDiv1</td></tr><tr><td>Method:</td><td>getNumber</td></tr><tr><td>Parameters:</td><td>int, vector &lt;int&gt;, string</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int getNumber(int N, vector &lt;int&gt; position, string value)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>N</b> will be between 1 and 1,000,000,000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>position</b> will contian between 1 and 50 elements, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>value</b> and <b>position</b> will contain the same number of elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>position</b> will be between 1 and <b>N</b>, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>All elements of <b>position</b> will be distinct.</td></tr><tr><td align="center" valign="top">-</td><td><b>value</b> will consist only of characters 'A' and 'B'.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>3</pre></td></tr><tr><td><pre>{1, 3}</pre></td></tr><tr><td><pre>&quot;AB&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">Currently, Taro's string looks as follows: A_B.
+He can either produce the string AAB or the string ABB.
+Both have the same ugliness.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>4</pre></td></tr><tr><td><pre>{2, 1, 3, 4}</pre></td></tr><tr><td><pre>&quot;ABBA&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">All characters of S have already been chosen.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>25</pre></td></tr><tr><td><pre>{23, 4, 8, 1, 24, 9, 16, 17, 6, 2, 25, 15, 14, 7, 13}</pre></td></tr><tr><td><pre>&quot;ABBBBABABBAAABA&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>305</pre></td></tr><tr><td><pre>{183, 115, 250, 1, 188, 193, 163, 221, 144, 191, 92, 192, 58, 215, 157, 187, 227, 177, 206, 15, 272, 232, 49, 11, 178, 59, 189, 246}</pre></td></tr><tr><td><pre>&quot;ABAABBABBAABABBBBAAAABBABBBA&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 43068480</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

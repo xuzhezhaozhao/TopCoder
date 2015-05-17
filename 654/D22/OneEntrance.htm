@@ -1,0 +1,35 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+There are N rooms in Maki's new house.
+The rooms are numbered from 0 to N-1.
+Some pairs of rooms are connected by bidirectional passages.
+The passages have the topology of a tree.
+That is, there are exactly N-1 of them and it is possible to go from any room to any other room by following some sequence of passages.
+</p>
+<p>
+You are given two vector &lt;int&gt;s <b>a</b> and <b>b</b> that describe the passages.
+For each valid i, there is a passage that connects the rooms <b>a</b>[i] and <b>b</b>[i].
+You are also given an int <b>s</b>.
+The house has exactly one entrance from the outside, and the entrance leads to the room <b>s</b>.
+</p>
+<p>
+Niko is helping Maki move into the new house.
+Maki has exactly N pieces of furniture.
+The pieces are numbered from 0 to N-1.
+Niko will carry them into the house in this order.
+Each piece of furniture must be placed into a different room.
+Maki does not care which piece goes where, each of the N! permutations is allowed.
+</p>
+<p>
+However, not all of those N! permutations are actually possible.
+This is because the furniture is large.
+As soon as a room contains a piece of furniture, it is impossible to move other pieces through this room.
+Thus, Niko must place the furniture carefully.
+Formally, she can place a new piece of furniture into the room x if and only if all rooms on the (unique) path between <b>s</b> and x, including <b>s</b> and x, are still empty.
+Niko is smart and she will always place the furniture in such a way that she never gets stuck.
+Thus, at the end each of Maki's rooms will contain exactly one piece of furniture.
+</p>
+<p>
+Calculate and return the number of ways how the furniture can be arranged in Maki's house at the end.
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>OneEntrance</td></tr><tr><td>Method:</td><td>count</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;, int</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int count(vector &lt;int&gt; a, vector &lt;int&gt; b, int s)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>N will be between 1 and 9, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>a</b> and <b>b</b> will contain exactly N-1 elements each.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>a</b> and <b>b</b> will be between 0 and N-1, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>The graph described by <b>a</b> and <b>b</b> will be a tree.</td></tr><tr><td align="center" valign="top">-</td><td><b>s</b> will be between 0 and N-1, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0, 1, 2}</pre></td></tr><tr><td><pre>{1, 2, 3}</pre></td></tr><tr><td><pre>0</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">There is only one solution: Niko must fill the rooms in the order {3,2,1,0}.
+Thus, piece number 0 will end in room 3, piece number 1 in room 2, and so on.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0, 1, 2}</pre></td></tr><tr><td><pre>{1, 2, 3}</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3</pre></td></tr><tr><td><table><tr><td colspan="2">In this case Niko can choose one of three orders: {3,0,1,2}, {0,3,1,2}, or {0,1,3,2}.
+Note that the room with the entrance (in this case, room 2) always gets the last piece of furniture.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{0, 0, 0, 0}</pre></td></tr><tr><td><pre>{1, 2, 3, 4}</pre></td></tr><tr><td><pre>0</pre></td></tr></table></td></tr><tr><td><pre>Returns: 24</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{7, 4, 1, 0, 1, 1, 6, 0}</pre></td></tr><tr><td><pre>{6, 6, 2, 5, 0, 3, 8, 4}</pre></td></tr><tr><td><pre>4</pre></td></tr></table></td></tr><tr><td><pre>Returns: 896</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{}</pre></td></tr><tr><td><pre>{}</pre></td></tr><tr><td><pre>0</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">Maki's new house has only one room.</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
