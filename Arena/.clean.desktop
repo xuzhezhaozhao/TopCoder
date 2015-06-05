@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=bash /home/xzz/Desktop/Arena/clean.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=false
+Name[en_US]=.clean
+Name=clean
+Comment[en_US]=
+Comment=
