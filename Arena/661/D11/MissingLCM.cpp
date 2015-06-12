@@ -30,14 +30,36 @@ typedef pair<int, int> pii;
 #define mkp make_pair
 
 /*************** Program Begin **********************/
-
-class NarrowPassage2 {
+const int MAX_N = 1000005;
+bool composite[MAX_N];
+class MissingLCM {
 public:
-    int count(vector <int> size, int maxSizeSum) {
-        int res;
+    int getMin(int N) {
+		if (1 == N) {
+			return 2;
+		}
+
+        int res = 0;
+		vector <int> primes;
+		memset(composite, 0, sizeof composite);
+		for (long long i = 2; i <= N; i++) {
+			if (composite[i]) { continue; }
+			primes.push_back(i);
+			for (long long j = i * i;  j <= N; j += i) {
+				composite[j] = true;
+			}
+		}
+
+		for (auto x : primes) {
+			int p = x;
+			while ((long long)p * x <= N) {
+				p *= x;
+			}
+			res = max(res, p * 2);
+		}
+
         return res;
     }
-
 };
 
 /************** Program End ************************/
@@ -88,40 +110,32 @@ static void eq( int n, string have, string need ) {
 
 int main( int argc, char* argv[] ) {
     {
-        int sizeARRAY[] = {1, 2, 3};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(0, theObject.count(size, 3),2);
+        MissingLCM theObject;
+        eq(0, theObject.getMin(1),2);
     }
     {
-        int sizeARRAY[] = {1, 2, 3};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(1, theObject.count(size, 1000),6);
+        MissingLCM theObject;
+        eq(1, theObject.getMin(2),4);
     }
     {
-        int sizeARRAY[] = {1, 2, 3};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(2, theObject.count(size, 4),3);
+        MissingLCM theObject;
+		eq(2, theObject.getMin(3),6);
     }
     {
-        int sizeARRAY[] = {1,1,1,1,1,1,1,1,1,1,1,1,1};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(3, theObject.count(size, 2),227020758);
+        MissingLCM theObject;
+		eq(3, theObject.getMin(4),8);
     }
     {
-        int sizeARRAY[] = {2,4,6,1,3,5};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(4, theObject.count(size, 8),60);
+        MissingLCM theObject;
+		eq(4, theObject.getMin(5),10);
     }
     {
-        int sizeARRAY[] = {1000000000};
-        vector <int> size( sizeARRAY, sizeARRAY+ARRSIZE(sizeARRAY) );
-        NarrowPassage2 theObject;
-        eq(5, theObject.count(size, 1000000000),1);
+        MissingLCM theObject;
+		eq(5, theObject.getMin(42),82);
+    }
+    {
+        MissingLCM theObject;
+		eq(6, theObject.getMin(999999),1999966);
     }
 	return 0;
 }

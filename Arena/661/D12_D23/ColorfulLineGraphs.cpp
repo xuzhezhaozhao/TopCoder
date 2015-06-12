@@ -31,11 +31,40 @@ typedef pair<int, int> pii;
 
 /*************** Program Begin **********************/
 
-class NamingConvention {
+class ColorfulLineGraphs {
 public:
-    string toCamelCase(string variableName) {
-        string res;
-        return res;
+	long long fastPow(long long a, long long b, int M) {
+		long long res = 1;
+		while (b > 0) {
+			if (b % 2 != 0) {
+				res *= a;
+				res %= M;
+			}
+			b /= 2;
+			a *= a;
+			a %= M;
+		}
+		return res;
+	}
+
+    int countWays(long long N, long long K, int M) {
+        long long res = 1;
+
+		long long times = N / M;
+		long long rem = N % M;
+
+		long long m1 = K % M;
+		long long m2 = (K - 1) % M;
+		for (long long i = 0; i <= M - 1 && i <= N; i++) {
+			long long a = ( m1 + i * m2) % M;
+			res *= fastPow(a, times, M);
+			res %= M;
+			if (i < rem) {
+				res *= a;
+				res %= M;
+			}
+		}
+        return (int)res;
     }
 
 };
@@ -88,20 +117,24 @@ static void eq( int n, string have, string need ) {
 
 int main( int argc, char* argv[] ) {
     {
-        NamingConvention theObject;
-        eq(0, theObject.toCamelCase("sum_of_two_numbers"),"sumOfTwoNumbers");
+        ColorfulLineGraphs theObject;
+        eq(0, theObject.countWays(3L, 2L, 100000),24);
     }
     {
-        NamingConvention theObject;
-        eq(1, theObject.toCamelCase("variable"),"variable");
+        ColorfulLineGraphs theObject;
+		eq(1, theObject.countWays(15L, 3L, 1000000),510625);
     }
     {
-        NamingConvention theObject;
-        eq(2, theObject.toCamelCase("t_o_p_c_o_d_e_r"),"tOPCODER");
+        ColorfulLineGraphs theObject;
+		eq(2, theObject.countWays(100000L, 100000L, 999999),185185);
     }
     {
-        NamingConvention theObject;
-        eq(3, theObject.toCamelCase("the_variable_name_can_be_very_long_like_this"),"theVariableNameCanBeVeryLongLikeThis");
+        ColorfulLineGraphs theObject;
+		eq(3, theObject.countWays(1000000000000L, 6L, 1000000),109376);
+    }
+    {
+        ColorfulLineGraphs theObject;
+		eq(4, theObject.countWays(5000L, 1000000000000L, 314159),202996);
     }
 	return 0;
 }

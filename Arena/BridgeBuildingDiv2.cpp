@@ -31,10 +31,10 @@ typedef pair<int, int> pii;
 
 /*************** Program Begin **********************/
 
-class Morphling {
+class BridgeBuildingDiv2 {
 public:
-    int findsz(int N, int K) {
-        int res;
+    int minDiameter(vector <int> a, vector <int> b, int K) {
+        int res = 0;
         return res;
     }
 
@@ -88,36 +88,36 @@ static void eq( int n, string have, string need ) {
 
 int main( int argc, char* argv[] ) {
     {
-        Morphling theObject;
-        eq(0, theObject.findsz(1, 1),1);
+        int aARRAY[] = {2,1,1,1,2};
+        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
+        int bARRAY[] = {1,9,1,9,1};
+        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
+        BridgeBuildingDiv2 theObject;
+        eq(0, theObject.minDiameter(a, b, 4),6);
     }
     {
-        Morphling theObject;
-        eq(1, theObject.findsz(2, 1),2);
+        int aARRAY[] = {1,50,1,50,1,50,1,50};
+        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
+        int bARRAY[] = {50,1,50,1,50,1,50,1};
+        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
+        BridgeBuildingDiv2 theObject;
+        eq(1, theObject.minDiameter(a, b, 9),8);
     }
     {
-        Morphling theObject;
-        eq(2, theObject.findsz(2, 2),3);
+        int aARRAY[] = {50,10,15,31,20,23,7,48,5,50};
+        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
+        int bARRAY[] = {2,5,1,8,3,2,16,11,9,1};
+        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
+        BridgeBuildingDiv2 theObject;
+        eq(2, theObject.minDiameter(a, b, 3),124);
     }
     {
-        Morphling theObject;
-        eq(3, theObject.findsz(3, 1),3);
-    }
-    {
-        Morphling theObject;
-        eq(4, theObject.findsz(3, 3),7);
-    }
-    {
-        Morphling theObject;
-        eq(5, theObject.findsz(10, 1),42);
-    }
-    {
-        Morphling theObject;
-        eq(6, theObject.findsz(48, 18),270440792);
-    }
-    {
-        Morphling theObject;
-        eq(7, theObject.findsz(100, 25),796177038);
+        int aARRAY[] = {2,4,10,2,2,22,30,7,28};
+        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
+        int bARRAY[] = {5,26,1,2,6,2,16,3,15};
+        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
+        BridgeBuildingDiv2 theObject;
+        eq(3, theObject.minDiameter(a, b, 5),54);
     }
 	return 0;
 }
