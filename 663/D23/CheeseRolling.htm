@@ -1,0 +1,68 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>N people (where N is a power of 2) are taking part in a single-elimination tournament in cheese rolling.
+The diagram below illustrates the structure of the tournament bracket.</p>
+<br></br>
+<p>
+<img src="http://www.topcoder.com/contest/problem/CheeseRolling/Pic1.png"></img></p>
+<br></br>
+<p>
+The people entering the tournament are numbered from 0 to N-1.
+For each potential cheese rolling match you know who would win the match.
+You are given this information encoded as a vector &lt;string&gt; <b>wins</b> with N elements, each containing N characters.
+For each valid i and j, <b>wins</b>[i][j] is 'Y' if person i beats person j.
+Otherwise, <b>wins</b>[i][j] is 'N'.
+The relation is not necessarily transitive: it may be the case that person i beats person j, person j beats person k, and person k beats person i.</p>
+<br></br>
+<p>
+There are N! (N factorial) ways to assign the people to positions in the bracket.
+Different assignments may produce a different winner of the tournament.
+Return a vector&lt;long long&gt; with N elements.
+For each valid i, element i of the return value should be the exact number of assignments for which person i wins the tournament.</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>CheeseRolling</td></tr><tr><td>Method:</td><td>waysToWin</td></tr><tr><td>Parameters:</td><td>vector &lt;string&gt;</td></tr><tr><td>Returns:</td><td>vector&lt;long long&gt;</td></tr><tr><td>Method signature:</td><td>vector&lt;long long&gt; waysToWin(vector &lt;string&gt; wins)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>4.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>N will be between 2 and 16, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>N will be a power of 2.</td></tr><tr><td align="center" valign="top">-</td><td><b>wins</b> will contain exactly N elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>wins</b> will have a length of exactly N.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>wins</b> will be composed of the characters 'Y' and 'N'.</td></tr><tr><td align="center" valign="top">-</td><td>For each i from 0 to N-1, <b>wins</b>[i][i] = 'N'.</td></tr><tr><td align="center" valign="top">-</td><td>For all distinct integers i and j from 0 to N-1, exactly one of <b>wins</b>[i][j] and <b>wins</b>[j][i] will be 'Y'.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NN&quot;,
+ &quot;YN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {0, 2 }</pre></td></tr><tr><td><table><tr><td colspan="2">There are 2 ways to assign the players:
+<ul>
+<li>Player 0 goes to position 0 and player 1 goes to position 1.</li>
+<li>Player 1 goes to position 0 and player 0 goes to position 1.</li>
+</ul>
+In both assignments, player 1 will win the match against player 0 because <b>wins</b>[1][0] = 'Y'.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NYNY&quot;,
+ &quot;NNYN&quot;,
+ &quot;YNNY&quot;,
+ &quot;NYNN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {8, 0, 16, 0 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NYNYNYNY&quot;,
+ &quot;NNYNYNYY&quot;,
+ &quot;YNNNNNNN&quot;,
+ &quot;NYYNNYNY&quot;,
+ &quot;YNYYNYYY&quot;,
+ &quot;NYYNNNNN&quot;,
+ &quot;YNYYNYNN&quot;,
+ &quot;NNYNNYYN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {4096, 8960, 0, 2048, 23808, 0, 1408, 0 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NYNNNNYYNYYNNYNN&quot;,
+ &quot;NNNNNNNNNYYNYYNY&quot;,
+ &quot;YYNYYNNNNYYYYYYN&quot;,
+ &quot;YYNNYYYNYNNYYYNY&quot;,
+ &quot;YYNNNYYNYYNNNNYY&quot;,
+ &quot;YYYNNNNYYNNYYNYN&quot;,
+ &quot;NYYNNYNYNYNYYYYN&quot;,
+ &quot;NYYYYNNNYYNYNYYY&quot;,
+ &quot;YYYNNNYNNYYYYNNN&quot;,
+ &quot;NNNYNYNNNNNNYYNY&quot;,
+ &quot;NNNYYYYYNYNYYYNN&quot;,
+ &quot;YYNNYNNNNYNNYNNY&quot;,
+ &quot;YNNNYNNYNNNNNYNN&quot;,
+ &quot;NNNNYYNNYNNYNNYY&quot;,
+ &quot;YYNYNNNNYYYYYNNN&quot;,
+ &quot;YNYNNYYNYNYNYNYN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 
+{331616878592, 37267079168, 2426798866432, 2606831599616, 994941665280,
+ 1162501849088, 1888166674432, 4632734203904, 832881524736, 84707409920,
+ 3007127748608, 55490052096, 17818550272, 254672666624, 629921447936, 1959311671296 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{&quot;NYYYYYYYYYYYYYYY&quot;,
+ &quot;NNYYYYYYYYYYYYYY&quot;,
+ &quot;NNNYYYYYYYYYYYYY&quot;,
+ &quot;NNNNYYYYYYYYYYYY&quot;,
+ &quot;NNNNNYYYYYYYYYYY&quot;,
+ &quot;NNNNNNYYYYYYYYYY&quot;,
+ &quot;NNNNNNNYYYYYYYYY&quot;,
+ &quot;NNNNNNNNYYYYYYYY&quot;,
+ &quot;NNNNNNNNNYYYYYYY&quot;,
+ &quot;NNNNNNNNNNYYYYYY&quot;,
+ &quot;NNNNNNNNNNNYYYYY&quot;,
+ &quot;NNNNNNNNNNNNYYYY&quot;,
+ &quot;NNNNNNNNNNNNNYYY&quot;,
+ &quot;NNNNNNNNNNNNNNYY&quot;,
+ &quot;NNNNNNNNNNNNNNNY&quot;,
+ &quot;NNNNNNNNNNNNNNNN&quot;}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {20922789888000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }</pre></td></tr><tr><td><table><tr><td colspan="2">Player 0 wins no matter how the positions are assigned, so the answer is 16! = 20922789888000.</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

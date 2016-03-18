@@ -1,0 +1,25 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>Limak is a little bear who loves to play.
+Today he is playing by moving some stones between two piles of stones.
+Initially, one of the piles has <b>A</b> and the other has <b>B</b> stones in it.</p>
+<br></br>
+<p>Limak has decided to perform a sequence of <b>K</b> operations.
+In each operation he will double the size of the currently smaller pile.
+Formally, if the current pile sizes are labeled X and Y in such a way that X &lt;= Y, he will move X stones from the second pile to the first one.
+After this move the new pile sizes will be X+X and Y-X.</p>
+<br></br>
+<p>You are given the ints <b>A</b>, <b>B</b>, and <b>K</b>.
+Determine the pile sizes after Limak finishes all his operations.
+Return the size of the smaller of those piles.</p>
+<br></br>
+<p>Formally, suppose that the final pile sizes are labeled P and Q in such a way that P &lt;= Q.
+Return P.</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>BearPlays</td></tr><tr><td>Method:</td><td>pileSize</td></tr><tr><td>Parameters:</td><td>int, int, int</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int pileSize(int A, int B, int K)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>1.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>Pay attention to the unusual time limit.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>A</b> and <b>B</b> will be between 1 and 1,000,000,000, inclusive. <br></br></td></tr><tr><td align="center" valign="top">-</td><td><b>K</b> will be between 1 and 2,000,000,000, inclusive.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>4</pre></td></tr><tr><td><pre>7</pre></td></tr><tr><td><pre>2</pre></td></tr></table></td></tr><tr><td><pre>Returns: 5</pre></td></tr><tr><td><table><tr><td colspan="2">The process will look as follows:
+<ul>
+<li>Initially, the pile sizes are 4 and 7.</li>
+<li>First operation: Limak doubles the pile of size 4 by moving 4 stones from the other pile to this pile. The new pile sizes are 8 and 3.</li>
+<li>Second operation: Limak doubles the pile of size 3. The final pile sizes are 5 and 6.</li>
+<li>As 5 &lt;= 6, the correct return value is 5.</li>
+</ul></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>5</pre></td></tr><tr><td><pre>5</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 0</pre></td></tr><tr><td><table><tr><td colspan="2"><p>The initial pile sizes are 5 and 5.
+In the first operation Limak will double one of them, so after the operation the new pile sizes will be 10 and 0.
+The second and third operation do nothing: in each of them Limak doubles the size of an empty pile.</p>
+<br></br>
+<p>As 0 &le; 10, the correct return value is 0.</p></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>2</pre></td></tr><tr><td><pre>6</pre></td></tr><tr><td><pre>1</pre></td></tr></table></td></tr><tr><td><pre>Returns: 4</pre></td></tr><tr><td><table><tr><td colspan="2">After the only operation the pile sizes will be 4 and 4, hence the correct return value is 4.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>2</pre></td></tr><tr><td><pre>8</pre></td></tr><tr><td><pre>2000000000</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>900000000</pre></td></tr><tr><td><pre>350000000</pre></td></tr><tr><td><pre>3</pre></td></tr></table></td></tr><tr><td><pre>Returns: 300000000</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

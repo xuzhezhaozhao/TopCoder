@@ -31,13 +31,55 @@ typedef pair<int, int> pii;
 
 /*************** Program Begin **********************/
 
-class BridgeBuildingDiv2 {
+class ABBADiv1 {
 public:
-    int minDiameter(vector <int> a, vector <int> b, int K) {
-        int res = 0;
-        return res;
+	string initial, target;
+    string canObtain(string initial, string target) {
+		this->initial = initial;
+		this->target = target;
+
+		bool f = solve(0, target.size() - 1, false);
+
+        return f ? "Possible" : "Impossible";
     }
 
+	bool solve(int b, int e, bool inv) {
+		if (e - b + 1 == initial.size()) {
+			string str = target.substr(b, e - b + 1);
+			if (inv) {
+				reverse(str.begin(), str.end());
+			}
+			return str == initial;
+		}
+
+		bool f1 = false;
+		if (inv) {
+			// 逆
+			if (target[b] == 'A' && target[e] == 'A') {
+				f1 = solve(b + 1, e, inv);
+			} else if (target[b] == 'A' && target[e] == 'B') {
+				f1 = solve(b + 1, e, inv) | solve(b, e - 1, !inv);
+			} else if (target[b] == 'B' && target[e] == 'A') {
+				f1 = false;
+			} else {
+				// target[b] == 'B' && target[e] == 'B'
+				f1 = solve(b, e - 1, !inv);
+			}
+		} else {
+			// 非逆
+			if (target[b] == 'A' && target[e] == 'A') {
+				f1 = solve(b, e - 1, inv);
+			} else if (target[b] == 'A' && target[e] == 'B') {
+				f1 = false;
+			} else if (target[b] == 'B' && target[e] == 'A') {
+				f1 = solve(b, e - 1, inv) | solve(b + 1, e, !inv);
+			} else {
+				// target[b] == 'B' && target[e] == 'B'
+				f1 = solve(b + 1, e, !inv);
+			}
+		}
+		return f1;
+	}
 };
 
 /************** Program End ************************/
@@ -88,36 +130,24 @@ static void eq( int n, string have, string need ) {
 
 int main( int argc, char* argv[] ) {
     {
-        int aARRAY[] = {2,1,1,1,2};
-        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
-        int bARRAY[] = {1,9,1,9,1};
-        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
-        BridgeBuildingDiv2 theObject;
-        eq(0, theObject.minDiameter(a, b, 4),6);
+        ABBADiv1 theObject;
+        eq(0, theObject.canObtain("A", "BABA"),"Possible");
     }
     {
-        int aARRAY[] = {1,50,1,50,1,50,1,50};
-        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
-        int bARRAY[] = {50,1,50,1,50,1,50,1};
-        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
-        BridgeBuildingDiv2 theObject;
-        eq(1, theObject.minDiameter(a, b, 9),8);
+        ABBADiv1 theObject;
+        eq(1, theObject.canObtain("BAAAAABAA", "BAABAAAAAB"),"Possible");
     }
     {
-        int aARRAY[] = {50,10,15,31,20,23,7,48,5,50};
-        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
-        int bARRAY[] = {2,5,1,8,3,2,16,11,9,1};
-        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
-        BridgeBuildingDiv2 theObject;
-        eq(2, theObject.minDiameter(a, b, 3),124);
+        ABBADiv1 theObject;
+        eq(2, theObject.canObtain("A", "ABBA"),"Impossible");
     }
     {
-        int aARRAY[] = {2,4,10,2,2,22,30,7,28};
-        vector <int> a( aARRAY, aARRAY+ARRSIZE(aARRAY) );
-        int bARRAY[] = {5,26,1,2,6,2,16,3,15};
-        vector <int> b( bARRAY, bARRAY+ARRSIZE(bARRAY) );
-        BridgeBuildingDiv2 theObject;
-        eq(3, theObject.minDiameter(a, b, 5),54);
+        ABBADiv1 theObject;
+        eq(3, theObject.canObtain("AAABBAABB", "BAABAAABAABAABBBAAAAAABBAABBBBBBBABB"),"Possible");
+    }
+    {
+        ABBADiv1 theObject;
+        eq(4, theObject.canObtain("AAABAAABB", "BAABAAABAABAABBBAAAAAABBAABBBBBBBABB"),"Impossible");
     }
 	return 0;
 }

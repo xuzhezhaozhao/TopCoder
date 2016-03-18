@@ -1,0 +1,74 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>Bear Limak was chilling in the forest when he suddenly found a computer program.
+The program was a correct implementation of MergeSort.
+Below you can find the program in pseudocode.</p>
+<br></br>
+<pre># mergeSort(left,right) sorts elements left, left+1, ..., right-1 of a global array T
+function mergeSort(left,right):
+    # if there is at most one element, we are done
+    if left+1 &gt;= right: return
+
+    # otherwise, split the sequence into halves, sort each half separately
+    mid = (left + right) div 2
+    mergeSort(left,mid)
+    mergeSort(mid,right)
+
+    # then merge the two halves together
+    merged = []    # an empty sequence
+    p1 = left
+    p2 = mid
+    while (p1 &lt; mid) or (p2 &lt; right):
+        if p1 == mid:
+            merged.append( T[p2] )
+            p2 += 1
+        else if p2 == right:
+            merged.append( T[p1] )
+            p1 += 1
+        else:
+            if LESS( T[p1], T[p2] ):
+                merged.append( T[p1] )
+                p1 += 1
+            else:
+                merged.append( T[p2] )
+                p2 += 1
+
+    # finally, move the merged elements back into the original array
+    for i from left to right-1 inclusive:
+        T[i] = merged[i-left]</pre>
+<br></br>
+<p>Limak noticed that one part of the implementation was missing: the function LESS.
+You can probably guess that the function is supposed to return a boolean value stating whether the first argument is less than the second argument.
+However, Limak is a bear and he didn't know that.
+Instead he implemented his own version of this function.
+Limak's function uses a true random number generator.
+Each of the two possible return values (true, false) is returned with probability 50 percent.</p>
+<br></br>
+<p>The random values generated in different calls to Limak's function LESS are mutually independent.
+Note that even if you call LESS twice with the same arguments, the two return values may differ.</p>
+<br></br>
+<p>After implementing LESS, Limak decided to run his brand new program.
+He initialized the global array T to contain N elements.
+Then, he filled the values 1 through N into the array: for each valid i, he set T[i] to i+1.
+Finally, he executed the function mergeSort(0,N).</p>
+<br></br>
+<p>Even with Limak's new LESS function, the program never crashes.
+On the other hand, it does not necessarily produce a sorted sequence when it terminates.
+In general, when the program terminates, the array T will contain some permutation of the numbers 1 through N.</p>
+<br></br>
+<p>After running the program many times, Limak has noticed that different output permutations are produced with different probabilities.
+Your task is to help him learn more about these probabilities.
+More precisely, your task is to compute the probability that a given sequence will appear as the output of Limak's program.</p>
+<br></br>
+<p>You are given a vector &lt;int&gt; <b>sortedSequence</b> with N elements, containing a permutation of 1 through N.
+Let P be the probability that Limak's program, when run on an array with N elements, outputs this permutation.
+Return the value log(P), where log denotes the natural (base e) logarithm.</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>BearSortsDiv2</td></tr><tr><td>Method:</td><td>getProbability</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;</td></tr><tr><td>Returns:</td><td>double</td></tr><tr><td>Method signature:</td><td>double getProbability(vector &lt;int&gt; seq)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Notes</h3></td></tr><tr><td align="center" valign="top">-</td><td>Your return value must have absolute or relative error smaller than 1e-9.</td></tr><tr><td align="center" valign="top">-</td><td>You may assume that for each N and for each permutation P of 1 through N the probability that P appears as the output of Limak's program is strictly positive.</td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>sortedSequence</b> will contain exactly N elements.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>N will be between 1 and 40, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>Elements of <b>sortedSequence</b> will be between 1 and N, inclusive.<br></br></td></tr><tr><td align="center" valign="top">-</td><td>Elements of <b>sortedSequence</b> will be pairwise distinct.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1,2}</pre></td></tr></table></td></tr><tr><td><pre>Returns: -0.6931471805599453</pre></td></tr><tr><td><table><tr><td colspan="2">Limak is sorting a 2-element sequence.
+The algorithm will split it into two 1-element sequences and then it will merge those together.
+While merging, the algorithm will call LESS(1, 2) to "compare" the two elements.
+If LESS(1, 2) returns true, the resulting permutation will be {1, 2}, otherwise it will be {2, 1}.
+Therefore, the probability of each of those two permutations is equal to 0.5.
+The return value is log(0.5).</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1,3,2}</pre></td></tr></table></td></tr><tr><td><pre>Returns: -1.3862943611198906</pre></td></tr><tr><td><table><tr><td colspan="2">When {1, 2, 3} is sorted, it is first split into {1} and {2, 3}.
+After that, in order to obtain {1, 3, 2} in the end, two things must happen, one after another:
+<ul>
+<li>When {2, 3} is recursively sorted, the result must be {3, 2}. From Example 0 we know this happens with probability 0.5.</li>
+<li>When merging {1} and {3, 2}, the first call to LESS will be LESS(1, 3). This call must return true. Again, this happens with probability 0.5.</li>
+</ul>
+Therefore, the probability is 0.5 * 0.5 = 0.25, and the answer is log(0.25).</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{10,13,18,2,4,6,24,22,19,5,7,20,23,14,21,17,25,3,1,11,12,8,15,16,9}</pre></td></tr></table></td></tr><tr><td><pre>Returns: -57.53121598647546</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>

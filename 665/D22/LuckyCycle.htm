@@ -1,0 +1,50 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+This problem is about trees.
+A tree consists of some special points (called nodes), and some lines (called edges) that connect those points.
+Each edge connects exactly two nodes.
+If there are N nodes in a tree, there are exactly N-1 edges.
+The edges of a tree must connect the nodes in such a way that the tree is connected: 
+it must be possible to get from any node to any other node by traversing some sequence of edges.
+Note that this implies that a tree never contains a cycle:
+for each pair of nodes there is exactly one way to reach one from the other without using the same edge twice.
+</p>
+<br></br>
+<p>
+Dog has a tree.
+The edges in Dog's tree have weights.
+As Dog likes the numbers 4 and 7, the weight of each edge is either 4 or 7.
+</p>
+<br></br>
+<p>
+Cat loves modifying trees.
+Cat is now going to modify Dog's tree by adding one new edge.
+The new edge will also have a weight that is either 4 or 7.
+The new edge will connect two nodes that don't already have an edge between them.
+Note that adding any such edge will create exactly one cycle somewhere in the tree.
+(A cycle is a sequence of consecutive edges that starts and ends in the same node.)
+</p>
+<br></br>
+<p>
+A cycle is balanced if the number of edges on the cycle is even, and among them the number of edges with weight 4 is the same as the number of edges with weight 7.
+Cat would like to add the new edge in such a way that the cycle it creates will be balanced.
+</p>
+<br></br>
+<p>
+You are given the description of Dog's current tree in vector &lt;int&gt;s <b>edge1</b>, <b>edge2</b>, and <b>weight</b>.
+Each of these vector &lt;int&gt;s will have exactly n-1 elements, where n is the number of nodes in Dog's tree.
+The nodes in Dog's tree are labeled 1 through n.
+For each valid i, Dog's tree contains an edge that connects the nodes <b>edge1</b>[i] and <b>edge2</b>[i], and the weight of this edge is <b>weight</b>[i].
+</p>
+<br></br>
+<p>
+Return a vector &lt;int&gt; with exactly three elements: {P,Q,W}.
+Here, P and Q should be the nodes connected by the new edge, and W should be the weight of the new edge.
+(Note that P and Q must be between 1 and N, inclusive, and W must be either 4 or 7.)
+If there are multiple solutions, return any of them.
+If there are no solutions, return an empty vector &lt;int&gt; instead.
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>LuckyCycle</td></tr><tr><td>Method:</td><td>getEdge</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;, vector &lt;int&gt;</td></tr><tr><td>Returns:</td><td>vector &lt;int&gt;</td></tr><tr><td>Method signature:</td><td>vector &lt;int&gt; getEdge(vector &lt;int&gt; edge1, vector &lt;int&gt; edge2, vector &lt;int&gt; weight)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>N will be between 2 and 100, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>edge1</b>, <b>edge2</b>, and <b>weight</b> will each contain exactly N-1 elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>weight</b> will be either 4 or 7</td></tr><tr><td align="center" valign="top">-</td><td>Each element of <b>edge1</b> and <b>edge2</b> will be between 1 and N, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>The input will define a tree.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1}</pre></td></tr><tr><td><pre>{2}</pre></td></tr><tr><td><pre>{4}</pre></td></tr></table></td></tr><tr><td><pre>Returns: { }</pre></td></tr><tr><td><table><tr><td colspan="2">We cannot add any edge because the only two nodes are already connected by an edge.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1, 3, 2, 4}</pre></td></tr><tr><td><pre>{2, 2, 4, 5}</pre></td></tr><tr><td><pre>{4, 7, 4, 7}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {1, 5, 7 }</pre></td></tr><tr><td><table><tr><td colspan="2">The input describes a tree with 5 nodes.
+The tree contains the following edges: 1-2 (weight 4), 3-2 (weight 7), 2-4 (weight 4), and 4-5 (weight 7).
+The example return value describes a new edge that connects nodes 1 and 5, and has weight 7.
+
+Adding the new edge creates a cycle that goes through the nodes 1, 2, 4, and 5, in this order.
+This cycle is balanced: two of its four edges have weight 4 and the other two have weight 7.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}</pre></td></tr><tr><td><pre>{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}</pre></td></tr><tr><td><pre>{4, 4, 4, 4, 4, 4, 7, 7, 7, 7, 7, 7}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {1, 12, 7 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1, 2, 3, 5, 6}</pre></td></tr><tr><td><pre>{2, 3, 4, 3, 5}</pre></td></tr><tr><td><pre>{4, 7, 7, 7, 7}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {1, 4, 4 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
