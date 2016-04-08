@@ -31,14 +31,76 @@ typedef pair<int, int> pii;
 
 /*************** Program Begin **********************/
 
+int dp[51][51][101][2];
+
 class CollectingTokens {
 public:
+	vector<vector<int>> subtree;
+
+	vector <int> tokens;
+	int N;
+
+	int solve(int x, int c, int s, int m) {
+		int &ans = dp[x][c][s][m];
+		if (ans != -1) {
+			return ans;
+		}
+
+		ans = 0;
+		if (c == 0) {
+			ans = tokens[x];
+			return ans;
+		}
+
+		// 不考虑子树 c-1
+		ans = solve(x, c-1, s, m);
+		// 考虑子树 c-1
+		for (int i = 1; i <= s; i++) {
+			// 第 c-1 棵子树给 i 步
+			int v= subtree[x][c-1];
+
+			// 返回 x
+			if (i >= 2) {
+				ans = max(ans, solve(x, c-1, s-i, m) + solve(v, subtree[v].size(), i-2, 1));
+			}
+
+			// 不返回 x, 此时 m 必须为 0
+			if (m == 0) {
+				ans = max(ans, solve(x, c-1, s-i, 1) + solve(v, subtree[v].size(), i-1, 0));
+			}
+		}
+		return ans;
+	}
+
     int maxTokens(vector <int> A, vector <int> B, vector <int> tokens, int L) {
-        int res = 0;
+		this->N = A.size();
+		this->tokens = tokens;
 
+		vector<vector<int>> adj(N+1);
+		subtree.resize(N+1);
 
+		for (int i = 0; i < N; i++) {
+			adj[ A[i]-1 ].push_back( B[i]-1 );
+			adj[ B[i]-1 ].push_back( A[i]-1 );
+		}
+		queue <int> Q;
+		bool visited[51] = {false};
+		Q.push(0);
+		visited[0] = true;
+		while (!Q.empty()) {
+			int cur = Q.front();
+			Q.pop();
+			for (auto x : adj[cur]) {
+				if (!visited[x]) {
+					visited[x] = true;
+					Q.push(x);
+					subtree[cur].push_back(x);
+				}
+			}
+		}
 
-        return res;
+		memset(dp, -1, sizeof(dp));
+        return solve(0, adj[0].size(), L, 0);
     }
 
 };

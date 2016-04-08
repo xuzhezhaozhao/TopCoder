@@ -1,0 +1,29 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Ducks have started mysteriously appearing in your room.
+All ducks make the same sound: "quack".
+Each duck makes the sound one or more times, one after another.
+For example, valid sounds for a single duck are "quack", "quackquackquackquack", "quackquack", etc.
+</p>
+
+<p>
+You have lost count of how many ducks are in your room.
+The ducks are quacking, and the sounds of their quacks are getting mixed up.
+You have recorded the sounds, obtaining a string of characters.
+When you later listened to the recording, you realized that the quacking of each individual duck forms a (not necessarily contiguous) subsequence of the recording.
+You also noticed that each letter in the recording belongs to exactly one duck.
+For example, if there were two ducks, you may have recorded "quqacukqauackck".
+</p>
+
+<p>
+You are given a string <b>s</b> that contains an arbitrary recording.
+Find and return the smallest number of ducks that could have produced the recording.
+Note that it is possible that the given recording is not a valid recording of quacking ducks.
+In such case, return -1.
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>Quacking</td></tr><tr><td>Method:</td><td>quack</td></tr><tr><td>Parameters:</td><td>string</td></tr><tr><td>Returns:</td><td>int</td></tr><tr><td>Method signature:</td><td>int quack(string s)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr><tr><td>Stack limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td><b>s</b> will have between 5 and 2,500 characters, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>Each character of <b>s</b> will be 'q', 'u', 'a', 'c', or 'k'.</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;quqacukqauackck&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 2</pre></td></tr><tr><td><table><tr><td colspan="2">This is the same as the one from the problem statement.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;kcauq&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: -1</pre></td></tr><tr><td><table><tr><td colspan="2">A backward duck is not a real duck.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;quackquackquackquackquackquackquackquackquackquack&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 1</pre></td></tr><tr><td><table><tr><td colspan="2">A single duck can make arbitrarily many quack sounds.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">3)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;qqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkk&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 10</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">4)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;quqaquuacakcqckkuaquckqauckack&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: 3</pre></td></tr><tr><td><table><tr><td colspan="2">This is one possible solution with 3 ducks.
+<pre>
+Mixed: quqaquuacakcqckkuaquckqauckack
+Duck1: ____q_u__a___ck_______________
+Duck2: __q__u_ac_k_q___ua__ckq_u__ack
+Duck3: qu_a_______c___k__qu___a_ck___
+</pre>
+Here, we can verify that each letter comes from exactly one duck.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">5)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>&quot;quackqauckquack&quot;</pre></td></tr></table></td></tr><tr><td><pre>Returns: -1</pre></td></tr><tr><td><table><tr><td colspan="2">Note that the second quack is misspelled.</td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
