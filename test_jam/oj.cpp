@@ -1,4 +1,3 @@
-#include <cassert>
 #include <algorithm>
 #include <functional>
 #include <numeric>
@@ -48,22 +47,15 @@ int main(int argc, char *argv[])
 {
 
 #ifdef TEST_OJ
-	if (!freopen("jam.in", "r", stdin)) {
-		printf("Can't open jam.in!\n");
-		exit(-1);
+	if (!freopen("test.txt", "r", stdin)) {
+		printf("Can't open test.txt!\n");
 	}
-	FILE * f = NULL;
-	f = freopen("jam.out", "w", stdout);
 #endif
 
 	int T;
-	scanf("%d\n", &T);
+	scanf("%d", &T);
 	for (int casei = 0; casei < T; ++casei) {
-		
-		scanf("");
-		int res = 0;
-		printf("Case #%d: %d\n", casei + 1, res);
 	}
-	
+
 	return 0;
 }
